@@ -11,9 +11,13 @@ Check the Features & Requirements for a detailed description of what the project
 The Technical requuirements for this project:
 
 Backend: Python or Node.js, RESTFul API's using Flask library. ML algorithms using Python libraries such as TensorFlow, Pytorch or Scikit-learn. Possibility of using Pygame for games.
+
 Frontend: Javascript, React.js, Plotly.js. JavaScript Libraries such as Phaser.js, Howler.js, and Three.js or Babylon.js. Chart.js, and D3.js for creating dashboards for KPIs.
+
 APIs: For the quest based game OpenAI's API for generative AI, TTS API to convert text to speech and RESTful APIs for self-created APIs. Google Analytics API for keeping track of KPIs
+
 DataBase: SQLlite for structured data and MongoDB for unstructured data to store user progress.
+
 Server: AWS or Azure (depending on which works best for us)
 
 
