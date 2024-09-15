@@ -1,4 +1,4 @@
-# Features and Requirements
+# Features and Requirements 
 
 - [ ] <ins>Avatar Creation</ins>: Users create custom avatars at the start of the game to represent themselves throughout the app.
       
