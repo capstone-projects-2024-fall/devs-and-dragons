@@ -15,6 +15,7 @@ Our app will use a web-based architecture where the user data is sent to the bac
 
 
 **Background**
+
 Similar products include leetcode, codify and replit. These are all products that provide an online environment to write code. Tech Quest is similar to these products in that it provides an outlet to practice coding. However, this app also includes personalized content tailored to each user's needs with a touch of game elements and alignment with future courses. This approach creates a more engaging and collaborative environment. 
 
  
