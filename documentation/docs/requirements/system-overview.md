@@ -11,7 +11,7 @@ This document proposes Tech Quest, a web-based platform that pairs students toge
 
 **Conceptual Design**
 
-Our app will use a web-based architecture where the user data is sent to the backend using API calls through Flask. Features such as user login and quest details will be stored in a SQL database for data management. Things like in-game actions and chatbot conversations are saved in MongoDB. The backend uses OpenAI API to match users based on their skill levels. All the processed data is sent back to the frontend. React and Phaser then use this data to update the user interface. 
+Our app will use a web-based architecture where the user data is sent to the backend using API calls through Flask. Features such as user login and quest details will be stored in a SQL database for data management. Things like in-game actions and chatbot conversations are saved in MongoDB. All the processed data is sent back to the frontend. React and Phaser then use this data to update the user interface. 
 
 
 **Background**
