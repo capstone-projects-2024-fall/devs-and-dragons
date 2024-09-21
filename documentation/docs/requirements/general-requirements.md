@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # General Requirements
 
-This will be a web base application. This is the best approach as it provide students with a platform where they can proogram which will only be best avilable if it is a web based application. 
+This will be a web base application. This is the best approach as it provide students with a platform where they can proogram which will only be best available if it is a web based application. 
 
 Check the Features & Requirements for a detailed description of what the project unfolds.
 
