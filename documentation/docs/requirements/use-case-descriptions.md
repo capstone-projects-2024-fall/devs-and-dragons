@@ -54,3 +54,18 @@ A user wants to create a guild to add friends to.
 5. User clicks the ‘create’ button to finalize the guild creation.
 6. Quests can now be assigned, and others can join the guild using the code.
 
+## Use Case 6 - Starting a Quest
+A user wants to begin a quest line with guild members.
+1. The user logs into their profile.
+2. The user navigates to the ‘Quest’ tab where they will see a list of quests they are able to attempt.
+3. The user would assign the chosen quest to their guild. 
+4. Users in the guild can now join the wait room and have the option to select the ‘ready up’ tab. 
+5. The user and other members in their guild can now start the quest together by pressing the ‘start quest’ button. 
+
+## Use Case 7 - Helper Bot
+A user is stuck on a quest and wants to ask the Helper Bot for help instead of giving up.
+1. The user would click the small ‘chatbot’ icon in the lower right corner of the game window. The game will pause and the chat area will appear. 
+2. The user will describe to the Helper Bot what part of the quest they are stuck on.
+3. The Helper Bot will guide the user to solve the problem. 
+4. After the Helper Bot has given the hint the user can close the chat window at their leisure to continue the game. The Helper Bot chat will be left available for the user to refer to.
+
