@@ -2,8 +2,6 @@
 sidebar_position: 3
 ---
 
-**General Requirements**
-
 Desktop, laptop or a mobile device with internet access
 
 **Development environment:**  
@@ -19,7 +17,7 @@ Github, Jira, Discord, and Zoom
 Test Driven Development and unit testing  
 Python library unittest
 
-**Technical requirements for this project:**  
+**Technical requirements:**  
 Backend: Python  
 Frontend: Javascript, React.js  
 APIs: OpenAI, TTS, Google Analytics, and Restful  
