@@ -2,28 +2,28 @@
 sidebar_position: 3
 ---
 
-# General Requirements
+**General Requirements**
 
 Desktop, laptop or a mobile device with internet access
 
-Development environment: 
+**Development environment:**  
 VS Studio code
 
-Hardware:
+**Hardware:**  
 Dual-core processor, 8GB RAM, 128 GB SSD, Linux/windows/Macos OS, and GPU
 
-Project management system:
-Github, Jira, Discord, and Zoom.
+**Project management system:**  
+Github, Jira, Discord, and Zoom
 
-Testing Requirements:
-Test Driven Development and unit testing
-Python library unittest 
+**Testing Requirements:**  
+Test Driven Development and unit testing  
+Python library unittest
 
-Technical requuirements for this project:
-Backend: Python
-Frontend: Javascript, React.js
-APIs: OpenAI, TTS, Google Analytics and Restful 
-DataBase: SQLite, MongoDB 
+**Technical requirements for this project:**  
+Backend: Python  
+Frontend: Javascript, React.js  
+APIs: OpenAI, TTS, Google Analytics, and Restful  
+Database: SQLite, MongoDB  
 Server: AWS or Azure
 
 
