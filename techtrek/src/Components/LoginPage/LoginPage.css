@@ -1,0 +1,11 @@
+.wrapper {
+    width: 420px;
+    background-color: black;
+    color: #ffff;
+}
+
+.wrapper h1{
+    font-size: 36;
+    text-align: center ;
+}
+
