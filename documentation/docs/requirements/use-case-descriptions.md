@@ -5,67 +5,100 @@ sidebar_position: 5
 # Use-case descriptions
 
 ## Use Case 1 - Account Creation
-A user wants to create an account on TechTrek.
-1. User opens the TechTrek web application for the first time.
-2. User is directed to a landing page with options to create an account or log in.
-3. User selects the ‘create account’ button to begin the account registration process.
-4. User enters their username, password, and email into the form.
-5. User clicks the ‘create account’ button.
-6. If any fields are filled out incorrectly, the user is notified and asked to try again.
-7. Once the form is successfully submitted, the user selects the ‘login’ button.
-8. User enters their username and password on the login page.
-9. Since this is the user's first login, the user is prompted to create their avatar.
-10. After completing avatar creation, the user is redirected to the TechTrek main page.
+A user wants to create a new account.
+1. The user opens the Devs & Dragons application for the first time.
+2. The user selects the ‘Create Account’ button to begin the account registration process.
+3. The user enters the desired username, password, and email into the form.
+4. If any fields are filled out incorrectly, the user is notified and asked to try again.
 
 ## Use Case 2 - Logging In
-A user wants to log into their TechTrek account.
-1. User opens the TechTrek web application.
-2. User navigates to the landing page.
-3. User selects the ‘login’ button.
-4. User enters their username and password.
-5. After providing the correct credentials, a 2FA code is sent to the user’s email.
-6. User enters the 2FA code.
-7. If the 2FA code is correct, the user is logged in and directed to the main page.
-8. If the code is incorrect, the user is notified and asked to try again.
+A user wants to log in to an account they created.
+1. The user navigates to the site's landing page.
+2. The user selects the ‘login’ button.
+3. The user enters their username and password.
+4. After providing the correct credentials, the user will receive a 2FA code in their email.
+5. The user enters the 2FA code.
+6. After providing the correct 2FA code, the user is brought to the home page.
 
 ## Use Case 3 - Quest Creation
-A user wants to generate a quest line based on their topic of choice.
-1. User logs into their TechTrek profile.
-2. User navigates to the ‘Create Quest’ tab.
-3. User fills out the ‘Create Quest’ form, including title, course code, coding topic, and difficulty level.
-4. User clicks the ‘Publish Quest’ button.
-5. The new quest line is published and available for the user to complete.
+A user wants to create a new quest.
+1. From the home page, the user selects the “Quests” tab.
+2. The user selects the “Create Quest” button.
+3. The user fills out a form for the following:
+   - Quest Title
+   - Coding Topic
+   - Amount of problems
+   - Difficulty level
+   - Enemy
+   - Background
+4. User reviews their input and selects the “Confirm” button.
 
 ## Use Case 4 - Adding a Friend
-A user wants to add classmates as friends.
-1. User logs into their TechTrek profile.
-2. User navigates to the ‘Profile’ tab.
-3. User clicks the ‘add friends’ button.
-4. User enters the username of the individual they want to add.
-5. A friend request is sent, and the recipient must accept.
-6. Once the recipient accepts, the sender can see them as a friend.
+Two users want to add one another to their friends list.
+1. From the home page, the user selects the “Friends” button.
+2. User 1 navigates to the search bar and types User 2’s username.
+3. User 1 selects User 2’s profile.
+4. User 1 selects the “Add Friend” button.
+5. User 2 receives the request and selects “Accept”.
 
-## Use Case 5 - Guild Creation
-A user wants to create a guild to add friends to.
-1. User logs into their TechTrek account.
-2. User navigates to the ‘Guilds’ tab.
-3. User clicks the ‘create new guild’ button.
-4. User fills out a form with guild information, including name, symbol, and guild code.
-5. User clicks the ‘create’ button to finalize the guild creation.
-6. Quests can now be assigned, and others can join the guild using the code.
+## Use Case 5 - Creating a Party to Start a Quest Outside of a Guild
+A user wants to start a quest outside of a guild.
+1. From the home page, the user selects the “Quests” tab.
+2. The user selects “My Quests”.
+3. The user selects the quest they want to do.
+4. The user selects the “Start Quest” button.
+5. The user creates a party code and shares it with their peer(s).
+6. The user waits for party size to be at two to four members, then clicks the “Start Quest” button.
 
-## Use Case 6 - Starting a Quest
-A user wants to begin a quest line with guild members.
-1. The user logs into their profile.
-2. The user navigates to the ‘Quest’ tab where they will see a list of quests they are able to attempt.
-3. The user would assign the chosen quest to their guild. 
-4. Users in the guild can now join the wait room and have the option to select the ‘ready up’ tab. 
-5. The user and other members in their guild can now start the quest together by pressing the ‘start quest’ button. 
+## Use Case 6 - Join a Party
+A user wants to join another user’s party.
+1. From the home page, the user clicks on the “Join Party” button.
+2. The user enters the party code.
+3. The user selects the “Join” button.
 
-## Use Case 7 - Helper Bot
-A user is stuck on a quest and wants to ask the Helper Bot for help instead of giving up.
-1. The user would click the small ‘chatbot’ icon in the lower right corner of the game window. The game will pause and the chat area will appear. 
-2. The user will describe to the Helper Bot what part of the quest they are stuck on.
-3. The Helper Bot will guide the user to solve the problem. 
-4. After the Helper Bot has given the hint the user can close the chat window at their leisure to continue the game. The Helper Bot chat will be left available for the user to refer to.
+## Use Case 7 - Guild Creation
+A user wants to create a guild.
+1. From the home page, the user selects the “Guilds” tab.
+2. The user selects the “Create Guild” button.
+3. The user fills out a form for the following:
+   - Guild name
+   - Guild description
+   - Guild symbol
+   - Guild Code
+4. The user reviews their input and selects “confirm”.
 
+## Use Case 8 - Assign Quest to Guild
+A user wants to assign a quest for their guild to complete.
+1. From the home page, the user selects the “Quests” tab.
+2. The user selects “My Quests”.
+3. The user selects the quest they want to assign.
+4. The user selects the “Assign to Guild” button.
+5. The user selects the guild to assign the quest to.
+
+## Use Case 9 - Join a Guild
+A user wants to join another user’s guild.
+1. From the home page, the user clicks on the “Join Guild” button.
+2. The user enters the guild code.
+3. The user selects “Join” button.
+
+## Use Case 10 - Creating a Guild Party To Start a Quest
+A user wants to start a quest inside a guild.
+1. From the home page, the user selects “Guilds” tab.
+2. The user selects “My Guilds” and then selects the guild they wish to start a quest in.
+3. In the guild, the user selects the “Quest Board” button.
+4. The user selects a quest they want to do.
+5. The user selects “Start Quest” which creates a guild party.
+6. The user enters a name for the guild party.
+7. User waits for the guild party size to be at two to four members, then selects the “Start Quest” button.
+
+## Use Case 11 - Solving a Problem in a Quest (gameplay)
+Two users want to solve a coding problem together during a quest.
+1. The users are given their first problem.
+2. User 1 is randomly selected and when the party is done reading the problem, user 1 presses the “Begin” button.
+3. The timer begins and user 1 starts to write code in the provided text box.
+4. User 1 clicks the “Submit” button.
+5. User 1’s turn is done and the timer restarts.
+6. The timer begins as it is now user 2's turn to write code in the provided text box.
+7. User 2 clicks the “Submit” button.
+8. GPT-bot analyzes the final submission and rates the party’s solution from 1 to 3.
+9. If the final submission is incorrect, the party loses health, the timer resets, and user 1 starts a new turn.
