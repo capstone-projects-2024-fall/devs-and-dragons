@@ -25,9 +25,17 @@ sidebar_position: 4
 * Users must create an avatar upon creating a new account
 * Users must make an account to access Devs and Dragons platform
   * A verification email will be sent to authenticate users
-
+* Users must be able to log into existing accounts
+* Users can opt to abandon a started quest
+* All user data will be stored in MongoDB
+ 
 
 ## Non-Functional Requirements
 
 * Application must be able to support multiple users
   * The use of AWS will enable Devs and Dragons to host up to 1000 concurrrent users
+* Users can track their progress
+  * Dashboard with KPIs (Key performance indicators)
+* The backend must handle errors in GPT-generated coding questions or feedback without affecting users' attempts
+* Automated daily backups must be performed
+
