@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # System Block Diagram
 
-<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKgS0PLA=/?moveToViewport=-1125,-724,2739,1304&embedId=147785153907" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+<iframe width="768" height="432" src="https://miro.com/app/embed/uXjVKgS0PLA=/?pres=1&frameId=3458764601497934026&embedId=647218527620" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 **Figure 3.** High level design of the Tech Quest application
 
 ## Description
