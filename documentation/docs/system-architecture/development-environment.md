@@ -20,3 +20,10 @@ sidebar_position: 5
 
 ### Database
 - MongoDB
+
+### Testing
+- Python Unit Testing
+- React Component Testing: Jest
+
+### Deplyoment/Hosting
+- AWS
