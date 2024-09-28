@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+# General Requirements
+
 Desktop, laptop or a mobile device with internet access
 
 **Development environment:**  
