@@ -4,12 +4,17 @@ sidebar_position: 2
 
 # System Block Diagram
 
-![image](https://github.com/user-attachments/assets/3f2fa9f0-8786-4aef-98c4-f160d0f308a0)
-**Figure 1.** High level design of the Tech Quest application
+<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKgS0PLA=/?moveToViewport=-1125,-724,2739,1304&embedId=147785153907" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+**Figure 3.** High level design of the Tech Quest application
 
 ## Description
-**Figure 1** above demonstrates how Tech Quest will take user input and process that data. Structured data, such as user login information and quest results, will be sent to the backend using RESTful API calls with Flask. After the data reaches the backend, it is stored in an SQL database. The backend will retrieve this structured data to validate user login. Users' quest data will be utilized for generating teams. 
+**Figure 3** above illustrates Devs and Dragons's full stack. The user interacts with the frontend that is built using **React**. The game component is created using a react library called, **React-Game-Kit**. The frontend will handle user actions and sends **RESTful API** requests to the backend.
 
-Unstrucutred data, such as in-game inputs and chatbot responses/inputs, follow a similar path but instead will be stored in a MongoDB database. This data is used when making OpenAI API calls to review user answers as well as genereating chatbot reponses.
+The backend is built using **Flask**. It will process game logic, verify user inputs, and manage the game state. The backend communicates with the **MongoDB** database, hosted on **AWS,** to store and retrieve data such as quest made, guilds joined, and in-game answers. 
 
-All of the processed information from both data types is sent back to the frontend where it will be used by React and Phaser for user interaction, updating the game, and chatbot responses.
+Multiplayer synchronization will be managed by using **AWS,** ensuring that all players remain in sync during a quest.
+
+The back end will use **OpenAI API** calls to comunicate with the GPT bot. The GPT bot will be utilized for three tasks:
+- generate code problems for quests
+- generate a storyline to sequence problems within a quest
+- grade user answers during a quest
