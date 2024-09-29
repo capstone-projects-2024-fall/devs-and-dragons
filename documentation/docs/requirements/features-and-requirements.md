@@ -22,7 +22,6 @@ sidebar_position: 4
   * User can search for another's username and click "Add Friend"
 * Users can create guilds to host multiple guild parties and assign multiple quests
 * Users can opt to abandon a started quest
-* Users must create an avatar upon creating a new account
 * Users must make an account to access Devs and Dragons platform
   * A verification email will be sent to authenticate users
 * Users must be able to log into existing accounts
