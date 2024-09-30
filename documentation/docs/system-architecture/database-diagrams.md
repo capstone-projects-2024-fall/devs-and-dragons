@@ -8,6 +8,12 @@ sidebar_position: 4
 
 ```mermaid
 erDiagram
+USER ||--|{ AVATAR : owns
+USER ||--o{ GUILD : "belongs to"
+USER ||--o{ QUEST : "created"
+USER ||--o{ PARTY : "part of"
+GUILD ||--o{ QUEST : "assigned"
+GUILD ||--|{ PARTY : "owns"
     USER {
         string username PK
         string password_hash "PBKDF2"
