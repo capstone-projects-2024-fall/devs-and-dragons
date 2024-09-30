@@ -7,66 +7,62 @@ sidebar_position: 4
 
 erDiagram
 
-    USER ||--|{ AVATAR : owns
-    USER ||--o{ GUILD : belongs to
-    USER ||--o{ QUEST : created
-    USER ||--o{ PARTY : part_of
-    GUILD ||--o{ QUEST : assigned
-    GUILD ||--|{ PARTY : owns
-    
     USER {
-      string username
-      string password_hash
-      string email
-      list guilds_in
-      list quests_made
-    }
+        string username PK
+        string password_hash "PBKDF2"
+        string email
+        list guilds_in "FK to GUILD table"
+        list quests_made "FK to QUEST table"
+      
+      AVATAR {
+        int avatar_id PK
+        string owner FK "USER - username"
+        string avatar_name
+        enum avatar_type
+        int total_health
+        datetime last_interaction
+        datetime birthday
+      
+      QUEST {
+        int quest_id PK
+        enum difficulty "EASY, MEDIUM, HARD"
+        int number_of_problems
+        string problem_topic
+        int time_limit 
+        string creator FK "USER -username"
+        string enemy
+        string background
+      
+      }
+      
+      GUILD {
+        int guild_id PK
+        string name
+        string description
+        int guild_code 
+        int quest_assigned FK "to QUEST table"
+        list guild_parties "FK to PARTY table"
+      
+      }
+      
+      PARTY {
+        int party_id PK
+        string name
+        int party_code
+        int quest_assigned FK "QUEST -quest_id"
+        list users_inside "FK to USER table"
+      
+      
+      }
+      
+      GUILD_PARTY {
+        int quild_party_ID PK
+        string name
+        int guild_party_code
+        int quest_assigned FK "QUEST - quest_id"
+        list users_inside "FK to USER table"
     
-    AVATAR {
-      int avatar_id
-      string owner
-      string avatar_name
-      string avatar_type
-      int total_health
-      datetime last_interaction
-      datetime birthday
-    }
-    
-    QUEST {
-      int quest_id
-      string difficulty
-      int number_of_problems
-      string problem_topic
-      int time_limit 
-      string creator
-      string enemy
-      string background
-    }
-    
-    GUILD {
-      int guild_id
-      string name
-      string description
-      int guild_code
-      list quests_assigned
-      list guild_parties
-    }
-    
-    PARTY {
-      int party_id
-      string name
-      int party_code
-      int quest_assigned
-      list users_inside
-    }
-    
-    GUILD_PARTY {
-      int guild_party_id
-      string name
-      int guild_party_code
-      int quest_assigned
-      list users_inside
-    }
+      }
 ```
 
 The diagram shows the individual tables and their relations in our MongoDB database. The tables provide this description:
