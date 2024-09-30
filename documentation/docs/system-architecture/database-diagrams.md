@@ -4,6 +4,7 @@ sidebar_position: 4
 
 # Database Diagrams
 
+![database_diagram](https://github.com/user-attachments/assets/bf10ab52-5794-4f39-85e1-8d63cea00be7)
 
 erDiagram
 
