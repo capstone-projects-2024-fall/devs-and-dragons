@@ -20,7 +20,10 @@ info:
 tags:
   - name: Quest
     description: Represents the main action users are pursuing. It is the unit of learning that users must do (aka play) and finish to move forward in the game which affects all the other game and user function. The main core function of Devs and Dragons.
-    
+
+  - name: Guild
+    description: The guild class is responsible for managing guild-related data and functionality of the platform. It allows users to create, join and manage guilds and track information such as current guild members and assigned quests. The class provides functionality for instructors and students.  
+
 paths:
   /quest:
     post:
@@ -55,7 +58,7 @@ paths:
         description: Unique identifier of quest
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
           description: Successful operation
@@ -79,7 +82,7 @@ paths:
         description: Unique identifier of quest
         required: true
         schema:
-          type: string
+          type: integer
       requestBody:
         content:
           application/json:
@@ -110,7 +113,7 @@ paths:
           description: Unique identifier of quest
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: Successful operation
@@ -204,5 +207,113 @@ components:
           type: integer
           example: 30
           description: Total questions in quest
+
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 12
+          description: Static ID to specify each user from potential duplicates.
+        username:
+          type: string
+          example: AppleIanBaum
+          description: Desired name of the user.
+        password:
+          type: string
+          example: password123
+          description: Desired password of the user.
+        email:
+          type: string
+          example: Apple@baum.com
+          description: An email linked to the user's account for 2FA
+        guilds_in:
+          type: array
+          items:
+            type: string
+          example: [guild1, guild2]
+          description: The number of guilds a user is in
+        quest_made:
+          type: array
+          items:
+            type: string
+          example: [quest1, quest2, quest2]
+    Pre_Created_User:
+      type: object
+      properties:
+        user_name:
+          type: string
+          example: AppleIanBaum
+        password:
+          type: string
+          example: password123
+        email:
+          type: string
+          example: Apple@baum.com
+    Post_Created_User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 12
+        user_name:
+          type: string
+          example: AppleIanBaum
+        password:
+          type: string
+          example: password123
+        email:
+          type: string
+          example: Apple@IanBaum.com
+        guilds_in:
+          type: array
+          items:
+            type: string
+          example: null
+        quest_made:
+          type: array
+          items:
+            type: string
+          example: null
+    Patched_User:
+      type: object
+      properties: 
+        username:
+          type: string
+          example: IanAppleBaum
+          description: Changed username
+    
+    
+    Guild:
+      type: object
+      properties:
+        guild_id:
+          type: integer
+          example: 55
+          description: Unique identifier that helps distinguish between different guilds in the system
+        name:
+          type: string
+          example: Fairy Tale
+          description: Stores the name of the guild to help users identify their guilds
+        guild_code:
+          type: integer
+          example: 1793
+          description: A code used for users to join a guild. It acts as an invite mechanism, allowing users to connect to new or existing guilds
+        quest_assigned:
+          type: array
+          items:
+            type: string
+          example: [assigned_quest1, assigned_quest2, assigned_quest3]
+          description: It is used to track what quest the guild is responsible for. It links to the quest table via Foreign Key(FK)
+        guild_parties:
+          type: array
+          items:
+            type: string
+          example: [guild_party1, guild_party2, guild_party3]
+          description: Organizes guild members into subgroups (parties) for the battle 
+
+    pre_created_Guild:
+
+    patched_Guild:
 
 
