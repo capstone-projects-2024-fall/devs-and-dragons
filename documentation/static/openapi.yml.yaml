@@ -36,6 +36,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/pre_created_Quest'
+        required: true
       responses:
         '200':
           description: Successful operation
@@ -88,6 +89,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/patched_Quest'
+        required: true
       responses:
         '200':
           description: Successful operation
@@ -122,7 +124,100 @@ paths:
         '404':
           description: Quest not found
 
+  /user:
+    post:
+      tags:
+      - User
+      summary: Create User
+      description: Create new user in the database
+      operationId: create-new-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pre_Created_User'
+        required: true
+      responses:
+        '200':
+          description: A successful operation generates a user_id and initializes an array of guilds the user is in and the quest they have made to null.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post_Created_User'
+        '405':
+          description: Invalid input
+  /user/{user_id}:
+    get:
+      tags:
+      - User
+      summary: Get data of a specific user data
+      description: Retrieve data of a specific user
+      operationId: get-user-data
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID of the user 
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:$ref: '#/components/schemas/User'
+        '400':
+          description: Invalid user ID
+        '404':
+          description: User ID not found
 
+    patch:
+      tags:
+      - User
+      summary: Update User Data
+      description: Modifies user data with only the data field needed to be changed for user
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID of the user
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patched_User'      
+        '400':
+          description: Invalid User ID
+          
+        '404':
+          description: User not found
+        '405':
+          description: Validation exception
+      
+    delete:
+      tags:
+      - User
+      summary: Delete a specific user
+      description: Remove a user from the database
+      operationId: delete-user-data
+      parameters:
+        - name: user_id
+          in: path
+          description: user id of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid User ID
+        '404':
+          description: User ID not found
 
 
 
