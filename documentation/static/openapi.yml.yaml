@@ -27,6 +27,8 @@ tags:
   - name: User
     description: The user class will be used to determine what quest a specific user has made, what guilds and parties a specific user has joined. The class will also be used in authenticating a user account login and deletion.
 
+  - name: Party
+    description: The party class will be used to create and join a party. It will be used to start quests by assiging one specific quest to the party using the Quest ID. The class will be used one last time to delete the party when the party is done with the quest.
 
 paths:
   /quest:
@@ -329,7 +331,108 @@ paths:
         '404':
           description: Guild not found
 
+  /party:
+    post:
+      tags:
+        - Party
+      summary: Create Party
+      description: Create new party in the database
+      operationId: create-new-party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pre_Created_Party'
 
+        required: true
+      responses: 
+        '200':
+          description: A successful operation generates a party id and initialized the fields "quest_assigned" chosen by the user, and "users_inside" to 1 as upon creation only the creator will be inside the party.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Party'
+        '405':
+          description: Invalid input
+
+  /party/{party_id}:
+    get:
+      tags:
+        - Party
+      summary: Get data of a specific party
+      description: Retrieve data of a specific party
+      operationId: get-party-data
+      parameters: 
+        - name: party_id
+          in: path
+          description: Party ID of the party 
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Party'
+        '400':
+          description: Invalid Party ID
+        '404':
+          description: Party ID not found
+    
+    patch:
+      tags:
+        - Party
+      summary: Update Party Data
+      description: Modifies party data with only the data field needed to be changed for user
+      parameters:
+        - name: party_id
+          in: path
+          description: Party ID of the party
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patched_Party'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patched_Party'
+        '400':
+          description: Invalid Party ID
+        '404':
+          description: Party ID not found
+        '405':
+          description: Validation exception
+  
+    delete:
+        tags:
+          - Party
+        summary: Delete a specific party
+        description: Remove a party from the database
+        operationId: delete-party-data
+        parameters:
+          - name: party_id
+            in: path
+            description: Party ID of the party
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Invalid Party ID
+          '404':
+            description: Party ID not found
 
 
   
@@ -565,5 +668,49 @@ components:
           type: string
           example: Red Claw
           description: Stores the name of the guild to help users identify their guilds
+
+    Party:
+      type: object
+      properties:
+        party_id:
+          type: integer
+          example: 12
+          description: Static ID to specify each party from potential duplication.
+        name:
+          type: string
+          example: Cool_Guys_Only_Party
+          description: The desired name of the party.
+        party_code:
+          type: integer
+          example: 1234
+          description: The join code required to join the party.
+        quest_assigned:
+          type: integer
+          example: 55
+          description: Each party is assigned to only one quest that will be determined by using the Quest's ID. 
+        users_inside:
+          type: array
+          items:
+            type: string
+          example: [AwsomeGuyJericho]
+          description: The users who have joined the party.
+    Pre_Created_Party:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Cool_Guys_Only_Party
+          description: The desired name of the party.
+        party_code:
+          type: integer
+          example: 1234
+          description: The join code required to join the party.
+    Patched_Party:
+      type: object
+      properties:
+        name: 
+          type: string
+          example: Very_Cool_Guys_Party
+          description: The desired name of the party.
 
 
