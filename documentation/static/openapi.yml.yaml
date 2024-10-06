@@ -437,7 +437,132 @@ paths:
           '404':
             description: Party ID not found
 
+  /guild/{guild_id}/guild_parties:
+    post:
+      tags:
+        - Guild Party
+      summary: Create Guild Party
+      description: Create new guild party in the database
+      operationId: create-new-guild-party
+      parameters:
+        - name: guild_id
+          in: path
+          description: Guild ID of the guild the guild party is created.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pre_Created_Guild_Party'
+        required: true
+      responses: 
+        '200':
+          description: A successful operation generates a guild party id and initialized the fields "quest_assigned" chosen by the user, and "users_inside" to 1 as upon creation only the creator will be inside the party.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild_Party'
+        '405':
+          description: Invalid input
+  
+  /guild/{guild_id}/{guild_party_id}:
+    get:
+      tags:
+        - Guild Party
+      summary: Get data of a specific guild party
+      description: Retrieve data of a specific guild party
+      operationId: get-guild-party-data
+      parameters: 
+        - name: guild_id
+          in: path
+          description: Guild ID of the guild the guild party is created.
+          required: true
+          schema:
+            type: integer
+        - name: guild_party_id
+          in: path
+          description: Guild Party ID of the party .
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild_Party'
+        '400':
+          description: Invalid Guild Party ID
+        '404':
+          description: Guild Party ID not found
 
+    patch:
+      tags:
+        - Guild Party
+      summary: Update Guild Party Data
+      description: Modifies guild party data with only the data field needed to be changed for user
+      parameters:
+        - name: guild_id
+          in: path
+          description: Guild ID of the guild the guild party is created.
+          required: true
+          schema:
+            type: integer
+        - name: guild_party_id
+          in: path
+          description: Guild Party ID of the party.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patched_Guild_Party'
+        required: true 
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patched_Guild_Party'
+        '400':
+          description: Invalid Party ID
+        '404':
+          description: Party ID not found
+        '405':
+          description: Validation exception
+    
+    delete:
+        tags:
+          - Guild Party
+        summary: Delete a specific guild party
+        description: Remove a guild party from the database
+        operationId: delete-guild-party-data
+        parameters:
+          - name: guild_id
+            in: path
+            description: Guild ID of the guild the guild party is created.
+            required: true
+            schema:
+              type: integer
+          - name: guild_party_id
+            in: path
+            description: Guild Party ID of the party .
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Invalid Party ID
+          '404':
+            description: Party ID not found
   
     
     
