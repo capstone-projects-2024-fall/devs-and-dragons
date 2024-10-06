@@ -228,7 +228,107 @@ paths:
         '400':
           description: Invalid User ID
         '404':
-          description: User ID not found
+          description: User not found
+  
+  /guild:
+     post:
+      tags: 
+      - Guild
+      summary: Create Guild
+      description: Create a new guild in the database for users to join via an unique code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pre_created_Guild'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post_created_Guild'
+        '405':
+          description: Validation exception
+
+  /guild/{guild_id}:
+    get:
+      tags:
+      - Guild
+      summary: Retrieve Guild data
+      description: Returns JSON file with `guild_id`, `name`, `description`, `guild_code`, `quest_assigned`, `guild_parties`; all the data fields of the Guild class
+      parameters:
+      - name: guild_id
+        in: path
+        description: Unique identifier of guild
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guild'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Guild not found
+
+    patch:
+      tags:
+      - Guild
+      summary: Update Guild Data
+      description: Modifies guild data with only the data field needed to be changed for guild
+      parameters:
+      - name: guild_id
+        in: path
+        description: Unique identifier of guild
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/patched_Guild'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/patched_Guild'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Guild not found
+        '405':
+          description: Validation exception
+    
+    delete:
+      tags:
+      - Guild
+      summary: Remove Guild
+      description: Delete an existing Guild from the database
+      parameters:
+        - name: guild_id
+          in: path
+          description: Unique identifier of guild
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Guild not found
+
 
 
 
