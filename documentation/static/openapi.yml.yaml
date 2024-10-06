@@ -24,6 +24,10 @@ tags:
   - name: Guild
     description: The guild class is responsible for managing guild-related data and functionality of the platform. It allows users to create, join and manage guilds and track information such as current guild members and assigned quests. The class provides functionality for instructors and students.  
 
+  - name: User
+    description: The user class will be used to determine what quest a specific user has made, what guilds and parties a specific user has joined. The class will also be used in authenticating a user account login and deletion.
+
+
 paths:
   /quest:
     post:
@@ -165,7 +169,8 @@ paths:
           description: Successful operation
           content:
             application/json:
-              schema:$ref: '#/components/schemas/User'
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           description: Invalid user ID
         '404':
@@ -183,6 +188,12 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patched_User'
+        required: true
       responses:
         '200':
           description: Successful operation
@@ -408,7 +419,51 @@ components:
           description: Organizes guild members into subgroups (parties) for the battle 
 
     pre_created_Guild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Fairy Tale
+          description: Stores the name of the guild to help users identify their guilds
+        guild_code:
+          type: integer
+          example: 1793
+          description: A code used for users to join a guild. It acts as an invite mechanism, allowing users to connect to new or existing guilds
+
+    post_created_Guild:
+      type: object
+      properties:
+        guild_id:
+          type: integer
+          example: 55
+          description: Unique identifier that helps distinguish between different guilds in the system
+        name:
+          type: string
+          example: Fairy Tale
+          description: Stores the name of the guild to help users identify their guilds
+        guild_code:
+          type: integer
+          example: 1793
+          description: A code used for users to join a guild. It acts as an invite mechanism, allowing users to connect to new or existing guilds
+        quest_assigned:
+          type: array
+          items:
+            type: string
+          example: null
+          description: It is used to track what quest the guild is responsible for. It links to the quest table via Foreign Key(FK)
+        guild_parties:
+          type: array
+          items:
+            type: string
+          example: null
+          description: Organizes guild members into subgroups (parties) for the battle
 
     patched_Guild:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Red Claw
+          description: Stores the name of the guild to help users identify their guilds
 
 
