@@ -30,6 +30,9 @@ tags:
   - name: Party
     description: The party class will be used to create and join a party. It will be used to start quests by assiging one specific quest to the party using the Quest ID. The class will be used one last time to delete the party when the party is done with the quest.
 
+  - name: Guild Party
+    description: The guild party class will be used to create and join a guild party within a guild. It will be used to start quests that are assigned to the guild.
+
 paths:
   /quest:
     post:
