@@ -32,7 +32,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Quest'
+              $ref: '#/components/schemas/pre_created_Quest'
       responses:
         '200':
           description: Successful operation
@@ -67,6 +67,37 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Quest not found
+
+    patch:
+      tags:
+      - Quest
+      summary: Update Quest Data
+      description: Modifies quest data with only the data field needed to be changed for quest
+      parameters:
+      - name: quest_id
+        in: path
+        description: Unique identifier of quest
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quest'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Quest not found
+        '405':
+          description: Validation exception
+    
+    delete:
+
+
+
 
   
     
@@ -109,5 +140,45 @@ components:
           type: string
           example: "Tokyo"
           description: Wallpaper of quest
+
+    pre_created_Quest:
+      type: object
+      properties:
+        difficulty:
+          type: integer
+          example: 3
+          description: Measured rigor of quest
+        number_of_problems:
+          type: integer
+          example: 20
+          description: Total questions in quest
+        problem_topic:
+          type: string
+          example: "Algorithms"
+          description:  Topic of quest
+        time_limit:
+          type: number
+          example: 30.0
+          description: Total time limit for players finishing quest
+        creator:
+          type: string
+          example: "get_smart_every_day"
+          description: User who created quest
+        enemy:
+          type: string
+          example: "Alan Turing"
+          description: Quest's villain challenging players with problems
+        background:
+          type: string
+          example: "Tokyo"
+          description: Wallpaper of quest
+
+    patched_Quest:
+      type: object
+      properties:
+        number_of_problems:
+          type: integer
+          example: 30
+          description: Total questions in quest
 
 
