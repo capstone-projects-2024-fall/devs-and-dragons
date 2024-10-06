@@ -706,12 +706,15 @@ components:
         user_name:
           type: string
           example: AppleIanBaum
+          description: The desired name of the user.
         password:
           type: string
           example: password123
+          description: The desired password of the user.
         email:
           type: string
           example: Apple@baum.com
+          description: An email linked to the user's acount for 2FA.
     Post_Created_User:
       type: object
       properties:
