@@ -2,26 +2,20 @@ openapi: 3.0.2
 info:
   title: Devs and Dragons - OpenAPI 3.0
   description: |-
-    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
-    Swagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
-    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
-    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
+    Pre-conditions for POST, GET, PATCH, and DELETE REST API calls which are used by the methods of our classes.
 
-    Some useful links:
-    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
-    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
-  termsOfService: http://swagger.io/terms/
-  contact:
-    email: apiteam@swagger.io
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.11
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
-servers:
-  - url: /api/v3
+
+    POST: An authentication header with the authentication token. A content type header set to `application/json` for a JSON request block. A request body with with a JSON block that specifies values for all data fields (attributes) of the object to be created.
+
+
+    GET: Appropriate endpoint.
+
+
+    PATCH: An authentication header with the authentication token. A content type header set to `application/json` for a JSON request block. A request body with a JSON block that only specifies the data fields intended be changed with new values for the object. Appropriate endpoint.
+
+
+    DELETE: Appropriate endpoint.
+
 tags:
   - name: pet
     description: Everything about your Pets
@@ -599,8 +593,10 @@ components:
   schemas:
     Order:
       type: object
+      description: Represents the main action users are pursuing. It is the unit of learning that users must do (aka "play") and finish to move forward in the game which affects all the other game and user functions. The main core function of Devs and Dragons.
       properties:
         id:
+          description: Primary of key of identifying and differentiating unique quests.
           type: integer
           format: int64
           example: 10
@@ -785,16 +781,3 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/User'
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
