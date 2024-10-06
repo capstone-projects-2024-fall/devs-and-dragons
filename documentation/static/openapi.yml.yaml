@@ -716,4 +716,48 @@ components:
           example: Very_Cool_Guys_Party
           description: The desired name of the party.
 
+    Guild_Party:
+      type: object
+      properties:
+        party_id:
+          type: integer
+          example: 12
+          description: Static ID to specify each guild party from potential duplication.
+        name:
+          type: string
+          example: Cool_Guys_Only_Party
+          description: The desired name of the guild party.
+        party_code:
+          type: integer
+          example: 1234
+          description: The join code required to join the guild party.
+        quest_assigned:
+          type: integer
+          example: 55
+          description: Each party is assigned to only one quest that will be determined by using the Quest's ID. 
+        users_inside:
+          type: array
+          items:
+            type: string
+          example: [AwsomeGuyJericho]
+          description: The users who have joined the guild party.
+    Pre_Created_Guild_Party:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Cool_Guys_Only_Party
+          description: The desired name of the guild party.
+        party_code:
+          type: integer
+          example: 1234
+          description: The join code required to join the guild party.
+    Patched_Guild_Party:
+      type: object
+      properties:
+        name: 
+          type: string
+          example: Very_Cool_Guys_Party
+          description: The desired name of the guild party.
+
 
