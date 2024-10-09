@@ -16,9 +16,6 @@ A user wants to log in to an account they created.
 1. The user navigates to the site's landing page.
 2. The user selects the ‘login’ button.
 3. The user enters their username and password.
-4. After providing the correct credentials, the user will receive a 2FA code in their email.
-5. The user enters the 2FA code.
-6. After providing the correct 2FA code, the user is brought to the home page.
 
 ## Use Case 3 - Quest Creation
 A user wants to create a new quest.
