@@ -1,18 +1,24 @@
 import LoginPage from './LoginPage';
 import SignUpForm from './SignUpForm';
 import Dashboard from './Dashboard'; // Import your Dashboard component
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Check local storage for login status on app load
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const savedLoginStatus = localStorage.getItem('isLoggedIn');
+    return savedLoginStatus === 'true'; // Convert to boolean
+  });
 
   const handleLogin = (loginStatus) => {
     setIsLoggedIn(loginStatus);
+    localStorage.setItem('isLoggedIn', loginStatus); // Store login status in local storage
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn'); // Remove login status from local storage
   };
 
     return (
