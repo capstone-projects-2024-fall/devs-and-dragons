@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css'
 import { useNavigate } from "react-router-dom";
-
 import axios from 'axios';
 
 
@@ -10,7 +9,7 @@ const LoginPage = ({ onLogin }) => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState("")
     const [loggedInSuccess, setLoggedInSuccess] = useState(false)
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -23,9 +22,9 @@ const LoginPage = ({ onLogin }) => {
         console.log(response.data)
 
           if (response.status === 200) {
-            // onLogin(true);
+            onLogin(true);
             setLoggedInSuccess(true)
-            // navigate('/home'); # later when we have a home page
+            navigate('/Dashboard');
           }
 
       } catch (error) {
