@@ -1,7 +1,7 @@
 import LoginPage from './LoginPage';
 import SignUpForm from './SignUpForm';
 import Dashboard from './Dashboard'; // Import your Dashboard component
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />} />
+                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up */ }} />} /> {/* Pass onLogin prop */}
                 <Route path="/Dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
             </Routes>
         </Router>

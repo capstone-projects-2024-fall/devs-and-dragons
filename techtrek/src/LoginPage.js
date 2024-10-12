@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './LoginPage.css'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const LoginPage = ({ onLogin }) => {
@@ -70,6 +71,9 @@ const LoginPage = ({ onLogin }) => {
         {loggedInSuccess && <p className="success-message">Logged in successfully, Let's begin the Journey!</p>} 
         <button type="submit" className="login-button">Begin Quest</button>
       </form>
+            <p>
+                Don't have an account? <Link to="/SignUpForm">Sign Up</Link>
+            </p>
     </div>
   );
 };

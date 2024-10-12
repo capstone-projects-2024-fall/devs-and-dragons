@@ -21,7 +21,7 @@ collection = db["userInfo"]
 
 @app.route('/get_credentials', methods=["POST"])
 def create_contact():
-    data = request.json()
+    data = request.get_json()
     new_contact = Contact(
         id = collection.count_documents({}) + 1, 
         name = data["name"],
@@ -35,13 +35,13 @@ def create_contact():
 
     if collection.find_one({"email": new_contact.email}):
         print("Contact already exists")
-        #return jsonify({"message": "Email already exists"}), 400
+        return jsonify({"message": "Email already exists"}), 400
     # if not eligiblePassword(password):
     #     print("The password must be 8 digits, must contain a number, and must be all alphanumeric characters")
         # return jsonify({"message": "Password is too weak"}), 400
     else:
-        collection.insert_one({"_id": id, 'name': new_contact.name,'email': new_contact.email, 'password': new_contact.password, 'guildsIn': 0, "questMade": 0})
-        #return jsonify({"message": "User created successfully"}), 201        
+        collection.insert_one({"_id": new_contact.id, 'name': new_contact.name, 'email': new_contact.email, 'password': new_contact.password, 'guildsIn': 0, "questMade": 0})
+        return jsonify({"message": "User created successfully"}), 201
 
 
 @app.route("/match_user", methods=["POST"])
@@ -96,11 +96,9 @@ def getResponse(difficulty):
 
 @app.route("/get_answer", methods=["POST"])
 def solutionFromTheUser():
-    #answerFromUser = request.json.get('answer')
-    data = request.json()
+    data = request.get_json()
     answer = data.get('answer')
-    #print("Answer from the user: ", answerFromUser)
-    return answer
+    return jsonify({"answer": answer})
     
 
 def checkAnswer(question, userAnswer):
