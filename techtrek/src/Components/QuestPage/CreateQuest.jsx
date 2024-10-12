@@ -95,7 +95,7 @@ const CreateQuest = () => {
             </Select>
 
             {/* Background Selection */}
-            <InputLabel id="background-select-label">Number of Problems</InputLabel>
+            <InputLabel id="background-select-label">Background</InputLabel>
             <Select
                 labelId="background-select-label"
                 id="background-select"
