@@ -16,6 +16,7 @@ This project uses MongoDB-server for a backend and uses React-Game-Kit as a libr
 ### Install Dependencies
 
 ```bash
+cd devsdragons
 npm install
 ```
 
