@@ -1,4 +1,4 @@
-import CustomButton from '../../components/Button/Button.jsx';
+import CustomButton from '../../components/Button/Button';
 
 const Button = () => (
   <div style={{ padding: '20px', display: 'flex', gap: '10px', flexDirection: 'column' }}>
