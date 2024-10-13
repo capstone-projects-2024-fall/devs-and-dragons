@@ -1,5 +1,5 @@
-import LoginPage from './components/LoginPage';
-import SignUpForm from './components/SignUpForm';
+import LoginPage from './views/LoginPage/LoginPage.jsx';
+import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
 import {useState} from 'react';
 // import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
