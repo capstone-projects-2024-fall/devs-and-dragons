@@ -1,6 +1,6 @@
-import LoginPage from './LoginPage';
-import SignUpForm from './SignUpForm';
-import React, {useState} from 'react';
+import LoginPage from './components/LoginPage';
+import SignUpForm from './components/SignUpForm';
+import {useState} from 'react';
 // import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 
