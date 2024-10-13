@@ -39,3 +39,15 @@ npm run build
 ```bash
 npm run preview
 ```
+
+### Run Tests
+
+To run all tests
+```bash
+npm test
+```
+
+To run a specific test file
+```bash
+npx vitest run {file path}
+```
