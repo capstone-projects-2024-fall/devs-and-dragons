@@ -50,7 +50,7 @@ const SignUpForm = ({ onClose }) => {
         // Send user details to backend for registration
 
         // Check if any input field is empty
-        if (name || !email || !password) {
+        if (!name || !email || !password) {
         setErrorMessage('Please fill out all fields.');
         return;
     }
@@ -68,7 +68,7 @@ const SignUpForm = ({ onClose }) => {
         } catch (error) {
             console.error('Error creating account:', error);
             setErrorMessage('Account creation failed. Please try again.');
-            //onClose();
+            onClose();
         }
     };
 
