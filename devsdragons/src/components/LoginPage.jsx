@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LoginPage.css'
+<<<<<<< HEAD:techtrek/src/LoginPage.js
 import { useNavigate } from "react-router-dom";
+=======
+
+>>>>>>> main:devsdragons/src/components/LoginPage.jsx
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 

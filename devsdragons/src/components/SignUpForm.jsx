@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 /**
  * SignUpForm provides a user interface for creating a new user account.

@@ -1,8 +1,16 @@
+<<<<<<< HEAD:techtrek/src/App.js
 import LoginPage from './LoginPage';
 import SignUpForm from './SignUpForm';
 import Dashboard from './Dashboard'; // Import your Dashboard component
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+=======
+import LoginPage from './components/LoginPage';
+import SignUpForm from './components/SignUpForm';
+import {useState} from 'react';
+// import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+
+>>>>>>> main:devsdragons/src/App.jsx
 
 function App() {
   // Check local storage for login status on app load
@@ -32,6 +40,7 @@ function App() {
     );
 }
 
+<<<<<<< HEAD:techtrek/src/App.js
 // A private route component to protect the dashboard route
 const PrivateRoute = ({ isLoggedIn, onLogout }) => {
     const navigate = useNavigate();
@@ -45,3 +54,6 @@ const PrivateRoute = ({ isLoggedIn, onLogout }) => {
 };
 
 export default App;
+=======
+export default App;
+>>>>>>> main:devsdragons/src/App.jsx
