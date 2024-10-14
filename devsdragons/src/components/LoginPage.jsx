@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import './LoginPage.css'
+<<<<<<< HEAD:techtrek/src/LoginPage.js
+import { useNavigate } from "react-router-dom";
+=======
 
+>>>>>>> main:devsdragons/src/components/LoginPage.jsx
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const LoginPage = ({ onLogin }) => {
@@ -9,7 +14,7 @@ const LoginPage = ({ onLogin }) => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState("")
     const [loggedInSuccess, setLoggedInSuccess] = useState(false)
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -22,9 +27,9 @@ const LoginPage = ({ onLogin }) => {
         console.log(response.data)
 
           if (response.status === 200) {
-            // onLogin(true);
+            onLogin(true);
             setLoggedInSuccess(true)
-            // navigate('/home'); # later when we have a home page
+            navigate('/Dashboard');
           }
 
       } catch (error) {
@@ -53,7 +58,7 @@ const LoginPage = ({ onLogin }) => {
       <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="login-input"
@@ -70,6 +75,9 @@ const LoginPage = ({ onLogin }) => {
         {loggedInSuccess && <p className="success-message">Logged in successfully, Let's begin the Journey!</p>} 
         <button type="submit" className="login-button">Begin Quest</button>
       </form>
+            <p>
+                Don't have an account? <Link to="/SignUpForm">Sign Up</Link>
+            </p>
     </div>
   );
 };
