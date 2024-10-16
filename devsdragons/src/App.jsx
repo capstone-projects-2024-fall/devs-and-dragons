@@ -1,12 +1,5 @@
-<<<<<<< HEAD:techtrek/src/App.js
-import LoginPage from './LoginPage';
-import SignUpForm from './SignUpForm';
-import Dashboard from './Dashboard'; // Import your Dashboard component
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-=======
-import LoginPage from './components/LoginPage';
-import SignUpForm from './components/SignUpForm';
+import LoginPage from './views/LoginPage/LoginPage.jsx';
+import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
 import {useState} from 'react';
 // import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
