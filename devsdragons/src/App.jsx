@@ -58,8 +58,10 @@ import LoginPage from "./views/LoginPage/LoginPage";
 
 const App = () => {
   return (
-    <div>Hello World</div>
-  ) 
+    <>
+      <LoginPage />
+    </>
+  )
 }
 
 export default App
