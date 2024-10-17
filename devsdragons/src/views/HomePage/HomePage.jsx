@@ -15,7 +15,7 @@ const HomePage = () => (
 
 export default HomePage;
 */
-import HUD from '../../components/HUD/HUD'
+{/* import HUD from '../../components/HUD/HUD' */}
 
 const HomePage = () => {
   return (

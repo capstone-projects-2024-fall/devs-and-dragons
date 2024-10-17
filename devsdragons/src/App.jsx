@@ -56,7 +56,7 @@ export default App;
 
 import LoginPage from "./views/LoginPage/LoginPage";
 import HomePage from './views/HomePage/HomePage';
-import HUD from "./components/HUD/HUD";
+{/* import HUD from "./components/HUD/HUD"; */}
 
 const App = () => {
   return (
