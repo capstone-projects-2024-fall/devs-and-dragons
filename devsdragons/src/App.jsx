@@ -55,9 +55,7 @@ export default App;
 */
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  return <div>Hello World</div>;
+};
 
 export default App
