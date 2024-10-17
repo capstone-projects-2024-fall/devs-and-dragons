@@ -1,3 +1,4 @@
+/*
 import LoginPage from './views/LoginPage/LoginPage.jsx';
 import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
 import {useState} from 'react';
@@ -26,7 +27,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />} />
-                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up */ }} />} /> {/* Pass onLogin prop */}
+                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up }} />} /> {/* Pass onLogin prop }
                 <Route path="/Dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
             </Routes>
         </Router>
@@ -50,3 +51,12 @@ export default App;
 =======
 export default App;
 >>>>>>> main:devsdragons/src/App.jsx
+*/
+
+const App = () => {
+  return (
+    <div>App</div>
+  )
+}
+
+export default App
