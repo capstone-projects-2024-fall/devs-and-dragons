@@ -78,7 +78,7 @@ const LoginPage = ({ onLogin }) => {
   
 export default LoginPage;
 */
-
+import './LoginPage.css'
 
 const LoginPage = () => {
   return (
