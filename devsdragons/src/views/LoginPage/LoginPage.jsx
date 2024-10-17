@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import './LoginPage.css'
-
 import axios from 'axios';
 
+import './LoginPage.css'
 
-const LoginPage = ({ onLogin }) => {
+{/* onLogin might be used as a prop later */}
+const LoginPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState("")
@@ -49,7 +49,8 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className="login-container">
-      <div className="quest-text">Let's begin your journey</div>
+      {/*' can be replaced with &apos; prevents es lint warnings */}
+      <div className="quest-text">Let&apos;s begin your journey</div>
       <form onSubmit={handleSubmit} className="login-form">
         <input
           type="text"
@@ -67,13 +68,11 @@ const LoginPage = ({ onLogin }) => {
         />
         
         {error && <p className="error-message">{error}</p>}
-        {loggedInSuccess && <p className="success-message">Logged in successfully, Let's begin the Journey!</p>} 
+        {/*' can be replaced with &apos; prevents es lint warnings */}
+        {loggedInSuccess && <p className="success-message">Logged in successfully, Let&apos;s begin the Journey!</p>} 
         <button type="submit" className="login-button">Begin Quest</button>
       </form>
     </div>
-  );
-};
-
-
-  
-export default LoginPage;
+  )
+}
+export default LoginPage

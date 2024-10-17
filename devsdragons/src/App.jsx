@@ -1,9 +1,10 @@
+/*
 import LoginPage from './views/LoginPage/LoginPage.jsx';
 import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
 import {useState} from 'react';
 // import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
->>>>>>> main:devsdragons/src/App.jsx
+***Incoming change from reorganize-views-branch by Jericho, App.jsx***
 
 function App() {
   // Check local storage for login status on app load
@@ -26,14 +27,15 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />} />
-                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up */ }} />} /> {/* Pass onLogin prop */}
+                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up }} />} /> {/* Pass onLogin prop }
                 <Route path="/Dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
             </Routes>
         </Router>
     );
 }
 
-<<<<<<< HEAD:techtrek/src/App.js
+***Previous change, when it was App.js****
+
 // A private route component to protect the dashboard route
 const PrivateRoute = ({ isLoggedIn, onLogout }) => {
     const navigate = useNavigate();
@@ -49,4 +51,21 @@ const PrivateRoute = ({ isLoggedIn, onLogout }) => {
 export default App;
 =======
 export default App;
->>>>>>> main:devsdragons/src/App.jsx
+
+*/
+
+import LoginPage from "./views/LoginPage/LoginPage";
+import HomePage from './views/HomePage/HomePage';
+{/* import HUD from "./components/HUD/HUD"; */}
+
+const App = () => {
+  return (
+    <>
+      <LoginPage />
+      <HomePage />
+      {/*<HUD /> */}
+    </>
+  )
+}
+
+export default App
