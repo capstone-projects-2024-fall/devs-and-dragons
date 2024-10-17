@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import './LoginPage.css'
 
 import axios from 'axios';
@@ -77,3 +77,14 @@ const LoginPage = ({ onLogin }) => {
 
   
 export default LoginPage;
+*/
+
+
+const LoginPage = () => {
+  return (
+    <div>LoginPage</div>
+  )
+}
+
+export default LoginPage
+
