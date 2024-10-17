@@ -1,52 +1,43 @@
 import LoginPage from './views/LoginPage/LoginPage.jsx';
 import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
+import AvatarPage from './views/Avatar/AvatarPage.jsx';
+import CreateQuestsPage from './views/QuestPage/CreateQuests.jsx';
+import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
+import HomePage from './views/HomePage/HomePage.jsx';
+import GuildsPage from './views/GuildPage/GuildPage.jsx';
+import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useState} from 'react';
+import theme from './theme/theme.js';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 // import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
->>>>>>> main:devsdragons/src/App.jsx
 
 function App() {
-  // Check local storage for login status on app load
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const savedLoginStatus = localStorage.getItem('isLoggedIn');
-    return savedLoginStatus === 'true'; // Convert to boolean
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = (loginStatus) => {
     setIsLoggedIn(loginStatus);
-    localStorage.setItem('isLoggedIn', loginStatus); // Store login status in local storage
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn'); // Remove login status from local storage
   };
 
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={isLoggedIn ? <Dashboard onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />} />
-                <Route path="/SignUpForm" element={<SignUpForm onLogin={handleLogin} onClose={() => { /* handle closing the sign-up */ }} />} /> {/* Pass onLogin prop */}
-                <Route path="/Dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn} onLogout={handleLogout} />} />
-            </Routes>
-        </Router>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/my-quests" element={<MyQuestsPage/>} />
+          <Route path="/create-quests" element={<CreateQuestsPage />}/>
+          <Route path="/guilds" element={<GuildsPage />} />
+          <Route path="/avatar" element={<AvatarPage />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  );
 }
 
-<<<<<<< HEAD:techtrek/src/App.js
-// A private route component to protect the dashboard route
-const PrivateRoute = ({ isLoggedIn, onLogout }) => {
-    const navigate = useNavigate();
-
-    const handleLogoutClick = async () => {
-        onLogout();
-        navigate('/'); // Redirect to login page after logout
-    };
-
-    return isLoggedIn ? <Dashboard onLogout={handleLogoutClick} /> : <Navigate to="/" />;
-};
-
 export default App;
-=======
-export default App;
->>>>>>> main:devsdragons/src/App.jsx
