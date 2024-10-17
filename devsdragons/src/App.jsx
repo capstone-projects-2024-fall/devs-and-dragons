@@ -55,11 +55,13 @@ export default App;
 */
 
 import LoginPage from "./views/LoginPage/LoginPage";
+import HomePage from "./views/HomePage/HomePage"
 
 const App = () => {
   return (
     <>
       <LoginPage />
+      <HomePage />
     </>
   )
 }
