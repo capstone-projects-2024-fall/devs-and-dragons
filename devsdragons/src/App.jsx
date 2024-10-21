@@ -1,23 +1,16 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './views/LoginPage/LoginPage.jsx';
-import SignUpForm from './views/SignUpForm/SignUpForm.jsx';
-import {useState} from 'react';
-// import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-
+import CodeEditor from './views/Editor/CodeEditor.jsx';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = (loginStatus) => {
-    setIsLoggedIn(loginStatus);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
   return (
-   <LoginPage/>       
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/code-editor" element={<CodeEditor />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

@@ -19,11 +19,14 @@ collection = db["userInfo"]
 
     
 
-@app.route('/get_credentials', methods=["POST"])
+@app.route('/create_contact', methods=["POST"])
 def create_contact():
-    data = request.json()
+    data = request.get_json()
+    print(data)
+    
+    new_id = collection.count_documents({}) + 1
     new_contact = Contact(
-        id = collection.count_documents({}) + 1, 
+        _id = new_id, 
         name = data["name"],
         password = data["password"],
         email = data["email"]
@@ -40,8 +43,15 @@ def create_contact():
     #     print("The password must be 8 digits, must contain a number, and must be all alphanumeric characters")
         # return jsonify({"message": "Password is too weak"}), 400
     else:
-        collection.insert_one({"_id": id, 'name': new_contact.name,'email': new_contact.email, 'password': new_contact.password, 'guildsIn': 0, "questMade": 0})
-        #return jsonify({"message": "User created successfully"}), 201        
+        collection.insert_one({
+            "_id": new_contact._id, 
+            'name': new_contact.name,
+            'email': new_contact.email, 
+            'password': new_contact.password,
+            'guildsIn': 0, 
+            "questMade": 0})
+        
+        return jsonify({"message": "User created successfully"}), 201        
 
 
 @app.route("/match_user", methods=["POST"])
@@ -49,6 +59,7 @@ def doesTheUserExist():
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
+    # need to encypt the password
     
     print(f"Looking for user with email: {email} and password: {password}")
 
