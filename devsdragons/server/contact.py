@@ -3,7 +3,7 @@
 
 class Contact:
     def __init__(self, _id, name, email, password):
-        self._id = _id  # auto-generated id, not provided by user
+        self._id = _id
         self.name = name
         self.email = email
         self.password = password
