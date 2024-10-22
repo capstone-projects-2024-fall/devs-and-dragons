@@ -1,4 +1,4 @@
-import React, { useState } from 'react';  
+import { useState } from 'react'; 
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@mui/material';  // MUI components for layout and buttons
 import { Home, AccountCircle, Settings, ListAlt, AddCircleOutline, Groups, Face } from '@mui/icons-material';  // MUI icons for visuals
 import { Link } from 'react-router-dom';  // Link from React Router to enable navigation between pages
@@ -80,8 +80,7 @@ const HUD = () => {
         </Menu>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default HUD;
-
+export default HUD
