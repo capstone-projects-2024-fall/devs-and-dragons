@@ -70,9 +70,14 @@ const SignUpForm = ({ onClose }) => {
             setSuccessMessage('Account created');
             onClose();
         } catch (error) {
-            console.error('Error creating account:', error);
-            setErrorMessage('Account creation failed. Please try again.');
-            //onClose();
+            const message = error.response?.data?.message || 'Account creation failed';
+            if (message === 'Email already exists') {
+                setErrorMessage('User already exists.');
+            } else {
+                setErrorMessage(message);
+            }
+        } finally {
+            setLoading(false);
         }
     };
 

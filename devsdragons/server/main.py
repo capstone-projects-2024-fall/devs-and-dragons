@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}}) 
 
 
 password = "testKey125"
@@ -22,36 +22,32 @@ collection = db["userInfo"]
 @app.route('/create_contact', methods=["POST"])
 def create_contact():
     data = request.get_json()
-    print(data)
+    print("Received data:", data)  # Log to check if data is received
     
-    new_id = collection.count_documents({}) + 1
-    new_contact = Contact(
-        _id = new_id, 
-        name = data["name"],
-        password = data["password"],
-        email = data["email"]
-    )
-    # id = contact._id
-    # name = contact.name
-    # email = contact.email
-    # password = contact.password
+    # Check if all required fields are present
+    if not data or not data.get("name") or not data.get("email") or not data.get("password"):
+        return jsonify({"message": "Missing required fields"}), 400
 
-    if collection.find_one({"email": new_contact.email}):
-        print("Contact already exists")
-        #return jsonify({"message": "Email already exists"}), 400
-    # if not eligiblePassword(password):
-    #     print("The password must be 8 digits, must contain a number, and must be all alphanumeric characters")
-        # return jsonify({"message": "Password is too weak"}), 400
-    else:
-        collection.insert_one({
-            "_id": new_contact._id, 
-            'name': new_contact.name,
-            'email': new_contact.email, 
-            'password': new_contact.password,
-            'guildsIn': 0, 
-            "questMade": 0})
-        
-        return jsonify({"message": "User created successfully"}), 201        
+    # Check if email already exists in the database
+    if collection.find_one({"email": data["email"]}):
+        return jsonify({"message": "Email already exists"}), 400
+
+    # Create a new contact without explicitly setting _id (let MongoDB handle it)
+    new_contact = {
+        'name': data["name"],
+        'email': data["email"],
+        'password': data["password"],  # Ensure you hash the password here in the future for security
+        'guildsIn': 0,
+        "questMade": 0
+    }
+
+    try:
+        # Insert new contact into the database (MongoDB will generate _id automatically)
+        collection.insert_one(new_contact)
+        return jsonify({"message": "User created successfully"}), 201
+    except Exception as e:
+        print(f"Error inserting user into MongoDB: {e}")
+        return jsonify({"message": "Account creation failed due to server error"}), 500         
 
 
 @app.route("/match_user", methods=["POST"])
@@ -63,12 +59,14 @@ def doesTheUserExist():
     
     print(f"Looking for user with email: {email} and password: {password}")
 
-    if collection.find_one({"email": email, "password": password}):
+    stored_user = collection.find_one({"email": email})
+    if stored_user and stored_user["password"] == password:
         print("User exists")
         return jsonify({"message": "User exists"}), 200
     else:
         print("User does not exist")
         return jsonify({"message": "User does not exist"}), 404
+    
 
 
 # def eligiblePassword(password):
