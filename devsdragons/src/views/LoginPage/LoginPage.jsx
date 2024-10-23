@@ -12,6 +12,19 @@ const LoginPage = () => {
     const [showSignUp, setShowSignUp] = useState(false);
     const navigate = useNavigate();
 
+    // Email validation function
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Basic email format validation
+        return emailRegex.test(email);
+    };
+
+    // Password validation function
+    const validatePassword = (password) => {
+        // At least 8 characters, 1 uppercase, 1 number, and 1 special character
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return passwordRegex.test(password);
+    };
+
     const signUpButton = () => {
         setShowSignUp(true);
     };
@@ -25,6 +38,17 @@ const LoginPage = () => {
 
         setError('');
         setLoggedInSuccess(false);
+
+        // Validate email and password before making API call
+        if (!validateEmail(email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setError('Invalid Credentials');
+            return;
+        }
 
         try {
             const response = await axios.post('http://127.0.0.1:5000/match_user', { email, password });

@@ -47,6 +47,21 @@ const SignUpForm = ({ onClose }) => {
      *
      * @param {React.FormEvent} e - The form submission event.
      */
+
+    // Email validation function
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email format validation
+        return emailRegex.test(email);
+    };
+
+    // Password validation function
+    const validatePassword = (password) => {
+        // At least 8 characters, 1 uppercase, 1 number, and 1 special character
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        return passwordRegex.test(password);
+    };
+
+
     const handleSignUp = async (e) => {
 
         e.preventDefault();
@@ -56,8 +71,20 @@ const SignUpForm = ({ onClose }) => {
         // Check if any input field is empty
         if (!name || !email || !password) {
             setErrorMessage('Please fill out all fields.');
-        return;
-    }
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setErrorMessage('Please enter a valid email address.');
+            setLoading(false);
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setErrorMessage('Password must be at least 8 characters long, include an uppercase letter, a number, and a special character.');
+            setLoading(false);
+            return;
+        }
 
         const newUser = {
             name: name,
