@@ -2,14 +2,17 @@
 import React, { useState } from 'react';
 import squareBlue from './squareBlue.png';
 import squareGreen from './squareGreen.png';
-import circleImg from './circle.png';
 import triangleBlue from './triangleBlue.png';
 import triangleGreen from './triangleGreen.png';
+import circleBlue from './circleBlue.png';
+import circleGreen from './circleGreen.png';
 
 
 const AvatarPage = () => {
+    //initializing colors for all shapes 
     const [squareImage, setSquareImage] = useState(squareBlue);
     const [triangleImage, setTriangleImage] = useState(triangleBlue);
+    const [circleImage, setCircleImage] = useState(circleBlue);
 
     //handling square change 
     const handleSquareChange = (event) => {
@@ -31,6 +34,16 @@ const AvatarPage = () => {
          } else if (selectedTriangleColor === 'green') {
             setTriangleImage(triangleGreen);
          }
+    }
+    //handling circle change
+    const handleCircleChange = (event) => {
+        //changes the image based on user's selection
+        const selectedCircleColor = event.target.value;
+        if(selectedCircleColor === 'blue') {
+            setCircleImage(circleBlue);
+        } else if (selectedCircleColor === 'green') {
+            setCircleImage(circleGreen);
+        }
     }
 
     return (
@@ -58,11 +71,19 @@ const AvatarPage = () => {
                         <option value="green"> Green Triangle</option>
                     </select>
                     <img src={triangleImage} alt="Triangle Shape" style={{ width: '100px', marginLeft: '10px' }} />
-                    {/* <img src={circleImg} alt="Circle Shape" style={{ width: '100px', marginLeft: '10px' }} /> */}
+                   
 
                 </div>
-                <img src={circleImg} alt="Circle Shape" style={{ width: '100px', marginLeft: '10px' }} />
+                {/*circle and it's dropdown*/}
+                <div style={{ display: 'flex', flexDirection: 'column',alignItems: 'center', marginLeft:'10px' }}>
+                <select onChange= {handleCircleChange}>
+                        <option value="blue"> Blue Circle</option>
+                        <option value="green"> Green Circle</option>
+                    </select>
+                <img src={circleImage} alt="Circle Shape" style={{ width: '100px', marginLeft: '10px' }} />
             </div>
+            </div>
+            
         </div>
     )
 
