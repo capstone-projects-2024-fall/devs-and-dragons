@@ -30,7 +30,17 @@ A user wants to create a new quest.
    - Background
 4. User reviews their input and selects the “Confirm” button.
 
-## Use Case 4 - Adding a Friend
+## Use Case 4 - Create Avatar
+A user wants to create their Avatar.
+1. From the homepage, the user selects "Avatar" tab.
+2. The user selects between three avatar options.
+3. The user selects the different customization options for the following:
+   - Hair color
+   - Skin color
+   - Armor color
+4. User selects "Save Changes" button.
+
+## Use Case 5 - Adding a Friend
 Two users want to add one another to their friends list.
 1. From the home page, the user selects the “Friends” button.
 2. User 1 navigates to the search bar and types User 2’s username.
@@ -38,7 +48,7 @@ Two users want to add one another to their friends list.
 4. User 1 selects the “Add Friend” button.
 5. User 2 receives the request and selects “Accept”.
 
-## Use Case 5 - Creating a Party to Start a Quest Outside of a Guild
+## Use Case 6 - Creating a Party to Start a Quest Outside of a Guild
 A user wants to start a quest outside of a guild.
 1. From the home page, the user selects the “Quests” tab.
 2. The user selects “My Quests”.
@@ -47,13 +57,13 @@ A user wants to start a quest outside of a guild.
 5. The user creates a party code and shares it with their peer(s).
 6. The user waits for party size to be at two to four members, then clicks the “Start Quest” button.
 
-## Use Case 6 - Join a Party
+## Use Case 7 - Join a Party
 A user wants to join another user’s party.
 1. From the home page, the user clicks on the “Join Party” button.
 2. The user enters the party code.
 3. The user selects the “Join” button.
 
-## Use Case 7 - Guild Creation
+## Use Case 8 - Guild Creation
 A user wants to create a guild.
 1. From the home page, the user selects the “Guilds” tab.
 2. The user selects the “Create Guild” button.
@@ -64,7 +74,7 @@ A user wants to create a guild.
    - Guild Code
 4. The user reviews their input and selects “confirm”.
 
-## Use Case 8 - Assign Quest to Guild
+## Use Case 9 - Assign Quest to Guild
 A user wants to assign a quest for their guild to complete.
 1. From the home page, the user selects the “Quests” tab.
 2. The user selects “My Quests”.
@@ -72,13 +82,13 @@ A user wants to assign a quest for their guild to complete.
 4. The user selects the “Assign to Guild” button.
 5. The user selects the guild to assign the quest to.
 
-## Use Case 9 - Join a Guild
+## Use Case 10 - Join a Guild
 A user wants to join another user’s guild.
 1. From the home page, the user clicks on the “Join Guild” button.
 2. The user enters the guild code.
 3. The user selects “Join” button.
 
-## Use Case 10 - Creating a Guild Party To Start a Quest
+## Use Case 11 - Creating a Guild Party To Start a Quest
 A user wants to start a quest inside a guild.
 1. From the home page, the user selects “Guilds” tab.
 2. The user selects “My Guilds” and then selects the guild they wish to start a quest in.
@@ -88,7 +98,7 @@ A user wants to start a quest inside a guild.
 6. The user enters a name for the guild party.
 7. User waits for the guild party size to be at two to four members, then selects the “Start Quest” button.
 
-## Use Case 11 - Solving a Problem in a Quest (gameplay)
+## Use Case 12 - Solving a Problem in a Quest (gameplay)
 Two users want to solve a coding problem together during a quest.
 1. The users are given their first problem.
 2. User 1 is randomly selected and when the party is done reading the problem, user 1 presses the “Begin” button.
