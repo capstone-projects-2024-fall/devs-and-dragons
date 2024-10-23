@@ -13,6 +13,7 @@ sidebar_position: 4
   * Difficulty level
   * Enemy
   * Background
+* Users must be able to create and customize an Avatar
 * Users must be able to create parties of two to four to start a quest
 * Users must be able to join parties
 * Game must include a timer for each party member
