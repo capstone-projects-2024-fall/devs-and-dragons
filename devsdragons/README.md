@@ -19,6 +19,13 @@ This project uses MongoDB-server for a backend and uses React-Game-Kit as a libr
 cd devsdragons
 npm install
 ```
+### Run MongoDB Backend before Vite Frontend
+
+```bash
+cd devsdragons
+cd server
+python3 main.py
+```
 
 ### Run Vite Frontend
 
