@@ -5,7 +5,8 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from contact import Contact
 from flask_cors import CORS
-
+import bcrypt
+import re
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}) 
@@ -16,7 +17,38 @@ cluster = MongoClient("mongodb+srv://User1:" + password + "@cluster0.1edn5.mongo
 openai.api_key = ""
 db = cluster["techQuest"]
 collection = db["userInfo"]
+sequence_collection = db["sequences"]
 
+
+# Initialize the sequence counter (this is done only once when setting up)
+if sequence_collection.find_one({"_id": "user_id"}) is None:
+    sequence_collection.insert_one({"_id": "user_id", "seq_value": 0})
+
+# Email validation function
+def valid_email(email):
+    return re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email) is not None
+
+# Function to enforce strong password requirements
+def eligible_password(password):
+    return (len(password) >= 8 and 
+            any(char.isdigit() for char in password) and 
+            any(char.isalpha() for char in password) and 
+            any(char.isupper() for char in password) and 
+            any(not char.isalnum() for char in password))
+
+# Function to get the next sequence value for user_id
+def get_next_sequence_value(sequence_name):
+    sequence_doc = sequence_collection.find_one_and_update(
+        {"_id": sequence_name},
+        {"$inc": {"seq_value": 1}},
+        return_document=True
+    )
+    return sequence_doc["seq_value"]
+
+# Function to generate a custom ID like USER001, USER002, etc.
+def generate_custom_id():
+    next_id = get_next_sequence_value("user_id")
+    return f"USER{next_id:03d}"  # This will create IDs like USER001, USER002, etc.
     
 
 @app.route('/create_contact', methods=["POST"])
@@ -28,23 +60,38 @@ def create_contact():
     if not data or not data.get("name") or not data.get("email") or not data.get("password"):
         return jsonify({"message": "Missing required fields"}), 400
 
+    # Validate email
+    if not valid_email(data["email"]):
+        return jsonify({"message": "Invalid email format."}), 400
+
+    # Validate password
+    if not eligible_password(data["password"]):
+        return jsonify({"message": "Password does not meet security requirements."}), 400
+
     # Check if email already exists in the database
     if collection.find_one({"email": data["email"]}):
         return jsonify({"message": "Email already exists"}), 400
+    
+    # Hash the password using bcrypt
+    hashed_password = bcrypt.hashpw(data["password"].encode('utf-8'), bcrypt.gensalt())
 
-    # Create a new contact without explicitly setting _id (let MongoDB handle it)
+    # Generate a custom ID
+    custom_id = generate_custom_id()
+
+    # Create a new contact with a custom _id
     new_contact = {
+        '_id': custom_id,
         'name': data["name"],
         'email': data["email"],
-        'password': data["password"],  # Ensure you hash the password here in the future for security
+        'password': hashed_password.decode('utf-8'),  # Store hashed password
         'guildsIn': 0,
         "questMade": 0
     }
 
     try:
-        # Insert new contact into the database (MongoDB will generate _id automatically)
+        # Insert new contact into the database
         collection.insert_one(new_contact)
-        return jsonify({"message": "User created successfully"}), 201
+        return jsonify({"message": "User created successfully", "user_id": custom_id}), 201
     except Exception as e:
         print(f"Error inserting user into MongoDB: {e}")
         return jsonify({"message": "Account creation failed due to server error"}), 500         
@@ -55,24 +102,25 @@ def doesTheUserExist():
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
-    # need to encypt the password
+    # Input Validation
+    if not email or not password:
+        return jsonify({"message": "Email and password are required"}), 400
     
-    print(f"Looking for user with email: {email} and password: {password}")
+    print(f"Looking for user with email: {email}")
 
     stored_user = collection.find_one({"email": email})
-    if stored_user and stored_user["password"] == password:
-        print("User exists")
-        return jsonify({"message": "User exists"}), 200
+    if stored_user:
+        # Compare the hashed password with the provided password
+        if bcrypt.checkpw(password.encode('utf-8'), stored_user["password"].encode('utf-8')):
+            print("User exists")
+            return jsonify({"message": "User exists"}), 200
+        else:
+            print("Incorrect password")
+            return jsonify({"message": "Incorrect password"}), 403
     else:
         print("User does not exist")
         return jsonify({"message": "User does not exist"}), 404
     
-
-
-# def eligiblePassword(password):
-#     # Add more conditions here to check if password is strong
-#     return len(password) >= 8 and any(char.isdigit() for char in password) and any(char.isalpha() for char in password)
-
 
 @app.route("/generate_question", methods=["GET"])
 def getResponse(difficulty):
