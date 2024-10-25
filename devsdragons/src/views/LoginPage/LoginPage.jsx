@@ -56,7 +56,7 @@ const LoginPage = () => {
 
             if (response.status === 200) {
                 setLoggedInSuccess(true);
-                navigate('/code-editor'); // Navigate to the CodeEditor page
+                navigate('/home-page'); // Navigate to the HomePage
             }
 
         } catch (error) {
