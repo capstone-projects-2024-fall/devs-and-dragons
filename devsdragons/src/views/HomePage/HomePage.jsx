@@ -15,13 +15,13 @@ const HomePage = () => (
 
 export default HomePage;
 */
-{/* import HUD from '../../components/HUD/HUD' */}
+import HUD from '../../components/HUD/HUD'
 
 const HomePage = () => {
   return (
     <div style={{ padding: '20px', display: 'flex', gap: '10px', flexDirection: 'column' }}>
       {/* Display the HUD at the top of the page */}
-      {/*<HUD />*/}
+      <HUD />
       <h1>Welcome To Devs and Dragons</h1>
     </div>
   )
