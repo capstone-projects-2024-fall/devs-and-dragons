@@ -7,15 +7,18 @@ from contact import Contact
 from flask_cors import CORS
 import bcrypt
 import re
+import certifi
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 
 
 password = "testKey125"
-cluster = MongoClient("mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+# For better readability
+connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
 openai.api_key = ""
-db = cluster["techQuest"]
+db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
 
