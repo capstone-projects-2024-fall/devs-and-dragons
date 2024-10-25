@@ -15,6 +15,7 @@ devsdragons/node_modules
 
 
 # Other things within devsdragons to ignore
+devsdragons/server/__pycache__
 
 # Logs
 devsdragons/logs
