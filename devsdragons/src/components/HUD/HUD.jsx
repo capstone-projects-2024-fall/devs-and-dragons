@@ -1,6 +1,6 @@
 import { useState } from 'react'; 
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@mui/material';  // MUI components for layout and buttons
-import { Home, AccountCircle, Settings, ListAlt, AddCircleOutline, Groups, Face } from '@mui/icons-material';  // MUI icons for visuals
+import { Home, AccountCircle, Settings, ListAlt, AddCircleOutline, Groups, Face, Logout } from '@mui/icons-material';  // MUI icons for visuals
 import { Link } from 'react-router-dom';  // Link from React Router to enable navigation between pages
 
 
@@ -76,6 +76,10 @@ const HUD = () => {
           <MenuItem component={Link} to="/account" onClick={handleMenuClose}>   {/* Links to the Account page */}
             <AccountCircle fontSize="small" />                                  {/* MUI icon for account */}
             Account                                                             {/* Text for the account option */}
+          </MenuItem>
+          <MenuItem component={Link} to="/" onClick={handleMenuClose}>          {/* Links to the Login page */}
+            <Logout fontSize="small" />                                         {/* MUI icon for Logout */}
+            Logout                                                              {/* Text for the Logout option */}
           </MenuItem>
         </Menu>
       </Toolbar>
