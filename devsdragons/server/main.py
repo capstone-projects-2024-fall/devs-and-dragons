@@ -88,7 +88,8 @@ def create_contact():
         'email': data["email"],
         'password': hashed_password.decode('utf-8'),  # Store hashed password
         'guildsIn': 0,
-        "questMade": 0
+        "questMade": 0,
+        "mock_field": 0
     }
 
     try:
@@ -97,7 +98,47 @@ def create_contact():
         return jsonify({"message": "User created successfully", "user_id": custom_id}), 201
     except Exception as e:
         print(f"Error inserting user into MongoDB: {e}")
-        return jsonify({"message": "Account creation failed due to server error"}), 500         
+        return jsonify({"message": "Account creation failed due to server error"}), 500   
+
+@app.route('/update_mock_field', methods=["POST"])
+def update_mock_field():
+    data = request.get_json()
+    user_id = data.get("user_id")
+    increment_value = data.get("increment_value", 1)  # Default increment value is 1
+
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
+
+    try:
+        result = collection.update_one(
+            {"_id": user_id},
+            {"$inc": {"mock_field": increment_value}}
+        )
+        if result.modified_count == 1:
+            return jsonify({"message": "Mock field updated successfully"}), 200
+        else:
+            return jsonify({"message": "User not found"}), 404
+    except Exception as e:
+        print(f"Error updating mock field: {e}")
+        return jsonify({"message": "Failed to update mock field"}), 500
+    
+@app.route('/get_user_data', methods=["GET"])
+def get_user_data():
+    user_id = request.args.get("user_id")
+
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
+
+    try:
+        user_data = collection.find_one({"_id": user_id})
+        if user_data:
+            return jsonify({"user_id": user_data["_id"], "mock_field": user_data["mock_field"]}), 200
+        else:
+            return jsonify({"message": "User not found"}), 404
+    except Exception as e:
+        print(f"Error fetching user data: {e}")
+        return jsonify({"message": "Failed to fetch user data"}), 500
+
 
 
 @app.route("/match_user", methods=["POST"])
@@ -116,7 +157,7 @@ def doesTheUserExist():
         # Compare the hashed password with the provided password
         if bcrypt.checkpw(password.encode('utf-8'), stored_user["password"].encode('utf-8')):
             print("User exists")
-            return jsonify({"message": "User exists"}), 200
+            return jsonify({"message": "User exists", "user_id": str(stored_user["_id"])}), 200
         else:
             print("Incorrect password")
             return jsonify({"message": "Incorrect password"}), 403

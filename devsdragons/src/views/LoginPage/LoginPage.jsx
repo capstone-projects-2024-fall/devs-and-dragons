@@ -35,7 +35,6 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setError('');
         setLoggedInSuccess(false);
 
@@ -53,9 +52,11 @@ const LoginPage = () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/match_user', { email, password });
             console.log(response.data);
-
             if (response.status === 200) {
                 setLoggedInSuccess(true);
+                const userId = response.data.user_id;
+                // Store user ID in localStorage or sessionStorage
+                localStorage.setItem('user_id', userId);
                 navigate('/home-page'); // Navigate to the HomePage
             }
 
