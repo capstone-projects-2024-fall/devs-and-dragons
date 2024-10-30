@@ -33,11 +33,8 @@ A user wants to create a new quest.
 ## Use Case 4 - Create Avatar
 A user wants to create their Avatar.
 1. From the homepage, the user selects "Avatar" tab.
-2. The user selects between three avatar options.
-3. The user selects the different customization options for the following:
-   - Hair color
-   - Skin color
-   - Armor color
+2. The user selects between six avatar options.
+3. The user selects a color-scheme for the selected avatar.
 4. User selects "Save Changes" button.
 
 ## Use Case 5 - Adding a Friend
