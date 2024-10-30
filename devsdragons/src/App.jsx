@@ -3,7 +3,7 @@ import AvatarPage from './views/Avatar/AvatarPage.jsx';
 import CreateQuestsPage from './views/QuestPage/CreateQuests.jsx';
 import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
-import GuildsPage from './views/GuildPage/GuildPage.jsx';
+import ProtoTypePage from './views/ProtoTypePage/ProtoTypePage.jsx';
 import CodeEditor from './views/Editor/CodeEditor.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -34,7 +34,7 @@ function App() {
           <Route path="/home-page" element={<HomePage />} />
           <Route path="/my-quests" element={<MyQuestsPage/>} />
           <Route path="/create-quests" element={<CreateQuestsPage />}/>
-          <Route path="/guilds" element={<GuildsPage />} />
+          <Route path="/test" element={<ProtoTypePage />} />
           <Route path="/avatar" element={<AvatarPage />} />
         </Routes>
       </Router>
