@@ -1,6 +1,6 @@
 const QuestCanvas = () => {
 
-  const canvasRef = useRef(null)
+  //const canvasRef = useRef(null)
 
   return (
     <div>QuestCanvas</div>
