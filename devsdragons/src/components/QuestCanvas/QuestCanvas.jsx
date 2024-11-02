@@ -37,7 +37,15 @@ const QuestCanvas = () => {
   
 
   return (
-    <div>QuestCanvas</div>
+    <div>
+      QuestCanvas
+      <canvas
+        ref = {canvasRef}
+        width={800}
+        height={400}
+        style={{ border: '1 px solid #000' }}
+      />
+    </div>
   )
 }
 
