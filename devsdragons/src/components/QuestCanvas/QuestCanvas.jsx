@@ -5,7 +5,8 @@ const QuestCanvas = () => {
     const canvasRef = useRef(null);
     const [background, setBackground] = useState(new Image()); // Correctly use array destructuring
 
-    useEffect(() => {
+    useEffect(
+      () => {
         const backgroundImg = new Image(); // Create a new Image object
         backgroundImg.src = backgroundImgSrc; // Load the image
 
@@ -32,18 +33,23 @@ const QuestCanvas = () => {
         render();
 
         return () => cancelAnimationFrame(render);
-    }, [background]);
+    }, [background]
+  );
 
-    return (
-        <div>
-            <canvas
-                ref={canvasRef}
-                width={800}
-                height={400}
-                style={{ border: '1px solid #000' }}
-            />
-        </div>
-    );
+  // set variable respresenting full amount of screen real estate
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight;
+
+  return (
+      <div>
+          <canvas
+              ref={canvasRef}
+              width={canvasWidth}
+              height={canvasHeight}
+              style={{ border: '1px solid #000' }}
+          />
+      </div>
+  );
 };
 
 export default QuestCanvas;
