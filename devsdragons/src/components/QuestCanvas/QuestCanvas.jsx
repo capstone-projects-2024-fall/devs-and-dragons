@@ -20,6 +20,9 @@ const QuestCanvas = () => {
       // Reset canvas upon loading to clear previously loaded background
       context.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Load quest background wallpaper
+      context.drawImage(background, 0, 0, canvas.width, canvas.height);
+
     }
   
   } )
