@@ -2,7 +2,7 @@ import QuestCanvas from "../../components/QuestCanvas/QuestCanvas"
 
 const QuestGameView = () => {
   return (
-    <div>
+    <div className="game-container">
         <QuestCanvas />
     </div>
   )

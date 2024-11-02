@@ -1,6 +1,7 @@
-import React from 'react'
-
 const QuestCanvas = () => {
+
+  const canvasRef = useRef(null)
+
   return (
     <div>QuestCanvas</div>
   )
