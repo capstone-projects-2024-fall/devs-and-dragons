@@ -37,7 +37,7 @@ function App() {
           <Route path="/create-quests" element={<CreateQuestsPage />}/>
           <Route path="/guilds" element={<GuildsPage />} />
           <Route path="/avatar" element={<AvatarPage />} />
-          <Route path="/games" element={<QuestGameView />} />
+          <Route path="/game" element={<QuestGameView />} />
         </Routes>
       </Router>
     </ThemeProvider>

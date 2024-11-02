@@ -54,9 +54,9 @@ const HUD = () => {
         </IconButton>
 
         {/* Icon for navigating to the 'My Quests' page */}
-        <IconButton component={Link} to="/games" color="inherit">  
+        <IconButton component={Link} to="/game" color="inherit">  
           <ListAlt />  
-          <Typography variant="caption">My Games</Typography>  
+          <Typography variant="caption">My Game</Typography>  
         </IconButton>
 
         {/* Account icon with a dropdown menu that leads AccountPage and SettingsPage*/}
