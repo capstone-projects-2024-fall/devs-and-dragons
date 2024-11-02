@@ -1,21 +1,21 @@
-import { useEffect, useState, useRef } from "react"
-import "./black-screen.jpg"
+import { useEffect, useState, useRef } from "react";
+import "./black-screen.jpg";
 
 
 const QuestCanvas = () => {
 
-  const canvasRef = useRef(null)
-  const {background, setBackground} = useState(new Image())
+  const canvasRef = useRef(null);
+  const {background, setBackground} = useState(new Image());
 
   useEffect( () => {
 
-    const backgroundImg = new Image()
-    backgroundImg.src = "black-screen.jpg" // Load image, background of quest, example black screen
+    const backgroundImg = new Image();
+    backgroundImg.src = "black-screen.jpg"; // Load image, background of quest, example black screen
 
     // Ensure background is loaded
     backgroundImg.onload = () => {
-      setBackground(backgroundImg)
-    }
+      setBackground(backgroundImg);
+    };
     
 
     // Render background
@@ -43,7 +43,7 @@ const QuestCanvas = () => {
     // Exiting quest game canvas, end game button should perform this function eventually
     return () => cancelAnimationFrame(render);
   
-  }, [background] )
+  }, [background] );
 
   
 
@@ -60,4 +60,4 @@ const QuestCanvas = () => {
   )
 }
 
-export default QuestCanvas
+export default QuestCanvas;
