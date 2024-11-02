@@ -43,7 +43,11 @@ const QuestCanvas = () => {
 
         window.addEventListener("resize", handleResize);
 
-        return () => cancelAnimationFrame(render);
+        return () => {
+            window.removeEventListener('resize', handleResize) // remove when game is exited
+            cancelAnimationFrame(render);
+        };
+
     }, [background]
   );
 
