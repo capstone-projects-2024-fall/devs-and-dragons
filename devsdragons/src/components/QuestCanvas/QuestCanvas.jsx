@@ -9,14 +9,6 @@ const QuestCanvas = () => {
     // Background reference
     const [background, setBackground] = useState(new Image());
 
-    // Handle window resizing so game canvas dynamically resizes
-    const handleResize = () => {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-    };
-
-
-
     useEffect(
       () => {
         const backgroundImg = new Image(); // Create a new Image object
@@ -25,6 +17,7 @@ const QuestCanvas = () => {
         // Ensure background is loaded
         backgroundImg.onload = () => {
             setBackground(backgroundImg); // Set the loaded image as background
+            resizeCanvas(); // function to dynamically resize wallpaper to changed window size
         };
 
         const render = () => {
@@ -43,6 +36,10 @@ const QuestCanvas = () => {
         };
 
         render();
+
+        const handleResize = () => {
+            
+        };
 
         return () => cancelAnimationFrame(render);
     }, [background]
