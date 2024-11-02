@@ -38,8 +38,10 @@ const QuestCanvas = () => {
         render();
 
         const handleResize = () => {
-            
+            resizeCanvas();
         };
+
+        window.addEventListener("resize", handleResize);
 
         return () => cancelAnimationFrame(render);
     }, [background]
