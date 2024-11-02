@@ -2,8 +2,19 @@ import { useEffect, useState, useRef } from "react";
 import backgroundImgSrc from "./black-screen.jpg"; // Cast the image as a variable to be used
 
 const QuestCanvas = () => {
+    
+    // Canvas reference
     const canvasRef = useRef(null);
-    const [background, setBackground] = useState(new Image()); // Correctly use array destructuring
+
+    // Background reference
+    const [background, setBackground] = useState(new Image());
+
+    // Handle window resizing so game canvas dynamically resizes
+    const handleResize = () => {
+        
+    };
+
+
 
     useEffect(
       () => {
