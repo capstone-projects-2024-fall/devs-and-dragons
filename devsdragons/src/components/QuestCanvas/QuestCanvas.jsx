@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import "./black-screen.jpg"; // This is fine if you're using a bundler like Webpack
+import backgroundImgSrc from "./black-screen.jpg"; // Cast the image as a variable to be used
 
 const QuestCanvas = () => {
     const canvasRef = useRef(null);
@@ -7,7 +7,7 @@ const QuestCanvas = () => {
 
     useEffect(() => {
         const backgroundImg = new Image(); // Create a new Image object
-        backgroundImg.src = "black-screen.jpg"; // Load the image
+        backgroundImg.src = backgroundImgSrc; // Load the image
 
         // Ensure background is loaded
         backgroundImg.onload = () => {
@@ -36,7 +36,6 @@ const QuestCanvas = () => {
 
     return (
         <div>
-            QuestCanvas
             <canvas
                 ref={canvasRef}
                 width={800}
