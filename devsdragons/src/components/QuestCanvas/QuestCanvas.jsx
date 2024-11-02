@@ -23,9 +23,16 @@ const QuestCanvas = () => {
       // Load quest background wallpaper
       context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-    }
+      requestAnimationFrame(render);
+
+    };
+    
+    render();
+
+    // Exiting quest game canvas, end game button should perform this function eventually
+    return () => cancelAnimationFrame(render);
   
-  } )
+  }, [background] )
 
   
 
