@@ -1,8 +1,10 @@
-import React from 'react'
+import QuestCanvas from "../../components/QuestCanvas/QuestCanvas"
 
 const QuestGameView = () => {
   return (
-    <div>QuestGameView</div>
+    <div>
+        <QuestCanvas />
+    </div>
   )
 }
 
