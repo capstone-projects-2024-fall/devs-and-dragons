@@ -50,9 +50,20 @@ const QuestCanvas = () => {
     }, [background]);
 
     const resizeCanvas = () => {
-        // set variable respresenting full amount of screen real estate
-        const canvasWidth = window.innerWidth;
-        const canvasHeight = window.innerHeight;
+        const canvas = canvasRef.current;
+
+        // if canvas exists
+        if(canvas) {
+            canvasWidth = window.innerWidth;
+            canvasHeight = window.innerHeight;
+
+            // Update context and background
+            const context = canvas.getContext('2d');
+            if (background.src) {
+                context.drawImage(background, 0, 0, canvas.width, canvas.height);
+            }
+        }
+
     };
     
 
