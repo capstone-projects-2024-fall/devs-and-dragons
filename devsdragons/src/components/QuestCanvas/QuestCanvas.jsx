@@ -11,7 +11,8 @@ const QuestCanvas = () => {
 
     // Handle window resizing so game canvas dynamically resizes
     const handleResize = () => {
-        
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
     };
 
 
