@@ -6,13 +6,20 @@ const QuestCanvas = () => {
   const [background, setBackground] = useState(new Image())
 
   useEffect( () => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    
+    // Load image, background of quest, example black screen
+    background.src = "../../assets/black-screen.jpg"
 
-      // Render background
+    // Render background
     const render = () => {
+
       // Previous canvas's context should be cleared and new canvas should be loaded in each time
-      context.clear
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      
+      // Reset canvas upon loading to clear previously loaded background
+
+
     }
   
   } )
