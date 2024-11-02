@@ -18,7 +18,7 @@ const QuestCanvas = () => {
       const context = canvas.getContext('2d');
       
       // Reset canvas upon loading to clear previously loaded background
-
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
     }
   
