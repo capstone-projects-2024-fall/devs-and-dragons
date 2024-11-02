@@ -54,8 +54,8 @@ const QuestCanvas = () => {
 
         // if canvas exists
         if(canvas) {
-            canvasWidth = window.innerWidth;
-            canvasHeight = window.innerHeight;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
             // Update context and background
             const context = canvas.getContext('2d');
