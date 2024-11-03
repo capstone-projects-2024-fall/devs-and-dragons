@@ -5,9 +5,11 @@ import { drawBackgroundFunction } from "./drawBackgroundFunction"; // Import nee
 export const resizeCanvasFunction = (canvasRef, background) => {
   const canvas = canvasRef.current;
 
+  // If canvas exists
   if (canvas) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    // Update context and background
     drawBackgroundFunction(canvasRef, background); // Draw the background after resizing
   }
 };

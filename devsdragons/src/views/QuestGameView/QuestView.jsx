@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
 import { resizeCanvasFunction, initializeBackground } from "../../components/QuestViewHelpers/resizeCanvasFunction";
-import { drawBackground } from "../../components/QuestViewHelpers/drawBackgroundFunction";
+import { drawBackgroundFunction } from "../../components/QuestViewHelpers/drawBackgroundFunction";
 
 const QuestView = () => {
   // Canvas reference
@@ -11,7 +11,7 @@ const QuestView = () => {
   const [background, setBackground] = useState(new Image());
 
   useEffect(() => {
-    initializeBackground(backgroundImgSrc, setBackground, resizeCanvas, canvasRef)
+    initializeBackground(backgroundImgSrc, setBackground, resizeCanvasFunction, canvasRef)
 
     const render = () => {
       const canvas = canvasRef.current;
@@ -20,16 +20,14 @@ const QuestView = () => {
       // Clear the previous canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      drawBackground
+      drawBackgroundFunction(canvasRef, background);
 
       requestAnimationFrame(render);
     };
 
     render();
 
-    const handleResize = () => {
-      resizeCanvas();
-    };
+    const handleResize = () => { resizeCanvasFunction(canvasRef, background); };
 
     window.addEventListener("resize", handleResize);
 
@@ -38,22 +36,6 @@ const QuestView = () => {
       cancelAnimationFrame(render);
     };
   }, [background]);
-
-  const resizeCanvas = () => {
-    const canvas = canvasRef.current;
-
-    // if canvas exists
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      // Update context and background
-      const context = canvas.getContext("2d");
-      if (background.src) {
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-      }
-    }
-  };
 
   return (
     <div className="my-games-page">
