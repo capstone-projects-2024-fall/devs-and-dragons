@@ -5,7 +5,7 @@ import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
 import GuildsPage from './views/GuildPage/GuildPage.jsx';
 import CodeEditor from './views/Editor/CodeEditor.jsx';
-import QuestGameView from './views/QuestGameView/QuestGameView.jsx';
+import QuestGameView from './views/QuestGameView/QuestView.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useState} from 'react';

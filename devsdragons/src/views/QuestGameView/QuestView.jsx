@@ -1,7 +1,7 @@
 import QuestCanvas from "../../components/QuestCanvas/QuestCanvas"
 import HUD from "../../components/HUD/HUD"
 
-const QuestGameView = () => {
+const QuestView = () => {
   return (
     <div className="my-games-page">
         <HUD />
@@ -10,4 +10,4 @@ const QuestGameView = () => {
   )
 }
 
-export default QuestGameView
+export default QuestView
