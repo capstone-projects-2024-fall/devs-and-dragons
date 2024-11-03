@@ -21,9 +21,6 @@ const QuestCanvas = () => {
             // Clear the previous canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw background image only when it's loaded
-            
-
             requestAnimationFrame(render);
         };
 
@@ -52,14 +49,12 @@ const QuestCanvas = () => {
 
             // Update context and background
             const context = canvas.getContext('2d');
-            if (background.src) {
+            /*if (background.src) {
                 context.drawImage(background, 0, 0, canvas.width, canvas.height);
-            }
+            } wallpaper component should take care of this redrawing */
         }
 
     };
-    
-
     
 
     return (

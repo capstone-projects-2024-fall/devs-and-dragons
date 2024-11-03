@@ -12,6 +12,8 @@ const Wallpaper = ({ canvasRef, backgroundSrc }) => {
             const canvas = canvasRef.current;
             const context = canvas.getContext('2d');
 
+
+            // Draw background image only when it's loaded
             if (backgroundImg.src) {
                 context.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
             }
