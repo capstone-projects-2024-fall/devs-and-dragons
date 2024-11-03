@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import backgroundImgSrc from "./black-screen.jpg"; // Cast the image as a variable to be used
+import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
 
 const QuestCanvas = () => {
     
