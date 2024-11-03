@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const Wallpaper = ({ canvasRef, backgroundSrc }) => {
     
-    useEffect = () => {
+    useEffect(() => {
         const backgroundImg = new Image(); // Create a new Image object
         backgroundImg.src = backgroundSrc; // Load the image, supplied path to asset is the one chosen for quest's wallpaper
         
@@ -18,10 +18,10 @@ const Wallpaper = ({ canvasRef, backgroundSrc }) => {
                 context.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
             }
         };
-    }, [canvasRef, backgroundSrc];
+    }, [canvasRef, backgroundSrc]);
 
 
     return null; // Wallpaper is to be used by a higher level component, it doesn't return anything
-}
+};
 
 export default Wallpaper;

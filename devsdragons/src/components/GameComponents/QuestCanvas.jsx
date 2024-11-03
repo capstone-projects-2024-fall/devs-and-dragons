@@ -3,29 +3,10 @@ import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image 
 import Wallpaper from "./Wallpaper";
 
 const QuestCanvas = () => {
-    
     // Canvas reference
     const canvasRef = useRef(null);
 
-    // Background reference
-    const [background, setBackground] = useState(new Image());
-
     useEffect(() => {
-        
-        
-
-        const render = () => {
-            const canvas = canvasRef.current;
-            const context = canvas.getContext('2d');
-
-            // Clear the previous canvas
-            context.clearRect(0, 0, canvas.width, canvas.height);
-
-            requestAnimationFrame(render);
-        };
-
-        render();
-
         const handleResize = () => {
             resizeCanvas();
         };
@@ -34,10 +15,9 @@ const QuestCanvas = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize) // remove when game is exited
-            cancelAnimationFrame(render);
         };
 
-    }, [background]);
+    }, []);
 
     const resizeCanvas = () => {
         const canvas = canvasRef.current;
@@ -46,15 +26,12 @@ const QuestCanvas = () => {
         if(canvas) {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
-            // Update context and background
-            const context = canvas.getContext('2d');
-            /*if (background.src) {
-                context.drawImage(background, 0, 0, canvas.width, canvas.height);
-            } wallpaper component should take care of this redrawing */
         }
-
     };
+
+    useEffect(() => {
+        resizeCanvas(); // Initial resize
+    }, []);
     
 
     return (
@@ -63,6 +40,7 @@ const QuestCanvas = () => {
                 ref={canvasRef}
                 style={{ border: '1px solid #000' }}
             />
+            <Wallpaper canvasRef={canvasRef} backgroundSrc={backgroundImgSrc} />
         </div>
     );
 
