@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
+import { resizeCanvas, initializeBackground } from "../../components/QuestViewHelpers/resizeCanvas";
 
 const QuestView = () => {
   // Canvas reference
