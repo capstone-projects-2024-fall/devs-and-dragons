@@ -4,8 +4,8 @@ const Wallpaper = ({ canvasRef, backgroundSrc }) => {
     
     useEffect = () => {
         const backgroundImg = new Image(); // Create a new Image object
-        backgroundImg.src = backgroundImgSrc; // Load the image, supplied path to asset is the one chosen for quest's wallpaper
-        
+        backgroundImg.src = backgroundSrc; // Load the image, supplied path to asset is the one chosen for quest's wallpaper
+
     };
 
 
