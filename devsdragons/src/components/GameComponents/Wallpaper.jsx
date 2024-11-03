@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const Wallpaper = () => {
+const Wallpaper = ({ canvasRef, backgroundSrc }) => {
   return (
     <div>Wallpaper</div>
   )
