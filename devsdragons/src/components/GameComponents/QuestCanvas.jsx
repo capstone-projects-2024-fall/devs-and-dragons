@@ -6,19 +6,6 @@ const QuestCanvas = () => {
     // Canvas reference
     const canvasRef = useRef(null);
 
-    useEffect(() => {
-        const handleResize = () => {
-            resizeCanvas();
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize) // remove when game is exited
-        };
-
-    }, []);
-
     const resizeCanvas = () => {
         const canvas = canvasRef.current;
 
@@ -29,16 +16,27 @@ const QuestCanvas = () => {
         }
     };
 
+
+
     useEffect(() => {
-        resizeCanvas(); // Initial resize
+        resizeCanvas();
+
+        // For any future resizing of window that will prompt image to be resized
+        const handleResize = () => {
+            resizeCanvas();
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener('resize', handleResize) // remove when game is exited
+
     }, []);
-    
 
     return (
         <div>
             <canvas
                 ref={canvasRef}
-                style={{ border: '1px solid #000' }}
+                style={{ border: "1px solid #000" }}
             />
             <Wallpaper canvasRef={canvasRef} backgroundSrc={backgroundImgSrc} />
         </div>
