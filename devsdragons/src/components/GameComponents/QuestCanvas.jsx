@@ -10,26 +10,18 @@ const QuestCanvas = () => {
     const [background, setBackground] = useState(new Image());
 
     useEffect(() => {
-        const backgroundImg = new Image(); // Create a new Image object
-        backgroundImg.src = backgroundImgSrc; // Load the image
-
-        // Ensure background is loaded
-        backgroundImg.onload = () => {
-            setBackground(backgroundImg); // Set the loaded image as background
-            resizeCanvas(); // function to dynamically resize wallpaper to changed window size
-        };
+        
+        
 
         const render = () => {
-            const canvas = canvasRef.current;
-            const context = canvas.getContext('2d');
+            
+            
 
             // Clear the previous canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
 
             // Draw background image only when it's loaded
-            if (background.src) {
-                context.drawImage(background, 0, 0, canvas.width, canvas.height);
-            }
+            
 
             requestAnimationFrame(render);
         };
