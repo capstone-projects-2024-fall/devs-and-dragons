@@ -15,8 +15,8 @@ const QuestCanvas = () => {
         
 
         const render = () => {
-            
-            
+            const canvas = canvasRef.current;
+            const context = canvas.getContext('2d');
 
             // Clear the previous canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
