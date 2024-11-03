@@ -1,6 +1,6 @@
 // With an image, intialize the background for the first time
 
-export const loadSetting = (
+export const loadSettingFunction = (
   src,
   setBackground,
   resizeCanvasFunction,
