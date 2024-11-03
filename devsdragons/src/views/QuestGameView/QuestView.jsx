@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
-import { resizeCanvas, initializeBackground } from "../../components/QuestViewHelpers/resizeCanvas";
+import { resizeCanvasFunction, initializeBackground } from "../../components/QuestViewHelpers/resizeCanvasFunction";
+import { drawBackground } from "../../components/QuestViewHelpers/drawBackgroundFunction";
 
 const QuestView = () => {
   // Canvas reference
@@ -10,14 +11,7 @@ const QuestView = () => {
   const [background, setBackground] = useState(new Image());
 
   useEffect(() => {
-    const backgroundImg = new Image(); // Create a new Image object
-    backgroundImg.src = backgroundImgSrc; // Load the image
-
-    // Ensure background is loaded
-    backgroundImg.onload = () => {
-      setBackground(backgroundImg); // Set the loaded image as background
-      resizeCanvas(); // function to dynamically resize wallpaper to changed window size
-    };
+    initializeBackground(backgroundImgSrc, setBackground, resizeCanvas, canvasRef)
 
     const render = () => {
       const canvas = canvasRef.current;
@@ -26,10 +20,7 @@ const QuestView = () => {
       // Clear the previous canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw background image only when it's loaded
-      if (background.src) {
-        context.drawImage(background, 0, 0, canvas.width, canvas.height);
-      }
+      drawBackground
 
       requestAnimationFrame(render);
     };
