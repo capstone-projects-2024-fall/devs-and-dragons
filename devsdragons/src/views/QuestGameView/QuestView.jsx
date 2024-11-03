@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
-import { loadSettingFunction } from "../../components/QuestViewHelpers/Functions/loadSettingFunction";
+import { loadBackdropFunction } from "../../components/QuestViewHelpers/Functions/loadBackdropFunction";
 import { drawBackgroundFunction } from "../../components/QuestViewHelpers/Functions/drawBackgroundFunction";
 import { resizeCanvasFunction } from "../../components/QuestViewHelpers/Functions/resizeCanvasFunction";
 
@@ -13,7 +13,7 @@ const QuestView = () => {
 
   useEffect(() => {
     // Initialize background image and set state
-    loadSettingFunction(backgroundImgSrc, setBackground, resizeCanvasFunction, canvasRef)
+    loadBackdropFunction(backgroundImgSrc, setBackground, resizeCanvasFunction, canvasRef)
 
     const render = () => {
       const canvas = canvasRef.current;

@@ -1,6 +1,6 @@
-// With an image, intialize the background for the first time
+// With an image, load the backdrop of the quest for the first time
 
-export const loadSettingFunction = (
+export const loadBackdropFunction = (
   src,
   setBackground,
   resizeCanvasFunction,
