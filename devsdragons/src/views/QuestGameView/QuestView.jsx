@@ -12,6 +12,7 @@ const QuestView = () => {
   const [background, setBackground] = useState(new Image());
 
   useEffect(() => {
+    // Initialize background image and set state
     loadSetting(backgroundImgSrc, setBackground, resizeCanvasFunction, canvasRef)
 
     const render = () => {
