@@ -15,26 +15,11 @@ const Wallpaper = ({ canvasRef, backgroundSrc }) => {
             }
         };
 
-        // Draw the background when the image is loaded initially
+        // Draw the background when the image loads
         backgroundImg.onload = drawBackground;
-
-        // Redraw the background when the canvas size changes
-        drawBackground(); // Ensure it's drawn if resized after mount
-
-        // Set up an observer to detect canvas resizing
-        const resizeObserver = new ResizeObserver(drawBackground);
-        if (canvasRef.current) {
-            resizeObserver.observe(canvasRef.current);
-        }
-
-        return () => {
-            if (canvasRef.current) {
-                resizeObserver.unobserve(canvasRef.current);
-            }
-        };
     }, [canvasRef, backgroundSrc]);
 
-    return null;
+    return null; // Wallpaper component doesn't render any DOM elements
 };
 
 export default Wallpaper;
