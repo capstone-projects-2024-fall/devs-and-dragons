@@ -1,11 +1,9 @@
 // With an image, intialize the background for the first time
 
-import { resizeCanvasFunction } from "./resizeCanvasFunction";
-
-export const intializeBackground = (
+export const loadSetting = (
   src,
   setBackground,
-  resizeCanvas,
+  resizeCanvasFunction,
   canvasRef
 ) => {
   const backgroundImg = new Image(); // Create a new Image object
