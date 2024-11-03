@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
 import Wallpaper from "./Wallpaper";
 
