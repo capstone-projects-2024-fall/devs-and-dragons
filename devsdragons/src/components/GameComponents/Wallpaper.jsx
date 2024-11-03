@@ -16,7 +16,7 @@ const Wallpaper = ({ canvasRef, backgroundSrc }) => {
                 context.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
             }
         };
-    };
+    }, [canvasRef, backgroundSrc];
 
 
     return null; // Wallpaper is to be used by a higher level component, it doesn't return anything
