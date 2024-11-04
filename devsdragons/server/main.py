@@ -8,6 +8,7 @@ from flask_cors import CORS
 import bcrypt
 import re
 import certifi
+import uuid
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}) 
@@ -17,10 +18,11 @@ password = "testKey125"
 # For better readability
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
-openai.api_key = ""
+# openai.api_key = ""
 db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
+quests_store = {}
 
 
 # Initialize the sequence counter (this is done only once when setting up)
@@ -166,46 +168,90 @@ def doesTheUserExist():
         return jsonify({"message": "User does not exist"}), 404
     
 
-@app.route("/generate_question", methods=["GET"])
-def getResponse(difficulty):
-    diff = {1: "easy", 2: "medium", 3: "hard"}
-    
-    print("Difficulty picked", diff[difficulty])
-    
-    TypeOfTopics = ["for loops", "while loops", "arrays"]
-    
-    randomTopic = random.randint(0, len(TypeOfTopics) - 1)
-    
-    user_input = f"Given the difficulty level {diff[difficulty]}, provide me with a computer science coding questions on this topic: {TypeOfTopics[randomTopic]}"
-    
-    print(user_input)
-    response = openai.ChatCompletion.create(
-        model = "gpt-3.5-turbo",
-        messages = [
-            {"role": "system", "content": "You are a helpful assitant"},
-            {"role": "user", "content": user_input}
+@app.route("/quest-parameters", methods=["POST", "GET"])
+def getResponse():
+    messageFromChatGpt = ""
+    if request.method == "POST":
+        data = request.get_json()
+        print(data)
+        questTitle = data.get('questTitle')
+        codingTopic = data.get("codingTopic")
+        problemCount = data.get("problemCount")
+        difficultyLevel = data.get("difficultyLevel")
+        enemy = data.get("enemy")
+        background = data.get("background")
+        description = data.get("description")
+        programmingLanguage = data.get("programmingLanguage")
         
-        ]
-    )
-    
-    #print(response)
-    messageFromChatGpt = response['choices'][0]['message']['content']
-    # The returned response is in json format, so we go inside choices and then inside choices, we look, at the 0 th element and then inside that
-    # the message and then acessing the content.
-    
-    return jsonify(messageFromChatGpt)
+        
+        user_input = (f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
+              f"I need {problemCount} computer science coding challenges on the topic '{codingTopic}', each in the language {programmingLanguage}. "
+              f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
+              f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
+              f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
+              f"Format the output as:\n"
+              f"Background: (Description of the scene)\n"
+              f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
+              f"that must be solved in {programmingLanguage} to progress)\n"
+              f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
+              f"… and so on up to Question {problemCount}.\n"
+              f"Example question format:\n"
+              f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
+              f"Use this storyline description for context: {description}")
+        
+        
+        
+        print(user_input)    
+        
+        response = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages = [
+                {"role": "system", "content": "You are a helpful assitant"},
+                {"role": "user", "content": user_input}
+            
+            ]
+        )
+        
+        #print(response)
+        messageFromChatGpt = response['choices'][0]['message']['content']
+        questions = messageFromChatGpt.split("Question")[1:]
+        quest_id = str(uuid.uuid4())
+        print("quest_id: ", quest_id)
+        quests_store[0] = questions
+        print(quests_store)
+        # The returned response is in json format, so we go inside choices and then inside choices, we look, at the 0 th element and then inside that
+        # the message and then acessing the content.
+        
+        return jsonify({"quest_id": quest_id}), 200
 
-@app.route("/get_answer", methods=["POST"])
-def solutionFromTheUser():
+    
+    else:
+        if request.method == 'GET':
+            #questions = []
+            quest_id = request.args.get('quest_id')
+            print("received quest id:", quest_id, type(quest_id))
+            if int(quest_id) in quests_store:
+                questions = quests_store[int(quest_id)]
+                return jsonify(questions), 200
+            else:
+                return jsonify({"No questions found for the quest_id": quest_id})
+            
+            
+
+
+    
+# @app.route("/get_questions", methods=["GET"])
+# def solutionFromTheUser():
     #answerFromUser = request.json.get('answer')
-    data = request.json()
-    answer = data.get('answer')
-    #print("Answer from the user: ", answerFromUser)
-    return answer
-    
 
-def checkAnswer(question, userAnswer):
-    sendToOpenAI = "This is the question" + question  + "and based on that grade my solution " + userAnswer + " on a scale 1-10. Focus more on the logic than the syntax of the code."
+@app.route("/check_answer", methods=["POST"])
+def checkAnswer():
+    data = request.get_json()
+    question = data.get('question')
+    answer = data.get('answer')
+    print(answer)
+    language = data.get('language')
+    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be an easy grader. Focus more on the logic than the syntax of the code. The return output should be: Grade, advice"
     
     response = openai.ChatCompletion.create(
         model = "gpt-3.5-turbo",
@@ -217,7 +263,9 @@ def checkAnswer(question, userAnswer):
     )
     messageFromChatGpt = response['choices'][0]['message']['content']
     
-    return messageFromChatGpt
+    print(messageFromChatGpt)
+    
+    return jsonify(messageFromChatGpt)
 
 
 # can insert multiple posts at once
