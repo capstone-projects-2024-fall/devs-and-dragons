@@ -7,7 +7,7 @@ sidebar_position: 4
 
 ```mermaid
 erDiagram
-USER ||--|{ AVATAR : owns
+USER ||--|| AVATAR : owns
 USER ||--o{ QUEST : "created"
 
     USER {
@@ -46,7 +46,7 @@ The diagram shows the individual tables and their relations in our MongoDB datab
   - USER (many-to-many with QUEST): A USER can create many QUESTs, but each quest belongs to one user as the creator.  
 
 - **AVATAR**: Represents the avatar created and owned by the user. Each avatar belongs to only one user.  
-  - AVATAR (many-to-one with USER): One USER can own many avatars.
+  - AVATAR (one-to-one with USER): One USER can own only one avatars.
 
 - **QUEST**: Contains information about quests. A user creates a quest.  
   - QUEST (many-to-one with USER): Each QUEST is created by one USER.  
