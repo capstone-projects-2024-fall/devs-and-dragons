@@ -65,3 +65,9 @@ After a user starts a quest in **Use Case 5**, they want to play and try to comp
      - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
      - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
 9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
+
+## Use Case 7 - Recieve help from helper bot
+A user wants to get help from the helper bot.
+1. During the quest, the user selects the "Help" icon button.
+2. The helper bot analyzes the current progress of the user's solution to the question and provides feedback.
+3. The feedback is displayed to the user in the code editor.
