@@ -14,17 +14,11 @@ sidebar_position: 4
   * Enemy
   * Background
 * Users must be able to create and customize an Avatar
-* Users must be able to create parties of two to four to start a quest
-* Users must be able to join parties
 * Game must include a timer for each party member
-* Game must be able to generate coding problems based on topic and difficulty chose
-* Game must be able grade answers based on logic and efficiency
-* Users can add other users
-  * User can search for another's username and click "Add Friend"
-* Users can create guilds to host multiple guild parties and assign multiple quests
-* Users can opt to abandon a started quest
-* Users must make an account to access Devs and Dragons platform
-  * A verification email will be sent to authenticate users
+* Game must be able to generate coding problems based on topic and difficulty chosen
+* Game must be able grade answers based on correct output
+* Users must make an account
+* Users must be able to log in created account
 * Users must be able to log into existing accounts
 * Users can opt to abandon a started quest
 * All user data will be stored in MongoDB
