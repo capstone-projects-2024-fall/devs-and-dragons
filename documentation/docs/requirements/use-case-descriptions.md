@@ -56,6 +56,7 @@ After a user starts a quest in **Use Case 5**, they want to play and try to comp
    - Code Editor
 3. The user is prompted with a question.
 4. The timer begins to tick down.
+   - If the user does not submit an answer before the timer reaches 0, then the user's health bar decreases.
 5. The user writes code in the provided code editor.
 6. The user clicks the "Submit" button.
 7. The GPT-bot analyzes the user's submission and provides feedback with a rating from 1 to 3.
