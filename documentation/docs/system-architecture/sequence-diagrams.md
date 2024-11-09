@@ -396,3 +396,7 @@ sequenceDiagram
     deactivate Game
     deactivate User
 ```
+
+1. During the quest, the user selects the "Help" icon button.
+2. The helper bot analyzes the current progress of the user's solution to the question and provides feedback.
+3. The feedback is displayed to the user.
