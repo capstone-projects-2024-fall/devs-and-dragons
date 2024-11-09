@@ -366,3 +366,33 @@ sequenceDiagram
      - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
      - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
 9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
+
+## Use Case 7 - Recieve help from helper bot.
+**A user wants to get help from the helper bot.**
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Game
+    participant HelpIcon
+    participant HelperBot
+
+    User->>Game: Engages in quest
+    activate User
+    activate Game
+    Game-->>User: Quest in progress
+
+    User->>HelpIcon: Selects "Help" icon button
+    activate HelpIcon
+    HelpIcon->>HelperBot: Requests help based on user's current solution progress
+    deactivate HelpIcon
+    activate HelperBot
+    HelperBot-->>Game: Analyzes solution and provides feedback
+    
+    HelperBot->>Game: Sends feedback
+    deactivate HelperBot
+
+    Game-->>User: Displays feedback
+    deactivate Game
+    deactivate User
+```
