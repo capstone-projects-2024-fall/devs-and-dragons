@@ -186,7 +186,8 @@ sequenceDiagram
     actor User
     participant HomePage
     participant AvatarTab
-    participant AvatarForm
+    participant AvatarSelection
+    participant ColorScheme
     participant Backend
     participant Database
 
@@ -200,19 +201,25 @@ sequenceDiagram
     activate AvatarTab
     AvatarTab-->>User: Displays "Create Avatar" button
     User->>AvatarTab: Selects "Create Avatar" button
-    AvatarTab->>AvatarForm: Opens avatar creation form
+    AvatarTab->>AvatarSelection: Opens avatar selection screen
     deactivate AvatarTab
 
-    activate AvatarForm
-    AvatarForm-->>User: Displays avatar customization options (hair color, skin color, armor color)
-    User->>AvatarForm: Chooses customization options
-    AvatarForm->>Backend: Sends avatar details to backend
-    deactivate AvatarForm
+    activate AvatarSelection
+    AvatarSelection-->>User: Displays six avatar options
+    User->>AvatarSelection: Chooses an avatar
+    AvatarSelection->>ColorScheme: User proceeds to color scheme selection
+    deactivate AvatarSelection
+
+    activate ColorScheme
+    ColorScheme-->>User: Displays color-scheme customization options
+    User->>ColorScheme: Selects color-scheme
+    ColorScheme->>Backend: Sends avatar and color-scheme details to backend
+    deactivate ColorScheme
 
     activate Backend
-    Backend->>Database: Stores avatar details
+    Backend->>Database: Stores avatar and color-scheme details
     activate Database
-    Database-->>Backend: Confirms avatar creation
+    Database-->>Backend: Confirms avatar update
     deactivate Database
     Backend-->>AvatarTab: Sends success message to avatar tab
     deactivate Backend
@@ -220,15 +227,11 @@ sequenceDiagram
     activate AvatarTab
     AvatarTab-->>User: Displays success message and updated avatar preview
     deactivate AvatarTab
-    deactivate User
-    
+    deactivate User 
 ```
 1. From the homepage, the user selects "Avatar" tab.
-2. The user selects between three avatar options.
-3. The user selects the different customization options for the following:
-   - Hair color
-   - Skin color
-   - Armor color
+2. The user selects between six avatar options.
+3. The user selects a color-scheme for the selected avatar.
 4. User selects "Save Changes" button.
 
 ## Use Case 5 - Adding a Friend
