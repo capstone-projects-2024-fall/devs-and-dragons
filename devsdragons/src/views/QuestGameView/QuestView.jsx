@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import backgroundImgSrc from "../../assets/black-screen.jpg"; // Cast the image as a variable to be used
+import backgroundImgSrc from "../../assets/images.jpg"; // Cast the image as a variable to be used
 import { loadBackdropFunction } from "../../components/QuestViewHelpers/Functions/loadBackdropFunction";
 import { drawBackgroundFunction } from "../../components/QuestViewHelpers/Functions/drawBackgroundFunction";
 import { resizeCanvasFunction } from "../../components/QuestViewHelpers/Functions/resizeCanvasFunction";
