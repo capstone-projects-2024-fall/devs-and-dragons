@@ -1,4 +1,4 @@
-import QuestCanvas from "../../components/QuestCanvas/QuestCanvas"
+import QuestCanvas from "../../components/GameComponents/QuestCanvas"
 import HUD from "../../components/HUD/HUD"
 
 const QuestGameView = () => {
