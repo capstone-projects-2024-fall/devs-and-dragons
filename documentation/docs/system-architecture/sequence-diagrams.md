@@ -234,6 +234,61 @@ sequenceDiagram
 3. The user selects a color-scheme for the selected avatar.
 4. User selects "Save Changes" button.
 
+## Use Case 5 - Starting a Quest
+**A user wants to start a quest they made.**
+```mermaid
+sequenceDiagram
+    actor User
+    participant HomePage
+    participant QuestsTab
+    participant DropdownMenu
+    participant QuestDisplay
+    participant Database
+    participant Backend
+    participant Game
+
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home screen with "Quests" button
+    HomePage->>QuestsTab: User selects "Quests" tab
+    deactivate HomePage
+    
+
+    activate QuestsTab
+    QuestsTab->>DropdownMenu: Opens dropdown menu
+    activate DropdownMenu
+    deactivate QuestsTab
+    DropdownMenu->>User: Displays "My Quests" option
+    User->>DropdownMenu: Selects "My Quests"
+    DropdownMenu->>QuestDisplay: Displays list of user-created quests
+    deactivate DropdownMenu
+
+    activate QuestDisplay
+    QuestDisplay-->>User: User views quests
+    User->>QuestDisplay: Selects a quest to start
+    QuestDisplay->>Backend: Sends selected quest to backend for initiation
+    deactivate QuestDisplay
+
+    activate Backend
+    Backend->>Database: Updates quest status to active
+    activate Database
+    Database-->>Backend: Confirms quest start
+    deactivate Database
+    Backend-->>Game: Initial game component
+    activate Game
+    deactivate Backend
+
+    Game-->>User: Displays game window as quests begins
+    deactivate User
+    deactivate Game
+```
+
+1. From the homepage, the user selects "Quests" tab.
+2. The user selects the dropdown menu option, "My Quests."
+3. The quests the user made are displayed, the user selects the quests interested in starting.
+4. The user selects "Start Quest" button.
+
 ## Use Case 12 - Solving a Problem in a Quest (gameplay)
 **Two users want to solve a coding problem together during a quest.**
 
