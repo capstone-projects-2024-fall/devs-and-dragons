@@ -289,85 +289,80 @@ sequenceDiagram
 3. The quests the user made are displayed, the user selects the quests interested in starting.
 4. The user selects "Start Quest" button.
 
-## Use Case 12 - Solving a Problem in a Quest (gameplay)
+## Use Case 6 - Solving a Problem in a Quest (gameplay)
 **Two users want to solve a coding problem together during a quest.**
 
 ```mermaid
 sequenceDiagram
-    actor User1
-    actor User2 
+    actor User
+    participant Game
+    participant Timer
+    participant CodeEditor as Editor
     participant GPTBot
-    participant GameEngine as Game
     participant Backend
-    participant Database as MongoDB
 
-    activate User1
-    activate User2
-    activate Backend
-    Backend->>GameEngine: Provides first problem
-    activate GameEngine
-    GameEngine-->>User1: Displays coding problem
-    GameEngine-->>User2: Displays coding problem
-    User1->>GameEngine: Presses "Begin" button
-    
-    GameEngine->>Backend: Starts timer
-    Backend-->>GameEngine: Timer Ticks Down
-    GameEngine-->>User1: Display Timer Tick Down
-    GameEngine-->>User2: Display Timer Tick Down
-    User1->>GameEngine: Writes code in text box
-    User1->>GameEngine: Clicks "Submit" button
-    GameEngine->>Backend: Receives code and ends User1's turn
-    Backend->>Database: Stores User1's code submission
-    activate Database
-    deactivate Database
-    GameEngine-->>User1: Displays current code entered
-    GameEngine-->>User2: Displays current code entered
-    GameEngine->Backend: Reset Timer for User 2
-    GameEngine-->>User2: Display their turn starts now
-    GameEngine->Backend: Start Timer
-    Backend-->GameEngine: Timer Ticks Down
-    GameEngine-->>User2: Display Time Tick Down
-    GameEngine-->>User1: Display Time Tick Down
-    User2->>GameEngine: Writes code in text box
-    User2->>GameEngine: Clicks "Submit" button
-    
-    GameEngine->>Backend: Receives code and ends User2's turn
-    
-    Backend->>Database: Stores User2's code submission
-    activate Database
-    deactivate Database
-    GameEngine-->>User1: Displays current code entered
-    GameEngine-->>User2: Displays current code entered
-    deactivate GameEngine
-    Backend->>GPTBot: Sends final submission for analysis
-    activate GPTBot
-    GPTBot-->>Backend: Rates solution (1-3)
-    deactivate GPTBot
-    Backend-->>User1: Displays party's rating
-    Backend-->>User2: Displays party's rating
-    deactivate Backend
-    deactivate User1
-    deactivate User2
-    alt Solution is incorrect
-        activate User1
-        Backend->>GameEngine: Party loses health
-        activate GameEngine
-        activate Backend
-        GameEngine->>Backend: Resets timer for next turn
-        deactivate GameEngine
-        Backend-->>User1: User 1 goes again for another turn
-        deactivate Backend
-        deactivate User1
-       
+    User->>Game: Starts quest
+    activate User
+    activate Game
+    Game->>User: Prompt with coding question
+
+    Game-->>User: Displays quest briefing with story
+    Game->>Timer: Starts countdown
+    activate Timer
+    loop Timer countdown
+        Timer-->>Game: Timer ticks down
+        alt Timer reaches 0
+            Game->>User: Display user health bar decreaseing
+            Timer->>Game: Reset timer or end game if player health is 0
+        end
     end
+    deactivate Timer
+    
+    User->>Editor: Writes code
+    activate Editor
+    User->>Editor: Clicks "Submit" button
+    Editor->>Backend: Sends code for analysis
+    deactivate Editor
+
+    activate Backend
+    Backend->>GPTBot: Analyzes submission
+    activate GPTBot
+    GPTBot-->>Backend: Provides feedback with rating (1-3)
+    deactivate GPTBot
+
+    Backend-->>Game: Sends feedback and rating
+    deactivate Backend
+
+    Game->>User: Displays feedback
+    alt Rating 1
+        Game->>User: Decreases user's health, prompts retry
+    else Rating 2
+        Game->>User: Provides tips, offers choice to retry or continue
+    else Rating 3
+        Game->>User: User successfully attacks, moves to next question
+    end
+
+    deactivate Game
+    deactivate User
 ```
 
-1. The users are given their first problem.
-2. User 1 is randomly selected and when the party is done reading the problem, user 1 presses the “Begin” button.
-3. The timer begins and user 1 starts to write code in the provided text box.
-4. User 1 clicks the “Submit” button.
-5. User 1’s turn is done and the timer restarts.
-6. The timer begins as it is now user 2's turn to write code in the provided text box.
-7. User 2 clicks the “Submit” button.
-8. GPT-bot analyzes the final submission and rates the party’s solution from 1 to 3.
-9. If the final submission is incorrect, the party loses health, the timer resets, and user 1 starts a new turn.
+1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
+2. The game screen is now displayed to the user where they can see:
+   - User's avatar
+   - User's health bar
+   - Enemy
+   - Enemy's health bar
+   - Timer
+   - Code Editor
+3. The user is prompted with a question.
+4. The timer begins to tick down.
+   - If the user does not submit an answer before the timer reaches 0, then the user's health bar decreases.
+5. The user writes code in the provided code editor.
+6. The user clicks the "Submit" button.
+7. The GPT-bot analyzes the user's submission and provides feedback with a rating from 1 to 3.
+8. Based on the GPT-bot’s rating:
+   - **Feedback is provided to the user**:
+     - If the rating is 1, the user’s health bar decreases, and the quest continues with the timer reset for a new attempt.
+     - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
+     - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
+9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
