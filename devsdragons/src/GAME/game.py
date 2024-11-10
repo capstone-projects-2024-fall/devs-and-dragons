@@ -46,9 +46,10 @@ class Fighter:
             self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
             temp_list.append(image)
         self.animation_list.append(temp_list)
+
         self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
-        self.rect_center = (x, y)
+        self.rect.center = (x, y)
 
     def update(self):
         animation_cooldown = 100
@@ -69,7 +70,7 @@ class Fighter:
 
 # How to change these numbers and position the character
 player = Fighter(200, 260, 'Knight', 30, 10, 3)
-villain = Fighter(550, 720, 'Boss', 20, 6, 1)
+villain = Fighter(550, 260, 'Boss', 20, 6, 1)
 
 
 run = True
