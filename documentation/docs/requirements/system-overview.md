@@ -10,11 +10,6 @@ Devs and Dragons is a single-player web-based application designed for computer 
 
 ## High Level Requirements
 
-### Group Dynamics
-- **Party:** Small group of 2 to 4 members
-- **Guild:** Large group capable of holding up to 150 members, can be assigned multiple quests
-- **Guild Party:** Similar to a _Party_, but are made within a guild
-
 ### Game Mechanics
 ![Timer](https://github.com/user-attachments/assets/ab9dd4d5-2544-461d-a894-28ed702d74bf)             
 **Figure 1.**
