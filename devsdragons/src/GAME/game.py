@@ -27,7 +27,8 @@ screen_height = 600 + bottom_panel
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Battle")
 
-
+# Define fonts
+font = pygame.font.SysFont('Times New Roman', 26)
 
 # Load Images
 # Background image
