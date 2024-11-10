@@ -1,6 +1,5 @@
 import pygame
 from pygame.time import Clock
-from clacks import Clacks
 
 import random
 # import button NEED TO FIX
@@ -21,25 +20,10 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.init() # Might not need this line
 
-clacks = Clacks()
-clacks.clock = Clock()
+clock = Clock()
 
-# Part 1: Import initial setup for the game
-from modes.LogoOne import LogOne
-
-current_screen = LogOne(clacks, (screen_width, screen_height))
-
-screens = {
-    "Logo": current_screen
-}
-screens["Logo"].enter_screen()
-screen.blit(screens["Logo"].render(), (0, 0)) # 0,0 Top left corner of screen origin point
 
 # Part 2: Load other Quest Stuff
-
-# Part 3: Game/Battle Logic (Loop)
-
-
 fps = 60
 
 pygame.display.set_caption("Battle")
@@ -144,6 +128,8 @@ dev_health_bar = HealthBar(448, 100, dev.hp, dev.max_hp)
 dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
 
 
+# Part 3: Game/Battle Logic (Loop)
+#run = dev_health_bar != 0 or dragon_health_bar != 0
 run = True
 while run:
     clock.tick(fps)
