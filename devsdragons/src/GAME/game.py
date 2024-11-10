@@ -1,13 +1,9 @@
 import pygame
 from pygame.time import Clock
+from clacks import Clacks
 
 import random
 # import button NEED TO FIX
-
-pygame.init()
-
-clock = Clock()
-fps = 60
 
 # Game Window, when we incorporate the bottom panel
 bottom_panel = 0 # Right now 0 before we add the editor keyboard (might not be here)
@@ -22,8 +18,27 @@ screen_height = 600 + bottom_panel
 # For devices of 1280 by 720, use 1200 by 540
 # For devices of 1920 by 1080, use 1536 by 600 | which is currently being used
 
+pygame.init() # Might not need this line
+
+clacks = Clacks()
+clacks.clock = Clock()
+
+# Part 1: Import initial setup for the game
+from modes.LogoOne import LogOne
+
+current_screen = LogOne(clacks, (screen_width, screen_height))
+
+screens = {
+    "Logo": current_screen
+}
 
 
+# Part 2: Load other Quest Stuff
+
+# Part 3: Game/Battle Logic (Loop)
+
+
+fps = 60
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Battle")
