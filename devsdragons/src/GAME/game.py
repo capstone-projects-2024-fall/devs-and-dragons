@@ -20,6 +20,9 @@ pygame.display.set_caption("Battle")
 # Background image
 background_image = pygame.image.load('images.jpg').convert_alpha()
 
+def draw_background():
+    screen.blit(background_image, (0, 0))
+
 run = True
 while run:
     clock.tick(fps)
