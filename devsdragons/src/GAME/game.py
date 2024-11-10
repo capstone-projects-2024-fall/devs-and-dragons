@@ -1,11 +1,12 @@
 import pygame
+from pygame.time import Clock
 
 import random
 # import button NEED TO FIX
 
 pygame.init()
 
-clock = pygame.time.Clock()
+clock = Clock()
 fps = 60
 
 # Game Window, when we incorporate the bottom panel
