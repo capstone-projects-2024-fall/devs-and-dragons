@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Project Abstract
 
-Devs and Dragons is a multiplayer web-based application that provides a gamified learning platform for computer science students and educators. Users must form parties of two to four members to take on quests that involve solving coding problems. Alternatively, users can create guilds to hold multiple parties and assign multiple quests. Each user in a party takes turns coding to solve the problem with a given time constraint based on difficulty. Each quest and the problems created for the quest are generated using user input and a GPT bot. 
+Devs and Dragons is a single-player web-based application designed for computer science education. It utilizes a GPT bot to generate unique quests tailored to the individual learning needs of each user. The application includes an AI helper bot that provides guidance during quests. Users can track and review completed quests to reinforce their learning.
 
 ## High Level Requirements
 
