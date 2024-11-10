@@ -32,7 +32,7 @@ All users can create a quest by filling out a form that specifies the difficulty
 
 ## Conceptual Design
 
-The frontend of Devs and Dragons will be developed using React.js to build UI components and manage the application state. The backend will be powered by Flask, handling user authentication, API requests, and integrating with the OpenAI GPT model for generating and grading coding challenges. MongoDB will be the database, storing user data, quest configurations, and coding submissions. React Game Kit will develop the game component using its tools to create and manage animations and game mechanics.
+The frontend of Devs and Dragons will be developed using React.js to build UI components and manage the application state. The backend will be powered by Flask, handling user authentication, API requests, and integrating with the OpenAI GPT model for generating and grading coding challenges. MongoDB will be the database, storing user data, quest configurations, and coding submissions. Pygames will be used to create the game portion where it will handle the animations, game mechanics, and overall visuals of the quest expereince.
 
 ## Background
 
