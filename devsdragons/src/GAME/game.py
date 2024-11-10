@@ -96,8 +96,8 @@ class Fighter:
 # But brief approximation, for every 1 increase in scale factor, decrease y by 10%
 
 # How to change these numbers and position the character: FIGURED IT OUT!
-player = Fighter(520, (520 * 0.9), 'Knight', 30, 10, 3)
-villain = Fighter(1016, (520 * 0.9), 'Boss', 20, 6, 1)
+dev = Fighter(520, (520 * 0.9), 'Dev', 30, 10, 3)
+dragon = Fighter(1016, (520 * 0.9), 'Dragon', 20, 6, 1)
 
 
 run = True
@@ -109,13 +109,13 @@ while run:
 
     # Draw entities onto the screen
     # Player
-    player.update()
-    player.draw()
+    dev.update()
+    dev.draw()
     # Player health bar
 
     # Villain
-    villain.update()
-    villain.draw()
+    dragon.update()
+    dragon.draw()
     # Villain health bar
 
     # Event handler
