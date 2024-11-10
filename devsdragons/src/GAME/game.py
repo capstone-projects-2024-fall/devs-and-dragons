@@ -39,8 +39,14 @@ class Fighter:
         # 0 indicating idle, 1 attack, 2 hurt, 3 dead
         self.action = 0
         self.update_time = pygame.time.get_ticks()
-        image = pygame.image.load(f'img/{self.name}/Idle/0.png')
-        self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
+        # Load idle animation images
+        temp_list = []
+        for i in range(4):
+            image = pygame.image.load(f'img/{self.name}/Idle/{i}.png')
+            self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
+            temp_list.append(image)
+        self.animation_list.append(temp_list)
+        self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
         self.rect_center = (x, y)
 
@@ -48,8 +54,9 @@ class Fighter:
         screen.blit(self.image, self.rect)
 
 # How to change these numbers and position the character
-player = Fighter(500, -500, 'Knight', 30, 10, 3)
-villain = Fighter()
+player = Fighter(200, 260, 'Knight', 30, 10, 3)
+villain = Fighter(550, 720, 'Boss', 20, 6, 1)
+
 
 run = True
 while run:
@@ -64,7 +71,7 @@ while run:
     # Player health bar
 
     # Villain
-
+    villain.draw()
     # Villain health bar
 
     # Event handler
