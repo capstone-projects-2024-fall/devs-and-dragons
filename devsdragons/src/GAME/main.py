@@ -1,4 +1,4 @@
-import pygame
+import pygame, asyncio
 from pygame.time import Clock
 
 import random
@@ -130,34 +130,41 @@ dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
 
 # Part 3: Game/Battle Logic (Loop)
 #run = dev_health_bar != 0 or dragon_health_bar != 0
-run = True
-while run:
-    clock.tick(fps)
 
-    # Draw background
-    draw_background()
+async def main():
+    run = True
+    while run:
+        clock.tick(fps)
 
-    # Draw entities onto the screen
-    # Player
-    dev.update()
-    dev.draw()
-    # Player health bar
-    dev_health_bar.draw(dev.hp)
+        # Draw background
+        draw_background()
 
-    # Villain
-    dragon.update()
-    dragon.draw()
-    # Villain health bar
-    dragon_health_bar.draw(dragon.hp)
+        # Draw entities onto the screen
+        # Player
+        dev.update()
+        dev.draw()
+        # Player health bar
+        dev_health_bar.draw(dev.hp)
 
-    # Event handler
-    for event in pygame.event.get():
-        # Some event that would cause the py game to quit,
-        # Eventually this event will become a health bar reaching 0
-        if event.type == pygame.quit:
-            run = False
+        # Villain
+        dragon.update()
+        dragon.draw()
+        # Villain health bar
+        dragon_health_bar.draw(dragon.hp)
 
-    # Update the display which the screen sees
-    pygame.display.update()
+        # Event handler
+        for event in pygame.event.get():
+            # Some event that would cause the py game to quit,
+            # Eventually this event will become a health bar reaching 0
+            if event.type == pygame.quit:
+                run = False
 
-pygame.quit()
+        # Update the display which the screen sees
+        pygame.display.update()
+
+        #pygame.quit()
+        await asyncio.sleep(0)
+
+
+
+asyncio.run(main())
