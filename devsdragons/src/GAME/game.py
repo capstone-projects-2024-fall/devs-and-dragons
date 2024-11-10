@@ -123,8 +123,8 @@ dev = Fighter(520, (520 * 0.9), 'Dev', 30, 10, 3)
 dragon = Fighter(1016, (520 * 0.9), 'Dragon', 20, 6, 1)
 
 # Create health bars
-dev_health_bar = HealthBar(100, screen_height - bottom_panel + 40, dev.hp, dev.max_hp)
-dragon_health_bar = HealthBar(500, screen_height - bottom_panel + 100, dev.hp, dev.max_hp)
+dev_health_bar = HealthBar(448, 100, dev.hp, dev.max_hp)
+dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
 
 
 run = True
