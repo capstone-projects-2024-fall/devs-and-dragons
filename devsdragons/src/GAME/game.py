@@ -9,6 +9,7 @@ import random
 bottom_panel = 0 # Right now 0 before we add the editor keyboard (might not be here)
 screen_width = 1536
 screen_height = 600 + bottom_panel
+screen = pygame.display.set_mode((screen_width, screen_height))
 
 # Keep screen width and screen height as these represent a 20 to 9 aspect ratio which is smaller than
 # 1024 by 768 (to accommodate all devices)
@@ -31,7 +32,8 @@ current_screen = LogOne(clacks, (screen_width, screen_height))
 screens = {
     "Logo": current_screen
 }
-
+screens["Logo"].enter_screen()
+screen.blit(screens["Logo"].render(), (0, 0)) # 0,0 Top left corner of screen origin point
 
 # Part 2: Load other Quest Stuff
 
@@ -40,7 +42,6 @@ screens = {
 
 fps = 60
 
-screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Battle")
 
 # Define fonts
