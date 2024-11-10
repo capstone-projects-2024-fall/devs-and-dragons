@@ -10,15 +10,15 @@ fps = 60
 
 # Game Window
 bottom_panel = 150
-screen_width = 800
-screen_height = 400 + bottom_panel
+screen_width = 620
+screen_height = 360 + bottom_panel
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Battle")
 
 # Load Images
 # Background image
-background_image = pygame.image.load('images.jpg').convert_alpha()
+background_image = pygame.image.load('QuestWallpaper.png').convert_alpha()
 
 def draw_background():
     screen.blit(background_image, (0, 0))
@@ -52,6 +52,15 @@ while run:
 
     # Draw background
     draw_background()
+
+    # Draw entities onto the screen
+    # Player
+    knight.draw()
+    # Player health bar
+
+    # Villain
+
+    # Villain health bar
 
     # Event handler
     for event in pygame.event.get():
