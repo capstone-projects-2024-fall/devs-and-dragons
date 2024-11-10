@@ -50,6 +50,20 @@ class Fighter:
         self.rect = self.image.get_rect()
         self.rect_center = (x, y)
 
+    def update(self):
+        animation_cooldown = 100
+        # Handle animation
+        # Update image
+        self.image = self.animation_list[self.action][self.frame_index]
+        # Check if enough time has passed since the last update
+        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+        # If the animation has run out then reset back to start
+        if self.frame_index >= len(self.animation_list[self.action]):
+            self.frame_index = 0
+
+
     def draw(self):
         screen.blit(self.image, self.rect)
 
