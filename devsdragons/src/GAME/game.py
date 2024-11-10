@@ -30,6 +30,11 @@ pygame.display.set_caption("Battle")
 # Define fonts
 font = pygame.font.SysFont('Times New Roman', 26)
 
+# Define colors
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
 # Load Images
 # Background image
 background_image = pygame.image.load('Backgrounds/Moonlight Forest.png').convert_alpha()
@@ -117,6 +122,10 @@ class Fighter:
 dev = Fighter(520, (520 * 0.9), 'Dev', 30, 10, 3)
 dragon = Fighter(1016, (520 * 0.9), 'Dragon', 20, 6, 1)
 
+# Create health bars
+dev_health_bar = HealthBar(100, screen_height - bottom_panel + 40, dev.hp, dev.max_hp)
+dragon_health_bar = HealthBar(500, screen_height - bottom_panel + 100, dev.hp, dev.max_hp)
+
 
 run = True
 while run:
@@ -130,11 +139,13 @@ while run:
     dev.update()
     dev.draw()
     # Player health bar
+    dev_health_bar.draw(dev.hp)
 
     # Villain
     dragon.update()
     dragon.draw()
     # Villain health bar
+    dragon_health_bar.draw(dragon.hp)
 
     # Event handler
     for event in pygame.event.get():
