@@ -53,10 +53,14 @@ class Fighter:
         self.update_time = pygame.time.get_ticks()
         # Load idle animation images
         temp_list = []
+        factor_to_scale_with = 5
         for i in range(4):
-            image = pygame.image.load(f'img/{self.name}/Idle/{i}.png')
-            self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
-            temp_list.append(image)
+            sprite_image = pygame.image.load(f'img/{self.name}/Idle/{i}.png').convert_alpha()
+            original_width = sprite_image.get_width()
+            original_height = sprite_image.get_height()
+            self.image = pygame.transform.scale(sprite_image, (original_width * factor_to_scale_with,
+                                                        original_height * factor_to_scale_with))
+            temp_list.append(self.image)
         self.animation_list.append(temp_list)
 
         self.image = self.animation_list[self.action][self.frame_index]
@@ -74,15 +78,26 @@ class Fighter:
             self.frame_index += 1
         # If the animation has run out then reset back to start
         if self.frame_index >= len(self.animation_list[self.action]):
-            self.frame_index = 0
+            if self.action == 3:
+                self.frame_index = len(self.animation_list[self.action]) - 1
+            else:
+                self.idle()
 
+    def idle(self):
+        # The idle animation as a function along with the variables
+        self.action = 0
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
 
     def draw(self):
         screen.blit(self.image, self.rect)
 
-# How to change these numbers and position the character
-player = Fighter(200, 260, 'Knight', 30, 10, 3)
-villain = Fighter(550, 260, 'Boss', 20, 6, 1)
+# Warning: Don't change the numbers
+# But brief approximation, for every 1 increase in scale factor, decrease y by 10%
+
+# How to change these numbers and position the character: FIGURED IT OUT!
+player = Fighter(520, (520 * 0.9), 'Knight', 30, 10, 3)
+villain = Fighter(1016, (520 * 0.9), 'Boss', 20, 6, 1)
 
 
 run = True
@@ -94,10 +109,12 @@ while run:
 
     # Draw entities onto the screen
     # Player
+    player.update()
     player.draw()
     # Player health bar
 
     # Villain
+    villain.update()
     villain.draw()
     # Villain health bar
 
