@@ -13,3 +13,9 @@ class BaseMode:
 
     def exit_screen(self):
         pass
+
+    def handle_event(self):
+        pass
+
+    def render(self, event):
+        pass
