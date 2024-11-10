@@ -9,9 +9,18 @@ clock = pygame.time.Clock()
 fps = 60
 
 # Game Window, when we incorporate the bottom panel
-bottom_panel = 180
-screen_width = 620
-screen_height = 360 + bottom_panel
+bottom_panel = 0 # Right now 0 before we add the editor keyboard (might not be here)
+screen_width = 1536
+screen_height = 600 + bottom_panel
+
+# Keep screen width and screen height as these represent a 20 to 9 aspect ratio which is smaller than
+# 1024 by 768 (to accommodate all devices)
+
+# Wallpaper dimensions are all 2400 by 1080, 20:9 aspect ratio
+# For devices of 1024 by 768, use 960 by 432
+# For devices of 1280 by 720, use 1200 by 540
+# For devices of 1920 by 1080, use 1536 by 600 | which is currently being used
+
 
 
 
@@ -20,7 +29,10 @@ pygame.display.set_caption("Battle")
 
 # Load Images
 # Background image
-background_image = pygame.image.load('QuestWallpaper.png').convert_alpha()
+background_image = pygame.image.load('Backgrounds/Moonlight Forest.png').convert_alpha()
+
+# Scale the image to fit the screen
+background_image = pygame.transform.scale(background_image, (screen_width, screen_height - bottom_panel))
 
 def draw_background():
     screen.blit(background_image, (0, 0))
