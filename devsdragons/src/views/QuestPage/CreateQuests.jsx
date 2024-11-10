@@ -15,7 +15,7 @@ const CreateQuestsPage = () => {
   // Placeholder values for coding topics, enemies, and backgrounds
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
   const enemies = ['Bugzilla', 'SyntaxError', 'NullPointer', 'InfiniteLoop'];
-  const backgrounds = ['Forest', 'Desert', 'Cave', 'Mountain'];
+  const backgrounds = ['Church Ruins', 'Cloudy Vines', "Halloween's Carnival", 'Hardrock Bar', 'Lava Everest', 'Medici Venue', 'Moonlight Forest', 'Pirates Den', 'Sauna Circle'];
 
   const handleCreateQuest = (e) => {
     e.preventDefault();
