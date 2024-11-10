@@ -8,10 +8,12 @@ pygame.init()
 clock = pygame.time.Clock()
 fps = 60
 
-# Game Window
-bottom_panel = 150
+# Game Window, when we incorporate the bottom panel
+bottom_panel = 180
 screen_width = 620
 screen_height = 360 + bottom_panel
+
+
 
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Battle")
@@ -37,14 +39,17 @@ class Fighter:
         # 0 indicating idle, 1 attack, 2 hurt, 3 dead
         self.action = 0
         self.update_time = pygame.time.get_ticks()
-        self.image = pygame.image.load(f'img/{self.name}/Idle/0.png')
+        image = pygame.image.load(f'img/{self.name}/Idle/0.png')
+        self.image = pygame.transform.scale(image, (image.get_width() * 3, image.get_height() * 3))
         self.rect = self.image.get_rect()
         self.rect_center = (x, y)
 
     def draw(self):
         screen.blit(self.image, self.rect)
 
-knight = Fighter(200, 260, 'Knight', 30, 10, 3)
+# How to change these numbers and position the character
+player = Fighter(500, -500, 'Knight', 30, 10, 3)
+villain = Fighter()
 
 run = True
 while run:
@@ -55,7 +60,7 @@ while run:
 
     # Draw entities onto the screen
     # Player
-    knight.draw()
+    player.draw()
     # Player health bar
 
     # Villain
