@@ -49,3 +49,18 @@ knight = Fighter(200, 260, 'Knight', 30, 10, 3)
 run = True
 while run:
     clock.tick(fps)
+
+    # Draw background
+    draw_background()
+
+    # Event handler
+    for event in pygame.event.get():
+        # Some event that would cause the py game to quit,
+        # Eventually this event will become a health bar reaching 0
+        if event.type == pygame.quit:
+            run = False
+
+    # Update the display which the screen sees
+    pygame.display.update()
+
+pygame.quit()
