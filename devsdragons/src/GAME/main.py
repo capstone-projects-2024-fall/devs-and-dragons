@@ -4,12 +4,12 @@ from pygame import MOUSEBUTTONDOWN
 from pygame.time import Clock
 import sys
 
+import button
+
 import random
 
 from sympy.physics.units import action
 from win32api import mouse_event
-
-# import button NEED TO FIX
 
 # Game Window, when we incorporate the bottom panel
 bottom_panel = 0 # Right now 0 before we add the editor keyboard (might not be here)
@@ -56,6 +56,17 @@ BLUE = (173, 216, 230)
 # Background image
 background_image = pg.image.load('Backgrounds/Moonlight Forest.png').convert_alpha()
 
+damage_text_group = pygame.sprite.Group()
+
+# Scale the image to fit the screen
+background_image = pg.transform.scale(background_image, (screen_width, screen_height - bottom_panel))
+
+pg.display.set_caption("Text Input Example")
+
+# Input variables
+user_text = ""  # Store the user input text
+input_active = True  # Control when to capture input
+
 
 
 def draw_speech_bubble(screen, text, text_colour, bg_colour, pos, size):
@@ -97,14 +108,6 @@ def read_image(path, w=None, h=None):
     return img
 
 
-# Scale the image to fit the screen
-background_image = pg.transform.scale(background_image, (screen_width, screen_height - bottom_panel))
-
-pg.display.set_caption("Text Input Example")
-
-# Input variables
-user_text = ""  # Store the user input text
-input_active = True  # Control when to capture input
 
 def draw_text(text, position, color=black):
     """Function to draw text on the screen at a given position."""
@@ -113,6 +116,24 @@ def draw_text(text, position, color=black):
 
 def draw_background():
     screen.blit(background_image, (0, 0))
+
+
+class DamageText(pygame.sprite.Sprite):
+	def __init__(self, x, y, damage, colour):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = font.render(damage, True, colour)
+		self.rect = self.image.get_rect()
+		self.rect.center = (x, y)
+		self.counter = 0
+
+
+	def update(self):
+		#move damage text up
+		self.rect.y -= 1
+		#delete the text after a few seconds
+		self.counter += 1
+		if self.counter > 30:
+			self.kill()
 
 class HealthBar:
     def __init__(self, x, y, hp, max_hp):
@@ -153,13 +174,39 @@ class Fighter:
             self.image = pg.transform.scale(sprite_image, (original_width * factor_to_scale_with,
                                                         original_height * factor_to_scale_with))
             temp_list.append(self.image)
+
+        # load attack images
+        temp_list = []
+        for i in range(4):
+            img = pygame.image.load(f'img/{self.name}/Attack/{i}.png')
+            self.img = pygame.transform.scale(img, (img.get_width() * factor_to_scale_with
+                                               , img.get_height() * factor_to_scale_with))
+            temp_list.append(self.img)
+        self.animation_list.append(temp_list)
+
+        # load hurt images
+        temp_list = []
+        for i in range(4):
+            img = pygame.image.load(f'img/{self.name}/Hurt/{i}.png')
+            self.img = pygame.transform.scale(img, (img.get_width() * factor_to_scale_with,
+                                                    img.get_height() * factor_to_scale_with))
+            temp_list.append(self.img)
+        self.animation_list.append(temp_list)
+
+        # load death images
+        temp_list = []
+        for i in range(4):
+            img = pygame.image.load(f'img/{self.name}/Death/{i}.png')
+            self.img = pygame.transform.scale(img, (img.get_width() * factor_to_scale_with,
+                                                    img.get_height() * factor_to_scale_with))
+            temp_list.append(self.img)
         self.animation_list.append(temp_list)
 
         self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    def update(self):
+    def update(self, should_display_text=False, text="Hello",):
         animation_cooldown = 100
         # Handle animation
         # Update image
@@ -174,6 +221,8 @@ class Fighter:
                 self.frame_index = len(self.animation_list[self.action]) - 1
             else:
                 self.idle()
+        if should_display_text:
+            self.display_text(text)
 
     def idle(self):
         # The idle animation as a function along with the variables
@@ -181,9 +230,42 @@ class Fighter:
         self.frame_index = 0
         self.update_time = pg.time.get_ticks()
 
-    def draw(self, text="Hello"):
+    def draw(self):
         screen.blit(self.image, self.rect)
+
+    def display_text(self, text):
         draw_speech_bubble(screen, text, (255, 255, 255), (0, 0, 0), self.rect.midtop, 25)
+
+    def attack(self, target):
+        # deal damage to enemy
+        rand = random.randint(-5, 5)
+        damage = self.strength + rand
+        target.hp -= damage
+        # run enemy hurt animation
+        target.hurt()
+        # check if target has died
+        if target.hp < 1:
+            target.hp = 0
+            target.alive = False
+            target.death()
+        damage_text = DamageText(target.rect.centerx, target.rect.y, str(damage), red)
+        damage_text_group.add(damage_text)
+        # set variables to attack animation
+        self.action = 1
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+
+    def hurt(self):
+        # set variables to hurt animation
+        self.action = 2
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+
+    def death(self):
+        # set variables to death animation
+        self.action = 3
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
 
 # Warning: Don't change the numbers
 # But brief approximation, for every 1 increase in scale factor, decrease y by 10%
@@ -221,6 +303,10 @@ def draw_text_bubble(text, position, bubble_width=200, bubble_height=100, pointe
 
 #run = dev_health_bar != 0 or dragon_health_bar != 0
 
+#create buttons
+#potion_button = button.Button(screen, 100, screen_height - bottom_panel + 70, potion_img, 64, 64)
+restart_button = button.Button(screen, 330, 120, restart_img, 120, 30)
+
 run = True
 while run:
     clock.tick(fps)
@@ -234,6 +320,16 @@ while run:
     dev.draw()
     # Player health bar
     dev_health_bar.draw(dev.hp)
+
+    # draw the damage text
+    damage_text_group.update()
+    damage_text_group.draw(screen)
+
+    # control player actions
+    # reset action variables
+    attack = False
+    potion = False
+    target = None
 
     # Villain
     dragon.update()
@@ -249,11 +345,27 @@ while run:
     dragon_first_question = "What's your name?"
     dragon_correct_ans_to_first_question = "Animish."
 
-    game_declaration_disappear = False
+    # check if game is over
+    if game_over != 0:
+        if game_over == 1:
+            screen.blit(victory_img, (250, 50))
+        if game_over == -1:
+            screen.blit(defeat_img, (290, 50))
+        if restart_button.draw():
+            knight.reset()
+            for bandit in bandit_list:
+                bandit.reset()
+            current_fighter = 1
+            action_cooldown
+            game_over = 0
 
     for event in pygame.event.get():
-        if event.type == pygame.quit:
+        if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            clicked = True
+        else:
+            clicked = False
 
     #draw_text_bubble(f"HI ISHAN", (360, 250))  # Use this text in the game logic
 
