@@ -18,7 +18,7 @@ password = "testKey125"
 # For better readability
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
-# openai.api_key = ""
+openai.api_key = "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" 
 db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
