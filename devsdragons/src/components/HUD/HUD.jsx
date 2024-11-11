@@ -36,9 +36,9 @@ const HUD = () => {
         </IconButton>
 
         {/* Icon for navigating to the guilds page */}
-        <IconButton component={Link} to="/guilds" color="inherit">  
+        <IconButton component={Link} to="/test" color="inherit">  
           <Groups />  
-          <Typography variant="caption">Guilds</Typography> 
+          <Typography variant="caption">GAME PROTOTYPE</Typography> 
         </IconButton>
 
         {/* Icon for navigating to the create quests page */}

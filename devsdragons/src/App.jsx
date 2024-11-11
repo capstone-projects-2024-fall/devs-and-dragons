@@ -3,7 +3,7 @@ import AvatarPage from './views/Avatar/AvatarPage.jsx';
 import CreateQuestsPage from './views/QuestPage/CreateQuests.jsx';
 import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
-import GuildsPage from './views/GuildPage/GuildPage.jsx';
+import ProtoTypePage from './views/ProtoTypePage/ProtoTypePage.jsx';
 import CodeEditor from './views/Editor/CodeEditor.jsx';
 import QuestGameView from './views/QuestGameView/QuestGameView.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
@@ -31,19 +31,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <QuestProvider>
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/code-editor" element={<CodeEditor />} />  
-            <Route path="/home-page" element={<HomePage />} />
-            <Route path="/create-quests" element={<CreateQuestsPage />}/>
-            <Route path="/my-quests" element={<MyQuestsPage/>} />
-            <Route path="/quest-main" element={<QuestMainPage />} /> 
-            <Route path="/guilds" element={<GuildsPage />} />
-            <Route path="/avatar" element={<AvatarPage />} />
-            <Route path="/game" element={<QuestGameView />} />
-          </Routes>
-        </QuestProvider>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/code-editor" element={<CodeEditor />} />  
+          <Route path="/home-page" element={<HomePage />} />
+          <Route path="/my-quests" element={<MyQuestsPage/>} />
+          <Route path="/create-quests" element={<CreateQuestsPage />}/>
+          <Route path="/test" element={<ProtoTypePage />} />
+          <Route path="/avatar" element={<AvatarPage />} />
+        </Routes>
       </Router>
     </ThemeProvider>
   );
