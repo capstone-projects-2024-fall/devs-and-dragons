@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
-import axios from 'axios';
 
-const CodeEditor = () => {
+const CodeEditor = ( { onCodeSubmit }) => {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
-  const [question, setQuestion] = useState("");
 
 
   const handleEditorChange = (value) => {
     setCode(value);
   };
 
-  const runCode = async () => {
-    try {
-      const response = await axios.post('/code_from_user', { code, language });
-      if (response.statusCode === 200) {
-        console.log(response.data);
-        console.log(code);
-        alert(code);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error in code execution: " + err.message);
-    }
+  const runCode = () => {
+    // passing the code, and the language to the parent component
+
+    onCodeSubmit(code, language);
   };
 
   const containerStyle = {
@@ -71,8 +61,6 @@ const CodeEditor = () => {
 
   return (
     <div style={containerStyle}>
-      <h1 style={headerStyle}>This is the IDE which will be coded in</h1>
-      <h2 style={headerStyle}>First please select the language you want to program in</h2>
       <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3>
       <select
         style={selectStyle}
@@ -85,7 +73,7 @@ const CodeEditor = () => {
       </select>
       <div style={editorContainerStyle}>
         <Editor
-          height="60vh"
+          height="30vh"
           language={language}
           theme="vs-light"
           value={code}
