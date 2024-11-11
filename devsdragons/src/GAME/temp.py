@@ -21,7 +21,20 @@ font = pygame.font.SysFont('Times New Roman', 26)
 # Set screen
 width = 1536
 height = 600
-screen = pygame.display.set_mode((width, height))
+bottom_panel = 200
+screen = pygame.display.set_mode((width, height + bottom_panel))
+
+# editor settings
+editor_x = width // 2 - 300
+editor_y = height + 20
+editor_width, editor_height = 600, 160
+editor_rect = pygame.Rect(editor_x, editor_y, editor_width + bottom_panel, editor_height)
+editor_font = pygame.font.Font(None, 20)
+
+# Other variables
+languages = ["Python", "JavaScript", "Java", "C", "C++"]
+button_width, button_height = 200, 50
+margin = 20
 
 # Load assets
 # Background image
@@ -79,7 +92,7 @@ def read_image(path, w=None, h=None):
 
 # All Classes - START
 class Fighter:
-    def __init__(self, x, y, name, max_hp, strength, potions):
+    def __init__(self, x, y, name, max_hp=100, strength=50, potions=0):
         self.name = name
         self.max_hp = max_hp
         self.hp = max_hp
@@ -157,8 +170,8 @@ class Fighter:
 
     def attack(self, _target):
         # deal damage to enemy
-        rand = random.randint(-5, 5)
-        damage = self.strength + rand
+        #rand = random.randint(-5, 5)
+        damage = self.strength
         _target.hp -= damage
         # run enemy hurt animation
         _target.hurt()
@@ -244,106 +257,136 @@ action_wait_time = 90
 attack = False
 game_over = 0
 
+pygame.display.set_caption("Battle!")
+damage_text_group = pygame.sprite.Group()
+
+# Game over 1 if dev wins, -1 if dragon wins
+
+# Instantiate components
+dev = Fighter(520, (520 * 0.9), 'Dev', 40, 20, 3)
+dragon = Fighter(1016, (520 * 0.9), 'Dragon', 40, 20, 1)
+# Create health bars
+dev_health_bar = HealthBar(448, 100, dev.hp, dev.max_hp)
+dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
+# Create buttons
+restart_button = button.Button(screen, 330, 120, restart_img, 120, 30)
+#x = width / 2 - button_width / 2
+#y = 150 + (button_height + margin)
+#python_button = button.Button(screen, x, y, )
+
+# editor variables
+is_typing = False
+code_lines = [""]
+selected_language = None
+buttons = []
+language_chosen = False
 
 if __name__ == '__main__':
-    pygame.display.set_caption("Battle!")
-    damage_text_group = pygame.sprite.Group()
-
-    # Game over 1 if dev wins, -1 if dragon wins
-
-    # Instantiate components
-    dev = Fighter(520, (520 * 0.9), 'Dev', 40, 10, 3)
-    dragon = Fighter(1016, (520 * 0.9), 'Dragon', 40, 10, 1)
-    # Create health bars
-    dev_health_bar = HealthBar(448, 100, dev.hp, dev.max_hp)
-    dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
-    # Create buttons
-    restart_button = button.Button(screen, 330, 120, restart_img, 120, 30)
-
-
     # Set the start time when the game starts
     start_time = pygame.time.get_ticks()
 
     # Questions and answers
-    question_one = "What is the time complexity for an insertion on a hash map?"
-    answer_one = "Constant"
-    question_two = "What is the time complexity for a traversal on a linked list?"
-    answer_two = "Linear"
-    question_three = "What is the time complexity when searching for an element on a balanced BST?"
-    answer_three = "Logarithmic"
-    question_four = "What is the time complexity for any 2 loops where one is nested in another?"
-    answer_four = "Quadratic"
+    question_list = [
+        "What is the time complexity for an insertion on a hash map?",
+        "What is the time complexity for a traversal on a linked list?",
+        "What is the time complexity when searching for an element on a balanced BST?",
+        "What is the time complexity for any 2 loops where one is nested in another?"
+    ]
+    answer_list = ["Constant", "Linear", "Logarithmic", "Quadratic"]
 
-    question_list = [question_one, question_two, question_three, question_four]
-    answer_list = [answer_one, answer_two, answer_three, answer_four]
+    # Define game states
+    ASK_QUESTION = 0
+    WAIT_FOR_ANSWER = 1
+    current_state = ASK_QUESTION  # Start with the dragon asking the first question
 
-    while dev.hp != 0 or dragon.hp != 0:
-        if dev.hp == 0:
-            dev.alive = False
-            screen.blit(defeat_img, (290, 50))
-            game_over =
+    # Initialize question index
+    current_question_idx = 0
 
-        if dragon.hp == 0:
-            dragon.alive = False
-            screen.blit(victory_img, (250, 50))
+    run = True
+    while run:
+        #dragon.display_text(question_list[current_question_idx])
+        # Handle events
+        for event in pygame.event.get():
+            #dragon.display_text(question_list[current_question_idx])
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if editor_rect.collidepoint(event.pos):
+                    is_typing = True
+                else:
+                    is_typing = False
+            elif event.type == pygame.KEYDOWN and is_typing:
+                if event.key == pygame.K_RETURN:
+                    # Check answer when "Enter" key is pressed
+                    player_answer = "".join(code_lines)
+                    correct_answer = answer_list[current_question_idx]
 
-        # Calculate the elapsed time (in milliseconds)
-        elapsed_time = pygame.time.get_ticks() - start_time
+                    if player_answer.strip().lower() == correct_answer.lower():
+                        dev.attack(dragon)  # Correct answer, player attacks dragon
+                    else:
+                        dragon.attack(dev)  # Incorrect answer, dragon attacks player
 
-        # Convert to seconds if needed
-        elapsed_seconds = elapsed_time / 1000
+                    # Move to the next question or end the game if all questions are done
+                    current_question_idx += 1
+                    if current_question_idx < len(question_list):
+                        current_state = ASK_QUESTION
+                        code_lines = [""]  # Reset code editor for next answer
+                    else:
+                        current_state = -1  # End game or implement other logic
+                elif event.key == pygame.K_BACKSPACE:
+                    # Handle backspace and text input
+                    if len(code_lines[-1]) > 0:
+                        code_lines[-1] = code_lines[-1][:-1]
+                    elif len(code_lines) > 1:
+                        code_lines.pop()
+                else:
+                    code_lines[-1] += event.unicode
 
-        # Display elapsed time on the screen (optional)
-        draw_text(f"Time: {elapsed_seconds:.2f} s", font, white, 50, 50)
-        pygame.display.update()
+        # Game logic based on state
+        if current_state == ASK_QUESTION:
+            # Display the current question from the dragon
+            dragon.display_text(question_list[current_question_idx])
+            current_state = WAIT_FOR_ANSWER
+
+        elif current_state == WAIT_FOR_ANSWER:
+            # Display the code editor for the player to type their answer
+            dragon.display_text(question_list[current_question_idx])
+            gray = (128, 128, 128)
+            pygame.draw.rect(screen, gray, editor_rect)
+            pygame.draw.rect(screen, black, editor_rect, 2)
+            for i, line in enumerate(code_lines):
+                line_surface = editor_font.render(line, True, black)
+                screen.blit(line_surface, (editor_x + 5, editor_y + 5 + i * 20))
 
 
-        clock.tick(fps)
-        # Draw background
+        # Draw background and other elements
         draw_background()
 
-        # Draw entities onto the screen
-        # Player
+        gray = (128, 128, 128)
+        # Display other game UI components
+        pygame.draw.rect(screen, gray, editor_rect)
+        pygame.draw.rect(screen, black, editor_rect, 2)
+        for i, line in enumerate(code_lines):
+            line_surface = editor_font.render(line, True, black)
+            screen.blit(line_surface, (editor_x + 5, editor_y + 5 + i * 20))
+
+        # Display elapsed time
+        elapsed_time = pygame.time.get_ticks() - start_time
+        elapsed_seconds = elapsed_time / 1000
+        draw_text(f"Time: {elapsed_seconds:.2f} s", font, white, 50, 50)
+
+        dragon.display_text(question_list[current_question_idx])
+
+        # Draw all characters, health bars, and other game elements
         dev.update()
         dev.draw()
-        # Player health bar
         dev_health_bar.draw(dev.hp)
-        # Villain
         dragon.update()
         dragon.draw()
-        # Villain health bar
         dragon_health_bar.draw(dragon.hp)
-
-        # Draw damage text
         damage_text_group.update()
         damage_text_group.draw(screen)
 
-        # Control player actions and reset them as needed
-        attack = False
-        target = None
-        start_declaration = True
-
-        if elapsed_seconds < 5:
-            draw_text("QUEST START", font, red, 675, 250)
-            start_declaration = False
-        else:
-            game_over = 0
-
-        if current_fighter == 1: # Player's turn
-            if dev.alive:
-                dev.attack(dragon)
-                current_fighter = 2
-
-        if current_fighter == 2: # Dragon's turn
-            if dragon.alive:
-                dragon.attack(dev)
-                current_fighter = 1
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-        # VERY IMPORTANT LINE BELOW, DO NOT CHANGE
         pygame.display.update()
 
     pygame.quit()

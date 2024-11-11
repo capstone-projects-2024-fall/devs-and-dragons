@@ -3,6 +3,9 @@ from pygame.time import Clock
 import sys
 
 import random
+
+from devsdragons.src.GAME.temp import draw_background
+
 # import button NEED TO FIX
 
 pygame.init() # Might not need this line
@@ -180,7 +183,7 @@ async def main():
     while run:
         # Removed the get_background() function. If image exisits, then this is the new background. 
         if background_image:
-            screen.blit(background_image, (0, 0))
+            draw_background()
         else:
             screen.fill((30, 30, 30))  # 
             
@@ -200,7 +203,7 @@ async def main():
             if not language_chosen:
                 title_text = font.render("Select a Programming Language", True, green)
             # position the text so that it is centerized and blitting it on the screen.
-            screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 50))
+                screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 50))
             # providing choices for the programming language's, creating a button for each and displaying them. 
             for i, language in enumerate(languages):
                 x = screen_width / 2 - button_width / 2
@@ -213,13 +216,16 @@ async def main():
                 screen.blit(text_surface, text_rect)
                 # storing the button's in a list
                 buttons.append((button, language))
+                #if button.clicked
+            #selected_language = True
+            #language_chosen = True
         else:
             # Display the selected language on the top left of the screen
             selected_text = font.render(f"Language: {selected_language}", True, red)
             screen.blit(selected_text, (50, 50))
 
             # Once the language has been chose, we can display the coding area
-            # title_text = font.render("Start coding here!", True, red)
+            title_text = font.render("Start coding here!", True, red)
             screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 100))
             pygame.draw.rect(screen, gray, editor_rect)
             pygame.draw.rect(screen, black, editor_rect, 2)
@@ -253,6 +259,7 @@ async def main():
                 # if the user enters the return key then a space is generated
                 if event.key == pygame.K_RETURN:
                     code_lines.append("")
+                    print(code_lines)
                     # if the user enter's backspace then we go the previous line, else we pop the last character
                 elif event.key == pygame.K_BACKSPACE:
                     if len(code_lines[-1]) > 0:
