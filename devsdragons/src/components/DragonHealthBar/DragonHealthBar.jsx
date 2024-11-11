@@ -5,6 +5,7 @@ import React, {useState} from 'react';
 
 const DragonHealthBar = () => {
     const[health, setHealth] = useState(150); //random value for now (more than player)
+    const [isDragonAttacking, setIsDragonAttacking] = useState(false); // State to track player's attack animation
     //health -> variable holding current health
     //setHealth -> function to update health 
 
@@ -13,9 +14,19 @@ const DragonHealthBar = () => {
     const decreaseHealth = () => {
         setHealth((prevHealth) => Math.max(prevHealth - 10, 0)); 
     };
+    const triggerDragonAttack = () => {
+        setIsDragonAttacking(true);
+        decreaseHealth();
+        setTimeout(() => setIsDragonAttacking(false), 500);
+    };
+
 
     return ( 
         <div>
+             <button onClick={triggerDragonAttack}>Attack</button>
+
+             {isDragonAttacking && <p>Dragon Attacking!</p>}
+             
              {/* Button to decrease health */}
             <button style = {{backgroundColor: 'red', color: 'white'}} onClick= {decreaseHealth}>TakeDamage(Dragon)</button>
              {/* Display current health value */}
