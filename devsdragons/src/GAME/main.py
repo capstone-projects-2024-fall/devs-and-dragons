@@ -1,14 +1,19 @@
 import pygame, asyncio
 from pygame.time import Clock
+import sys
 
 import random
 # import button NEED TO FIX
 
+pygame.init() # Might not need this line
+
 # Game Window, when we incorporate the bottom panel
-bottom_panel = 0 # Right now 0 before we add the editor keyboard (might not be here)
+bottom_panel = 200 # Right now 0 before we add the editor keyboard (might not be here)
 screen_width = 1536
 screen_height = 600 + bottom_panel
 screen = pygame.display.set_mode((screen_width, screen_height))
+clock = pygame.time.Clock()
+fps = 60
 
 # Keep screen width and screen height as these represent a 20 to 9 aspect ratio which is smaller than
 # 1024 by 768 (to accommodate all devices)
@@ -18,33 +23,62 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 # For devices of 1280 by 720, use 1200 by 540
 # For devices of 1920 by 1080, use 1536 by 600 | which is currently being used
 
-pygame.init() # Might not need this line
 
-clock = Clock()
 
 
 # Part 2: Load other Quest Stuff
-fps = 60
 
 pygame.display.set_caption("Battle")
 
 # Define fonts
-font = pygame.font.SysFont('Times New Roman', 26)
+font = pygame.font.SysFont('Times New Roman', 40)
 
 # Define colors
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+black = (0, 0, 0)
+gray = (240, 240, 240)
+white = (255, 255, 255)
 
 # Load Images
 # Background image
-background_image = pygame.image.load('Backgrounds/Moonlight Forest.png').convert_alpha()
+try:
+    background_image = pygame.image.load('Backgrounds/Moonlight Forest.png').convert_alpha()
+    background_image = pygame.transform.scale(background_image, (screen_width, screen_height - bottom_panel))
+except:
+    background_image = None
+    
 
 # Scale the image to fit the screen
-background_image = pygame.transform.scale(background_image, (screen_width, screen_height - bottom_panel))
 
-def draw_background():
-    screen.blit(background_image, (0, 0))
+languages = ["Python", "JavaScript", "Java", "C", "C++"]
+button_width, button_height = 200, 50
+margin = 20
+
+# editor settings
+editor_x = screen_width // 2 - 300
+editor_y = screen_height - bottom_panel + 20
+editor_width, editor_height = 600, 160
+editor_rect = pygame.Rect(editor_x, editor_y, editor_width, editor_height)
+editor_font = pygame.font.Font(None, 20)
+
+
+def IDE_button(text, x, y, color):
+    # first creating a rectangle for the button
+    # next drawing the button
+    # next displaying the text on the center of the button
+    button_rect = pygame.Rect(x, y, button_width, button_height)
+    pygame.draw.rect(screen, color, button_rect)
+    text_surface = font.render(text, True, white)
+    text_rect = text_surface.get_rect(center=(x + button_width / 2, y + button_height/2))
+    screen.blit(text_surface, text_rect)
+    return button_rect
+
+    
+    
+        
+        
 
 class HealthBar:
     def __init__(self, x, y, hp, max_hp):
@@ -131,39 +165,115 @@ dragon_health_bar = HealthBar(946, 100, dragon.hp, dragon.max_hp)
 # Part 3: Game/Battle Logic (Loop)
 #run = dev_health_bar != 0 or dragon_health_bar != 0
 
+
+# editor variables
+is_typing = False
+code_lines = [""]
+selected_language = None
+buttons = []
+language_chosen = False
+
+
 async def main():
+    global selected_language, is_typing, code_lines, language_chosen
     run = True
     while run:
-        clock.tick(fps)
-
-        # Draw background
-        draw_background()
-
-        # Draw entities onto the screen
-        # Player
+        # Removed the get_background() function. If image exisits, then this is the new background. 
+        if background_image:
+            screen.blit(background_image, (0, 0))
+        else:
+            screen.fill((30, 30, 30))  # 
+            
+        # Update and drawing the game components
         dev.update()
         dev.draw()
-        # Player health bar
         dev_health_bar.draw(dev.hp)
 
-        # Villain
         dragon.update()
         dragon.draw()
-        # Villain health bar
         dragon_health_bar.draw(dragon.hp)
 
-        # Event handler
-        for event in pygame.event.get():
-            # Some event that would cause the py game to quit,
-            # Eventually this event will become a health bar reaching 0
-            if event.type == pygame.quit:
-                run = False
+        # First, provide the option of selecting the programming language
+        if not selected_language:
+            # Display language selection title and buttons
+            # if language_chosen == False:
+            if not language_chosen:
+                title_text = font.render("Select a Programming Language", True, green)
+            # position the text so that it is centerized and blitting it on the screen.
+            screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 50))
+            # providing choices for the programming language's, creating a button for each and displaying them. 
+            for i, language in enumerate(languages):
+                x = screen_width / 2 - button_width / 2
+                y = 150 + i * (button_height + margin)
+                color = black if selected_language != language else gray
+                button = pygame.Rect(x, y, button_width, button_height)
+                pygame.draw.rect(screen, color, button)
+                text_surface = font.render(language, True, white)
+                text_rect = text_surface.get_rect(center=(x + button_width / 2, y + button_height / 2))
+                screen.blit(text_surface, text_rect)
+                # storing the button's in a list
+                buttons.append((button, language))
+        else:
+            # Display the selected language on the top left of the screen
+            selected_text = font.render(f"Language: {selected_language}", True, red)
+            screen.blit(selected_text, (50, 50))
 
-        # Update the display which the screen sees
+            # Once the language has been chose, we can display the coding area
+            # title_text = font.render("Start coding here!", True, red)
+            screen.blit(title_text, (screen_width / 2 - title_text.get_width() / 2, 100))
+            pygame.draw.rect(screen, gray, editor_rect)
+            pygame.draw.rect(screen, black, editor_rect, 2)
+
+            # Draw code lines in the editor
+            for i, line in enumerate(code_lines):
+                line_surface = editor_font.render(line, True, black)
+                screen.blit(line_surface, (editor_x + 5, editor_y + 5 + i * 20))
+
+        # Changing things based on the event happening
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if not selected_language:
+                    for button, language in buttons:
+                        if button.collidepoint(event.pos):
+                            selected_language = language
+                            language_chosen = True
+                            is_typing = True
+                            print(f"Selected language: {selected_language}")
+                else:
+                    # if the user is in the editor box, setting is_typing = True
+                    if editor_rect.collidepoint(event.pos):
+                        is_typing = True
+                    else:
+                        is_typing = False
+            
+            # if the user presses a key and is_typing then:
+            elif event.type == pygame.KEYDOWN and is_typing:
+                # if the user enters the return key then a space is generated
+                if event.key == pygame.K_RETURN:
+                    code_lines.append("")
+                    # if the user enter's backspace then we go the previous line, else we pop the last character
+                elif event.key == pygame.K_BACKSPACE:
+                    if len(code_lines[-1]) > 0:
+                        code_lines[-1] = code_lines[-1][:-1]
+                    elif len(code_lines) > 1:
+                        code_lines.pop()
+                    # if tab is hit generating enough space for the tab
+                elif event.key == pygame.K_TAB:
+                    code_lines[-1] += "    "
+                else:
+                    code_lines[-1] += event.unicode
+
+        # Update display and maintain frame rate
         pygame.display.update()
+        
+        clock.tick(fps)
 
         #pygame.quit()
         await asyncio.sleep(0)
+    
+    pygame.quit()
 
 
 
