@@ -1,4 +1,38 @@
-# All imports
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from tkinter.messagebox import QUESTION
+
 import pygame
 from pygame.time import Clock
 import random
@@ -281,6 +315,8 @@ selected_language = None
 buttons = []
 language_chosen = False
 
+should_display = True
+
 if __name__ == '__main__':
     # Set the start time when the game starts
     start_time = pygame.time.get_ticks()
@@ -345,12 +381,12 @@ if __name__ == '__main__':
         # Game logic based on state
         if current_state == ASK_QUESTION:
             # Display the current question from the dragon
-            dragon.display_text(question_list[current_question_idx])
+            #dragon.display_text(question_list[current_question_idx])
             current_state = WAIT_FOR_ANSWER
 
         elif current_state == WAIT_FOR_ANSWER:
             # Display the code editor for the player to type their answer
-            dragon.display_text(question_list[current_question_idx])
+            #dragon.display_text(question_list[current_question_idx])
             gray = (128, 128, 128)
             pygame.draw.rect(screen, gray, editor_rect)
             pygame.draw.rect(screen, black, editor_rect, 2)
@@ -375,7 +411,8 @@ if __name__ == '__main__':
         elapsed_seconds = elapsed_time / 1000
         draw_text(f"Time: {elapsed_seconds:.2f} s", font, white, 50, 50)
 
-        dragon.display_text(question_list[current_question_idx])
+        if should_display:
+            dragon.display_text(question_list[current_question_idx])
 
         # Draw all characters, health bars, and other game elements
         dev.update()
@@ -386,6 +423,18 @@ if __name__ == '__main__':
         dragon_health_bar.draw(dragon.hp)
         damage_text_group.update()
         damage_text_group.draw(screen)
+
+        if dev.hp == 0:
+            dev.alive = False
+            screen.blit(defeat_img, (650, 50))
+            should_display = False
+            #pygame.quit()
+
+        if dragon.hp == 0:
+            dragon.alive = False
+            screen.blit(victory_img, (650, 50))
+            should_display = False
+            #pygame.quit()
 
         pygame.display.update()
 
