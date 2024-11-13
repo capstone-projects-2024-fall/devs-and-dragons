@@ -27,6 +27,10 @@ const PlayerHealthBar = () => {
 
     return ( 
         <div>
+             {/* Button to decrease health */}
+            <button style = {{backgroundColor: 'red', color: 'white'}} onClick= {decreaseHealth}>TakeDamage</button>
+             {/* Display current health value */}
+            <p>Health: {health}</p> {/*states health*/}
             {/* Button to trigger the attack animation  (not working yet ) */} 
             <button onClick={triggerAttack}>Attack</button>
 

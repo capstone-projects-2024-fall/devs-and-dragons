@@ -53,12 +53,6 @@ const HUD = () => {
           <Typography variant="caption">My Quests</Typography>  
         </IconButton>
 
-        {/* Icon for navigating to the 'My Quests' page */}
-        <IconButton component={Link} to="/game" color="inherit">  
-          <ListAlt />  
-          <Typography variant="caption">My Game</Typography>  
-        </IconButton>
-
         {/* Account icon with a dropdown menu that leads AccountPage and SettingsPage*/}
         <IconButton onClick={handleMenuOpen} color="inherit">  
           <AccountCircle />  

@@ -5,7 +5,6 @@ import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
 import ProtoTypePage from './views/ProtoTypePage/ProtoTypePage.jsx';
 import CodeEditor from './views/Editor/CodeEditor.jsx';
-import QuestGameView from './views/QuestGameView/QuestView.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useState} from 'react';
@@ -31,15 +30,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/code-editor" element={<CodeEditor />} />  
-          <Route path="/home-page" element={<HomePage />} />
-          <Route path="/my-quests" element={<MyQuestsPage/>} />
-          <Route path="/create-quests" element={<CreateQuestsPage />}/>
-          <Route path="/test" element={<ProtoTypePage />} />
-          <Route path="/avatar" element={<AvatarPage />} />
-        </Routes>
+        <QuestProvider>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/code-editor" element={<CodeEditor />} />  
+            <Route path="/home-page" element={<HomePage />} />
+            <Route path="/create-quests" element={<CreateQuestsPage />}/>
+            <Route path="/my-quests" element={<MyQuestsPage/>} />
+            <Route path="/quest-main" element={<QuestMainPage />} /> 
+            <Route path="/guilds" element={<GuildsPage />} />
+            <Route path="/avatar" element={<AvatarPage />} />
+          </Routes>
+        </QuestProvider>
       </Router>
     </ThemeProvider>
   );
