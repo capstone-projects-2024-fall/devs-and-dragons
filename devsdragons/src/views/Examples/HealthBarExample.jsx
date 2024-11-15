@@ -1,13 +1,12 @@
-// src/views/Examples/HealthBarExample.jsx
+// HealthBarExample.jsx
 import React from 'react';
-import PlayerHealthBar from '../../components/PlayerHealthBar/PlayerHealthBar.jsx';
+import HealthBar from '../components/HealthBar';
 
-const HealthBarExample = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', height: '100vh'}}>
-            <PlayerHealthBar />
-        </div>
-    );
-};
+const HealthBarExample = () => (
+    <div style={{ display: 'flex', gap: '20px' }}>
+        <HealthBar characterName="Player" startingHealth={100} />
+        <HealthBar characterName="Dragon" startingHealth={150} />
+    </div>
+);
 
 export default HealthBarExample;
