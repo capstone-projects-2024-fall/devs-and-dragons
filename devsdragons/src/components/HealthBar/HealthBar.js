@@ -3,9 +3,10 @@ import './HealthBar.css';
 
 const HealthBar = ({ startingHealthPlayer = 100, startingHealthDragon = 150 }) => {
     const [currentCharacter, setCurrentCharacter] = useState('Player');
+     //track current character
     const [healthPlayer, setHealthPlayer] = useState(startingHealthPlayer);
     const [healthDragon, setHealthDragon] = useState(startingHealthDragon);
-    const [isAttacking, setIsAttacking] = useState(false);
+    const [isAttacking, setIsAttacking] = useState(false); //handle attack animation status
 
     const getCurrentHealth = () => (currentCharacter === 'Player' ? healthPlayer : healthDragon);
     const setCurrentHealth = (newHealth) => {
@@ -32,18 +33,21 @@ const HealthBar = ({ startingHealthPlayer = 100, startingHealthDragon = 150 }) =
 
     return React.createElement(
         'div',
-        { style: { padding: '20px', borderRadius: '10px' } },
+        null,
         React.createElement(
+            /*toggle between characters*/
             'button',
             { onClick: toggleCharacter, style: { marginBottom: '10px' } },
             `Switch to ${currentCharacter === 'Player' ? 'Dragon' : 'Player'}`
         ),
         React.createElement(
+            /*button for trigger animation*/ 
             'button',
             { onClick: triggerAttack },
             `Attack (${currentCharacter})`
         ),
         React.createElement(
+            /*takes damage to character's health*/
             'button',
             {
                 onClick: takeDamage,
@@ -51,6 +55,7 @@ const HealthBar = ({ startingHealthPlayer = 100, startingHealthDragon = 150 }) =
             },
             `Take Damage (${currentCharacter})`
         ),
+        /*animation message (black attack button)*/
         isAttacking && React.createElement('p', null, `${currentCharacter} Attacking!`),
         React.createElement('p', null, `Health: ${getCurrentHealth()}`),
         React.createElement(
@@ -61,6 +66,7 @@ const HealthBar = ({ startingHealthPlayer = 100, startingHealthDragon = 150 }) =
                 style: {
                     width: `${(getCurrentHealth() / (currentCharacter === 'Player' ? startingHealthPlayer : startingHealthDragon)) * 100}%`,
                     backgroundColor: '#b3e024',
+                    transition: 'width 0.5s ease-in-out', // this is for the smooth transition for width change
                 }
             })
         )
@@ -68,4 +74,3 @@ const HealthBar = ({ startingHealthPlayer = 100, startingHealthDragon = 150 }) =
 };
 
 export default HealthBar;
-
