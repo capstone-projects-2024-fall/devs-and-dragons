@@ -1,12 +1,12 @@
-// HealthBarExample.jsx
 import React from 'react';
-import HealthBar from '../components/HealthBar';
+import HealthBar from '../../components/HealthBar/HealthBar.js'; // Explicitly reference .js
 
 const HealthBarExample = () => (
-    <div style={{ display: 'flex', gap: '20px' }}>
-        <HealthBar characterName="Player" startingHealth={100} />
-        <HealthBar characterName="Dragon" startingHealth={150} />
-    </div>
+    React.createElement(
+        'div',
+        { style: { display: 'flex', justifyContent: 'center', marginTop: '20px' } },
+        React.createElement(HealthBar, { startingHealthPlayer: 100, startingHealthDragon: 150 })
+    )
 );
 
 export default HealthBarExample;
