@@ -6,11 +6,11 @@ export default function initKnightAnimation() {
 
 
     class Knight {
-        constructor (canvasWidth, canvasHeight){
+        constructor (canvasWidth, canvasHeight, imageID, max){
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
-            this.image = document.getElementById("playerAttack1");
-            this.scale = 6
+            this.image = document.getElementById(imageID);
+            this.scale = 6;
             this.spriteWidth = 64;
             this.spriteHeight = 64;
             this.width = this.spriteWidth * this.scale;
@@ -18,7 +18,7 @@ export default function initKnightAnimation() {
             this.x = (canvasWidth - this.width) / 2;
             this.y = (canvasHeight - this.height) /2;
             this.minFrame = 0;
-            this.maxFrame = 6;
+            this.maxFrame = max;
             this.frameIndex = 0;
             // this.frameX = 1;
             this.tickCount = 0;
@@ -42,8 +42,8 @@ export default function initKnightAnimation() {
             }
         }
     }
-
-    const knight = new Knight(canvas.width, canvas.height);
+    // playerAttack1 & playerAttack3 -- 6 max
+    const knight = new Knight(canvas.width, canvas.height, "playerAttack3", 6);
 
     function animate(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);

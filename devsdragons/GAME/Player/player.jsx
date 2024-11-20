@@ -17,6 +17,11 @@ const PlayerAnimation = () => {
     return (
         <div id="container">
             <img src={knightAttack1} alt="Player Attack 1 SS" id="playerAttack1" style={{display: "none"}} />
+            <img src={knightAttack2} alt="Player Attack 2 SS" id="playerAttack2" style={{display: "none"}} />
+            <img src={knightAttack3} alt="Player Attack 3 SS" id="playerAttack3" style={{display: "none"}} />
+            <img src={knightDeath} alt="Player Death SS" id="playerDeath" style={{display: "none"}} />
+            <img src={knightHurt} alt="Player Hurt SS" id="playerHurt" style={{display: "none"}} />
+            <img src={knightIdle} alt="Player Idle SS" id="playerIdle" style={{display: "none"}} />
 
             {/* <div id="controls">
                 <p>Player Animations</p>
