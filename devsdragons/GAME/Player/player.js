@@ -38,12 +38,18 @@ export default function initKnightAnimation() {
             this.tickCount++;
             if (this.tickCount > this.ticksPerFrame) {
                 this.tickCount = 0;
-                this.frameIndex = (this.frameIndex + 1) % 6;  // Cycle through frames
+                this.frameIndex = (this.frameIndex + 1) % this.maxFrame;  // Cycle through frames
             }
         }
     }
-    // playerAttack1 & playerAttack3 -- 6 max
-    const knight = new Knight(canvas.width, canvas.height, "playerAttack3", 6);
+
+    // imageID: "playerIdle" --- max: 7
+    // imageID: "playerAttack1" --- max: 6
+    // imageID: "playerAttack2" --- max: 5
+    // imageID: "playerAttack3" --- max: 6
+    // imageID: "playerDeath" --- max: 12
+    // imageID: "playerHurt" --- max: 4
+    const knight = new Knight(canvas.width, canvas.height, "playerIdle", 7);
 
     function animate(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
