@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BackgroundMusic from "../../components/Music/BackgroundMusic";
 
 const MusicTestView = () => {
-    const [music] = useState(() => new BackgroundMusic("/game_music.mp3")); // Instantiate the class
-    const [isPlaying, setIsPlaying] = useState(false);
+    const musicRef = useRef(null); //keep music playing 
+    const [isStarted, setIsStarted] = useState(false); // Track if the user has interacted
+    //() there will be an error without any user interaction so I've added a play music button)
 
     useEffect(() => {
-        // stop music
+        if (isStarted && !musicRef.current) {
+            musicRef.current = new BackgroundMusic("/game_music.mp3");
+            musicRef.current.play(); // Plays  music after user interaction
+        }
+
+        // Cleanup: Stop music when the user leaves the view
         return () => {
-            music.stop();
+            if (musicRef.current) {
+                musicRef.current.stop();
+            }
         };
-    }, [music]);
+    }, [isStarted]); 
 
-    const handlePlay = () => {
-        music.play();
-        setIsPlaying(true);
-    };
-
-
-
-    const handleStop = () => {
-        music.stop();
-        setIsPlaying(false);
+    const handleStartMusic = () => {
+        setIsStarted(true); 
     };
 
     return (
         <div>
-            
-            <button onClick={handlePlay} disabled={isPlaying}>
-                Play Music
-            </button>
-
-            <button onClick={handleStop}>Stop Music</button>
+             <button onClick={handleStartMusic}
+             style={{ position: 'absolute', top: '10px', left: '10px' }}
+             >Start Music</button>     
         </div>
     );
+    
 };
 
 export default MusicTestView;
