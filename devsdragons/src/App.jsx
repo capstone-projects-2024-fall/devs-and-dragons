@@ -11,7 +11,7 @@ import {useState} from 'react';
 import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
-// import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
+import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
 
 
 
@@ -27,23 +27,26 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <QuestProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/code-editor" element={<CodeEditor />} />  
-            <Route path="/home-page" element={<HomePage />} />
-            <Route path="/create-quests" element={<CreateQuestsPage />}/>
-            <Route path="/my-quests" element={<MyQuestsPage/>} />
-            {/* <Route path="/quest-main" element={<QuestMainPage />} />  */}
-            {/* <Route path="/guilds" element={<GuildsPage />} /> */}
-            <Route path="/avatar" element={<AvatarPage />} />
-          </Routes>
-        </QuestProvider>
-      </Router>
-    </ThemeProvider>
+    // <ThemeProvider theme={theme}>
+    //   <CssBaseline />
+    //   <Router>
+    //     <QuestProvider>
+    //       <Routes>
+    //         <Route path="/" element={<LoginPage />} />
+    //         <Route path="/code-editor" element={<CodeEditor />} />  
+    //         <Route path="/home-page" element={<HomePage />} />
+    //         <Route path="/create-quests" element={<CreateQuestsPage />}/>
+    //         <Route path="/my-quests" element={<MyQuestsPage/>} />
+    //         <Route path="/quest-main" element={<QuestMainPage />} /> 
+    //         <Route path="/guilds" element={<GuildsPage />} />
+    //         <Route path="/avatar" element={<AvatarPage />} />
+    //       </Routes>
+    //     </QuestProvider>
+    //   </Router>
+    // </ThemeProvider>
+    <div>
+      <p>nothing</p>
+    </div>
   );
 }
 
