@@ -14,7 +14,6 @@ sequenceDiagram
     participant RegistrationForm
     participant Backend
     participant Database
-
     
     User->>DevsAndDragonsApp: Opens application for the first time
     activate User
@@ -22,14 +21,12 @@ sequenceDiagram
     DevsAndDragonsApp-->>User: Displays home screen with "Create Account" button
     DevsAndDragonsApp->>RegistrationForm: Selects "Create Account" button
     deactivate DevsAndDragonsApp
-
     
     activate RegistrationForm
     RegistrationForm-->>User: Displays account registration form
     User->>RegistrationForm: Fills out form (username, password, email)
     RegistrationForm->>Backend: Sends form data to backend
     deactivate RegistrationForm
-
     activate Backend
     Backend->>Database: Checks if username or email already exists
     activate Database
@@ -59,14 +56,12 @@ sequenceDiagram
     participant Backend
     participant EmailService
     participant Database as MongoDB
-
     User->>HomePage: Navigates to landing page
     activate User
     activate HomePage
     HomePage-->>User: Displays home page
     HomePage->>LoginForm: Selects "Login" button
     deactivate HomePage
-
     activate LoginForm
     LoginForm-->>User: Displays login form
     User->>LoginForm: Enters username and password
@@ -90,7 +85,6 @@ sequenceDiagram
     deactivate Backend
     LoginForm-->>User: Redirects to home page
     deactivate LoginForm
-
     LoginForm-->>User: Sends 2FA code to email
     activate LoginForm
     LoginForm->>EmailService: Request to send 2FA code
@@ -98,7 +92,6 @@ sequenceDiagram
     EmailService-->>User: Sends email with 2FA code
     deactivate EmailService
     deactivate LoginForm
-
     User->>LoginForm: Enters 2FA code
     activate LoginForm
     LoginForm->>Backend: Verifies 2FA code
@@ -131,13 +124,11 @@ sequenceDiagram
     participant Backend
     participant GPTBot
     participant Database as MongoDB
-
     User->>HomePage: Navigates to home page
     activate User
     activate HomePage
     HomePage-->>User: Displays home page
     deactivate HomePage
-
     User->>QuestTab: Selects "Quests" tab
     activate QuestTab
     QuestTab-->>User: Displays "Create Quest" button
@@ -148,18 +139,15 @@ sequenceDiagram
     User->>QuestTab: Selects "Confirm" button
     QuestTab->>Backend: Sends form data to backend
     deactivate QuestTab
-
     activate Backend
     Backend->>GPTBot: Processes request to generate quest
     activate GPTBot
     GPTBot-->>Backend: Returns generated quest
     deactivate GPTBot
-
     Backend->>Database: Stores generated quest
     activate Database
     Database-->>Backend: Quest stored
     deactivate Database
-
     Backend-->>QuestTab: Displays the new quest line
     deactivate Backend
     activate QuestTab
@@ -190,32 +178,27 @@ sequenceDiagram
     participant ColorScheme
     participant Backend
     participant Database
-
     User->>HomePage: Navigates to home page
     activate User
     activate HomePage
     HomePage-->>User: Displays home screen with "Avatar" button
     HomePage->>AvatarTab: Selects "Avatar" button
     deactivate HomePage
-
     activate AvatarTab
     AvatarTab-->>User: Displays "Create Avatar" button
     User->>AvatarTab: Selects "Create Avatar" button
     AvatarTab->>AvatarSelection: Opens avatar selection screen
     deactivate AvatarTab
-
     activate AvatarSelection
     AvatarSelection-->>User: Displays six avatar options
     User->>AvatarSelection: Chooses an avatar
     AvatarSelection->>ColorScheme: User proceeds to color scheme selection
     deactivate AvatarSelection
-
     activate ColorScheme
     ColorScheme-->>User: Displays color-scheme customization options
     User->>ColorScheme: Selects color-scheme
     ColorScheme->>Backend: Sends avatar and color-scheme details to backend
     deactivate ColorScheme
-
     activate Backend
     Backend->>Database: Stores avatar and color-scheme details
     activate Database
@@ -223,7 +206,6 @@ sequenceDiagram
     deactivate Database
     Backend-->>AvatarTab: Sends success message to avatar tab
     deactivate Backend
-
     activate AvatarTab
     AvatarTab-->>User: Displays success message and updated avatar preview
     deactivate AvatarTab
@@ -234,169 +216,443 @@ sequenceDiagram
 3. The user selects a color-scheme for the selected avatar.
 4. User selects "Save Changes" button.
 
-## Use Case 5 - Starting a Quest
-**A user wants to start a quest they made.**
+## Use Case 5 - Adding a Friend
+**Two users want to add one another to their friends list.**
+```mermaid
+sequenceDiagram
+    actor User1
+    actor User2
+    participant HomePage
+    participant FriendsTab
+    participant Backend
+    participant Database
+  
+    User1->>HomePage: Navigates to home page
+    activate User1
+    activate HomePage
+    HomePage-->>User1: Displays home page
+    deactivate HomePage
+    
+    User1->>FriendsTab: Selects "Friends" button
+    activate FriendsTab
+    FriendsTab-->>User1: Displays search bar
+    User1->>FriendsTab: Searches for User2's username
+    FriendsTab-->>User1: Displays User2's profile
+    User1->>FriendsTab: Selects "Add Friend" button
+    deactivate FriendsTab
+    FriendsTab->>Backend: Sends friend request to backend
+    activate Backend
+    Backend->>Database: Stores pending friend request
+    activate Database
+    Database-->>Backend: Confirms storage of friend request
+    deactivate Database
+    Backend-->>User2: Displays friend request notification
+    activate User2
+    deactivate Backend
+    User2->>Backend: Selects "Accept" button
+    activate Backend
+    Backend->>Database: Updates friend status in database
+    activate Database
+    Database-->>Backend: Confirms updated friend status
+    deactivate Database
+    Backend-->>FriendsTab: Confirms friend request for both users
+    deactivate Backend
+    activate FriendsTab
+    FriendsTab-->>User1: Displays User2 as friend
+    deactivate User1
+    FriendsTab-->>User2: Displays User1 as friend
+    deactivate User2
+    deactivate FriendsTab
+```
+1. From the home page, the user selects the “Friends” button.
+2. User 1 navigates to the search bar and types User 2’s username.
+3. User 1 selects User 2’s profile.
+4. User 1 selects the “Add Friend” button.
+5. User 2 receives the request and selects “Accept”.
+
+## Use Case 6 - Creating a Party to Start a Quest Outside of a Guild
+**A user wants to start a quest outside of a guild.**
+```mermaid
+sequenceDiagram
+    actor User as User 1
+    actor Peer as User 2
+    participant HomePage
+    participant QuestTab
+    participant Backend
+    participant Database as MongoDB
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home page
+    deactivate HomePage
+    User->>QuestTab: Selects "Quests" tab
+    activate QuestTab
+    QuestTab-->>User: Displays "My Quests"
+    User->>QuestTab: Selects "My Quests"
+    QuestTab-->>User: Displays available quests
+    User->>QuestTab: Selects the quest to start
+    QuestTab-->>User: Displays "Start Quest" button
+    User->>QuestTab: Selects "Start Quest" button
+    QuestTab-->>User: Asks to create a party code
+    User->QuestTab: Creates party code
+     QuestTab->>Backend: Sends party code
+    deactivate QuestTab
+    activate Backend
+    Backend->>Database: Stores party code
+    activate Database
+    deactivate Database
+    deactivate Backend
+    User->>Peer: Shares party code with peer(s)
+    activate Peer
+    Peer->>Backend: Joins party using code
+    activate Backend
+    Backend->>Database: Updates party members count
+    activate Database
+    Database-->>Backend: Party size updated
+    deactivate Database
+    Backend-->>User: Displays party size
+    deactivate Backend
+    User->>QuestTab: Selects "Start Quest" button when party is 2-4 members
+    activate QuestTab
+    QuestTab->>Backend: Starts the quest
+     deactivate QuestTab
+    activate Backend
+    Backend->>Database: Updates quest status
+    activate Database
+    Database-->>Backend: Quest Started set to true
+    deactivate Database
+    Backend-->>User: Quest has started
+    deactivate User
+    Backend-->>Peer: Quest has started
+    deactivate Peer
+    deactivate Backend
+```
+1. From the home page, the user selects the “Quests” tab.
+2. The user selects “My Quests”.
+3. The user selects the quest they want to do.
+4. The user selects the “Start Quest” button.
+5. The user creates a party code and shares it with their peer(s).
+6. The user waits for party size to be at two to four members, then clicks the “Start Quest” button.
+
+## Use Case 7 - Join a Party
+**A user wants to join another user’s party.**
 ```mermaid
 sequenceDiagram
     actor User
     participant HomePage
-    participant QuestsTab
-    participant DropdownMenu
-    participant QuestDisplay
-    participant Database
+    participant JoinPartyForm
     participant Backend
-    participant Game
-
+    participant Database as MongoDB
     User->>HomePage: Navigates to home page
     activate User
     activate HomePage
-    HomePage-->>User: Displays home screen with "Quests" button
-    HomePage->>QuestsTab: User selects "Quests" tab
+    HomePage-->>User: Displays home page with "Join Party" button
+    HomePage->>JoinPartyForm: Clicks "Join Party" button
     deactivate HomePage
-    
-
-    activate QuestsTab
-    QuestsTab->>DropdownMenu: Opens dropdown menu
-    activate DropdownMenu
-    deactivate QuestsTab
-    DropdownMenu->>User: Displays "My Quests" option
-    User->>DropdownMenu: Selects "My Quests"
-    DropdownMenu->>QuestDisplay: Displays list of user-created quests
-    deactivate DropdownMenu
-
-    activate QuestDisplay
-    QuestDisplay-->>User: User views quests
-    User->>QuestDisplay: Selects a quest to start
-    QuestDisplay->>Backend: Sends selected quest to backend for initiation
-    deactivate QuestDisplay
-
+    activate JoinPartyForm
+    JoinPartyForm-->>User: Displays form to enter party code
+    JoinPartyForm-->>User: Displays "join" button
+    User->>JoinPartyForm: Enters party code
+    User->>JoinPartyForm: Selects "Join" button
+    JoinPartyForm->>Backend: Sends party code to backend
     activate Backend
-    Backend->>Database: Updates quest status to active
+    Backend->>Database: Validates party code and updates party members
     activate Database
-    Database-->>Backend: Confirms quest start
+    Database-->>Backend: Party code valid, member added
     deactivate Database
-    Backend-->>Game: Initial game component
-    activate Game
+    Backend-->>JoinPartyForm: Confirms successful party join
     deactivate Backend
-
-    Game-->>User: Displays game window as quests begins
+    JoinPartyForm-->>User: Displays confirmation of joining the party
     deactivate User
-    deactivate Game
+    deactivate JoinPartyForm
 ```
+1. From the home page, the user clicks on the “Join Party” button.
+2. The user enters the party code.
+3. The user selects the “Join” button.
 
-1. From the homepage, the user selects "Quests" tab.
-2. The user selects the dropdown menu option, "My Quests."
-3. The quests the user made are displayed, the user selects the quests interested in starting.
-4. The user selects "Start Quest" button.
+## Use Case 8 - Guild Creation
+**A user wants to create a guild.**
+```mermaid
+sequenceDiagram
+    actor User
+    participant HomePage
+    participant GuildsTab
+    participant CreateGuildForm
+    participant Backend
+    participant Database as MongoDB
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home page
+    HomePage->>GuildsTab: Selects "Guild" tab
+    deactivate HomePage
+    activate GuildsTab
+    GuildsTab-->>User: Displays "Create Guild" button
+    GuildsTab->>CreateGuildForm: Selects "Create Guild" button
+    deactivate GuildsTab
+    activate CreateGuildForm
+    CreateGuildForm-->>User: Displays form (Guild name, description, symbol, code)
+    User->>CreateGuildForm: Fills out form
+    User->>CreateGuildForm: Selects "Confirm" button
+    CreateGuildForm->>Backend: Sends form data to backend
+    deactivate CreateGuildForm
+    activate Backend
+    Backend->>Database: Stores new guild details
+    activate Database
+    Database-->>Backend: Confirms guild creation
+    deactivate Database
+    Backend-->>GuildsTab: Confirms successful guild creation
+    deactivate Backend
+    activate GuildsTab
+    GuildsTab-->>User: Displays confirmation of guild creation
+    deactivate User
+    deactivate GuildsTab
+```
+1. From the home page, the user selects the “Guilds” tab.
+2. The user selects the “Create Guild” button.
+3. The user fills out a form for the following:
+   - Guild name
+   - Guild description
+   - Guild symbol
+   - Guild Code
+4. The user reviews their input and selects “confirm”.
 
-## Use Case 6 - Solving a Problem in a Quest (gameplay)
+## Use Case 9 - Assign Quest to Guild
+**A user wants to assign a quest for their guild to complete**
+```mermaid
+sequenceDiagram
+    actor User
+    participant HomePage
+    participant QuestTab
+    participant GuildsTab
+    participant Backend
+    participant Database as MongoDB
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home page
+    HomePage->>QuestTab: Selects "Quests" tab
+    deactivate HomePage
+    activate QuestTab
+    QuestTab-->>User: Displays "My Quests"
+    User->>QuestTab: Selects "My Quests"
+    QuestTab-->>User: Displays available quests
+    User->>QuestTab: Selects quest to assign
+    QuestTab-->>User: Displays "Assign to Guild" button
+    User->>QuestTab: Selects "Assign to Guild" button
+    QuestTab-->>GuildsTab: Displays available guilds
+    deactivate QuestTab
+    activate GuildsTab
+    User->>GuildsTab: Selects guild to assign quest
+    GuildsTab->>Backend: Sends assignment details to backend
+    deactivate GuildsTab
+    activate Backend
+    Backend->>Database: Updates quest assignment to selected guild
+    activate Database
+    Database-->>Backend: Confirms quest assignment
+    deactivate Database
+    Backend-->>GuildsTab: Confirms assignment to guild
+    deactivate Backend
+    activate GuildsTab
+    GuildsTab-->>User: Displays confirmation of quest assignment
+    deactivate User
+    deactivate GuildsTab
+```
+1. From the home page, the user selects the “Quests” tab.
+2. The user selects “My Quests”.
+3. The user selects the quest they want to assign.
+4. The user selects the “Assign to Guild” button.
+5. The user selects the guild to assign the quest to.
+
+## Use Case 10 - Join a Guild
+**A user wants to join another user’s guild.**
+```mermaid
+sequenceDiagram
+    actor User
+    participant HomePage
+    participant JoinGuildForm
+    participant Backend
+    participant Database as MongoDB
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home page with "Join Guild" button
+    HomePage->>JoinGuildForm: Clicks "Join Guild" button
+    deactivate HomePage
+    activate JoinGuildForm
+    JoinGuildForm-->>User: Displays form to enter guild code
+    JoinGuildForm-->>User: Dispalys "Join" button
+    User->>JoinGuildForm: Enters guild code
+    User->>JoinGuildForm: Selects "Join" button
+    JoinGuildForm->>Backend: Sends guild code to backend
+    deactivate JoinGuildForm
+    activate Backend
+    Backend->>Database: Validates guild code and adds user to guild
+    activate Database
+    Database-->>Backend: Guild code valid, user added to guild
+    deactivate Database
+    Backend-->>JoinGuildForm: Confirms successful guild join
+    deactivate Backend
+    activate JoinGuildForm
+    JoinGuildForm-->>User: Displays confirmation of joining the guild
+    deactivate User
+    deactivate JoinGuildForm
+```
+1. From the home page, the user clicks on the “Join Guild” button.
+2. The user enters the guild code.
+3. The user selects “Join” button.
+
+## Use Case 11 - Creating a Guild Party To Start a Quest
+**A user wants to start a quest inside a guild.**
+```mermaid
+sequenceDiagram
+    actor User
+    actor GuildMember as Guild Members
+    participant HomePage
+    participant GuildsTab
+    participant QuestBoard
+    participant Backend
+    participant Database as MongoDB
+    User->>HomePage: Navigates to home page
+    activate User
+    activate HomePage
+    HomePage-->>User: Displays home page
+    HomePage->>GuildsTab: Selects "Guilds" tab
+    deactivate HomePage
+    activate GuildsTab
+    GuildsTab-->>User: Displays "My Guilds"
+    User->>GuildsTab: Selects "My Guilds" and chooses a guild
+    GuildsTab-->>User: Displays guild page with "Quest Board" button
+    GuildsTab->>QuestBoard: Selects "Quest Board"
+    deactivate GuildsTab
+    activate QuestBoard
+    QuestBoard-->>User: Displays available quests
+    QuestBoard-->>User: Displays available quests
+    User->>QuestBoard: Selects quest to start
+    QuestBoard-->>User: Displays "Start Quest" button
+    User->>QuestBoard: Selects "Start Quest" and enters guild party name
+    QuestBoard->>Backend: Creates guild party
+    deactivate QuestBoard
+    activate Backend
+    Backend->>Database: Stores guild party details
+    activate Database
+    Database-->>Backend: Confirms party created
+    deactivate Database
+    deactivate Backend
+    User->>GuildMember: Shares party details with guild members
+    activate GuildMember
+    GuildMember->>Backend: Joins guild party
+    deactivate GuildMember
+    activate Backend
+    Backend->>Database: Updates party members count
+    activate Database
+    Database-->>Backend: Party size updated
+    deactivate Database
+    Backend-->>User: Displays updated party size
+    deactivate Backend
+    User->>QuestBoard: Selects "Start Quest" when party size is 2-4 members
+    activate QuestBoard
+    QuestBoard->>Backend: Starts quest
+    activate Backend
+    Backend->>Database: Updates quest status
+    activate Database
+    Database-->>Backend: Quest Started set to True
+    deactivate Database
+    deactivate QuestBoard
+    Backend-->>User: Quest has started
+    deactivate User
+    deactivate Backend
+```
+1. From the home page, the user selects “Guilds” tab.
+2. The user selects “My Guilds” and then selects the guild they wish to start a quest in.
+3. In the guild, the user selects the “Quest Board” button.
+4. The user selects a quest they want to do.
+5. The user selects “Start Quest” which creates a guild party.
+6. The user enters a name for the guild party.
+7. User waits for the guild party size to be at two to four members, then selects the “Start Quest” button.
+
+## Use Case 12 - Solving a Problem in a Quest (gameplay)
 **Two users want to solve a coding problem together during a quest.**
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant Game
-    participant Timer
-    participant CodeEditor as Editor
+    actor User1
+    actor User2 
     participant GPTBot
+    participant GameEngine as Game
     participant Backend
-
-    User->>Game: Starts quest
-    activate User
-    activate Game
-    Game->>User: Prompt with coding question
-
-    Game-->>User: Displays quest briefing with story
-    Game->>Timer: Starts countdown
-    activate Timer
-    loop Timer countdown
-        Timer-->>Game: Timer ticks down
-        alt Timer reaches 0
-            Game->>User: Display user health bar decreaseing
-            Timer->>Game: Reset timer or end game if player health is 0
-        end
-    end
-    deactivate Timer
-    
-    User->>Editor: Writes code
-    activate Editor
-    User->>Editor: Clicks "Submit" button
-    Editor->>Backend: Sends code for analysis
-    deactivate Editor
-
+    participant Database as MongoDB
+    activate User1
+    activate User2
     activate Backend
-    Backend->>GPTBot: Analyzes submission
-    activate GPTBot
-    GPTBot-->>Backend: Provides feedback with rating (1-3)
-    deactivate GPTBot
-
-    Backend-->>Game: Sends feedback and rating
-    deactivate Backend
-
-    Game->>User: Displays feedback
-    alt Rating 1
-        Game->>User: Decreases user's health, prompts retry
-    else Rating 2
-        Game->>User: Provides tips, offers choice to retry or continue
-    else Rating 3
-        Game->>User: User successfully attacks, moves to next question
-    end
-
-    deactivate Game
-    deactivate User
-```
-
-1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
-2. The game screen is now displayed to the user where they can see:
-   - User's avatar
-   - User's health bar
-   - Enemy
-   - Enemy's health bar
-   - Timer
-   - Code Editor
-3. The user is prompted with a question.
-4. The timer begins to tick down.
-   - If the user does not submit an answer before the timer reaches 0, then the user's health bar decreases.
-5. The user writes code in the provided code editor.
-6. The user clicks the "Submit" button.
-7. The GPT-bot analyzes the user's submission and provides feedback with a rating from 1 to 3.
-8. Based on the GPT-bot’s rating:
-   - **Feedback is provided to the user**:
-     - If the rating is 1, the user’s health bar decreases, and the quest continues with the timer reset for a new attempt.
-     - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
-     - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
-9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
-
-## Use Case 7 - Recieve help from helper bot.
-**A user wants to get help from the helper bot.**
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Game
-    participant HelpIcon
-    participant HelperBot
-
-    User->>Game: Engages in quest
-    activate User
-    activate Game
-    Game-->>User: Quest in progress
-
-    User->>HelpIcon: Selects "Help" icon button
-    activate HelpIcon
-    HelpIcon->>HelperBot: Requests help based on user's current solution progress
-    deactivate HelpIcon
-    activate HelperBot
-    HelperBot-->>Game: Analyzes solution and provides feedback
+    Backend->>GameEngine: Provides first problem
+    activate GameEngine
+    GameEngine-->>User1: Displays coding problem
+    GameEngine-->>User2: Displays coding problem
+    User1->>GameEngine: Presses "Begin" button
     
-    HelperBot->>Game: Sends feedback
-    deactivate HelperBot
-
-    Game-->>User: Displays feedback
-    deactivate Game
-    deactivate User
+    GameEngine->>Backend: Starts timer
+    Backend-->>GameEngine: Timer Ticks Down
+    GameEngine-->>User1: Display Timer Tick Down
+    GameEngine-->>User2: Display Timer Tick Down
+    User1->>GameEngine: Writes code in text box
+    User1->>GameEngine: Clicks "Submit" button
+    GameEngine->>Backend: Receives code and ends User1's turn
+    Backend->>Database: Stores User1's code submission
+    activate Database
+    deactivate Database
+    GameEngine-->>User1: Displays current code entered
+    GameEngine-->>User2: Displays current code entered
+    GameEngine->Backend: Reset Timer for User 2
+    GameEngine-->>User2: Display their turn starts now
+    GameEngine->Backend: Start Timer
+    Backend-->GameEngine: Timer Ticks Down
+    GameEngine-->>User2: Display Time Tick Down
+    GameEngine-->>User1: Display Time Tick Down
+    User2->>GameEngine: Writes code in text box
+    User2->>GameEngine: Clicks "Submit" button
+    
+    GameEngine->>Backend: Receives code and ends User2's turn
+    
+    Backend->>Database: Stores User2's code submission
+    activate Database
+    deactivate Database
+    GameEngine-->>User1: Displays current code entered
+    GameEngine-->>User2: Displays current code entered
+    deactivate GameEngine
+    Backend->>GPTBot: Sends final submission for analysis
+    activate GPTBot
+    GPTBot-->>Backend: Rates solution (1-3)
+    deactivate GPTBot
+    Backend-->>User1: Displays party's rating
+    Backend-->>User2: Displays party's rating
+    deactivate Backend
+    deactivate User1
+    deactivate User2
+    alt Solution is incorrect
+        activate User1
+        Backend->>GameEngine: Party loses health
+        activate GameEngine
+        activate Backend
+        GameEngine->>Backend: Resets timer for next turn
+        deactivate GameEngine
+        Backend-->>User1: User 1 goes again for another turn
+        deactivate Backend
+        deactivate User1
+       
+    end
 ```
 
-1. During the quest, the user selects the "Help" icon button.
-2. The helper bot analyzes the current progress of the user's solution to the question and provides feedback.
-3. The feedback is displayed to the user.
+1. The users are given their first problem.
+2. User 1 is randomly selected and when the party is done reading the problem, user 1 presses the “Begin” button.
+3. The timer begins and user 1 starts to write code in the provided text box.
+4. User 1 clicks the “Submit” button.
+5. User 1’s turn is done and the timer restarts.
+6. The timer begins as it is now user 2's turn to write code in the provided text box.
+7. User 2 clicks the “Submit” button.
+8. GPT-bot analyzes the final submission and rates the party’s solution from 1 to 3.
+9. If the final submission is incorrect, the party loses health, the timer resets, and user 1 starts a new turn.
+0 commit comments
+Comments
+0
+ (0)
