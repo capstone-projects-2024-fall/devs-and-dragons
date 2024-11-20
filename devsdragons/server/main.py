@@ -1,7 +1,8 @@
 import pymongo
 import random
 import openai
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
+from flask_socketio import SocketIO, join_room, leave_room, emit
 from pymongo import MongoClient
 from contact import Contact
 from flask_cors import CORS
@@ -11,7 +12,9 @@ import certifi
 import uuid
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
+socketio = SocketIO(app)
 
 
 password = "testKey125"
@@ -23,7 +26,7 @@ db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
 quests_store = {}
-
+rooms = {}
 
 # Initialize the sequence counter (this is done only once when setting up)
 if sequence_collection.find_one({"_id": "user_id"}) is None:
@@ -54,7 +57,73 @@ def get_next_sequence_value(sequence_name):
 def generate_custom_id():
     next_id = get_next_sequence_value("user_id")
     return f"USER{next_id:03d}"  # This will create IDs like USER001, USER002, etc.
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/create_room", methods=["POST"])
+def create_room():
+    room_code = str(uuid.uuid4())[:6]
+    rooms[room_code] = {"players": []}
+    return jsonify({"room_code": room_code})
+
+@app.route("/join_room", methods=["POST"])
+def join_room():
+    data = request.get_json()
+    room_code = data.get("room_code")
+    username = data.get("username")
     
+    if room_code not in rooms:
+        return jsonify({"error": "Room does not exist"})
+    
+    if username in rooms[room_code]["players"]:
+        return jsonify({"error": "Username already taken"})
+    
+    rooms[room_code]["players"].append(username)
+    return jsonify({"message": f"{username}", "room_code": room_code})
+
+@socketio.on('join_room')
+def handle_join_room(data):
+    username = data["username"]
+    room = data["room"]
+    
+    
+    if room not in rooms:
+        emit("error", {'message': 'Room does not exist'})
+        return 
+    
+    join_room(room)
+    if username not in rooms[room]["players"]:
+        rooms[room]["players"].append(username)
+    emit('user_joined', {'username': username, 'players': rooms[room]['players']}, room=room)
+    
+
+@socketio.on('leave_room')
+def handle_leave_room(data):
+    username = data["username"]
+    room = data["room"]
+    
+    if room in rooms and username in rooms[room]["players"]:
+        rooms[room]["players"].remove(username)
+        leave_room(room)
+        emit('user_left', {'username': username, 'players': rooms[room]['players']}, room=room)
+        # if not rooms[room]["players"]:
+        #     del rooms[room]
+        
+
+
+@socketio.on('send_message')
+def handle_send_message(data):
+    room = data['room']
+    message = data['message']
+    username = data['username']
+    
+    emit('receive_message', {'username': username, 'message': message}, room=room)
+
+        
+
 
 @app.route('/create_contact', methods=["POST"])
 def create_contact():
@@ -182,6 +251,7 @@ def getResponse():
         background = data.get("background")
         description = data.get("description")
         programmingLanguage = data.get("programmingLanguage")
+        gameType = data.get("gameType")
         
         
         user_input = (f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
@@ -287,7 +357,7 @@ for result in results:
 """
 
 if __name__ == '__main__':
-
+    socketio.run(app, debug=True)
     app.run(debug=True)
 
 

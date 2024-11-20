@@ -13,7 +13,7 @@ import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
-
+import TwoPlayerQuestPage from './views/QuestPage/TwoPlayerQuestPage.jsx';
 
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
             <Route path="/create-quests" element={<CreateQuestsPage />}/>
             <Route path="/my-quests" element={<MyQuestsPage/>} />
             <Route path="/quest-main" element={<QuestMainPage />} /> 
+            <Route path="/two-player" element={<TwoPlayerQuestPage />} />
             <Route path="/guilds" element={<GuildsPage />} />
             <Route path="/avatar" element={<AvatarPage />} />
             <Route path="/game" element={<QuestGameView />} />

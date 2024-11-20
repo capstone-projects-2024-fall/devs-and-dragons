@@ -9,8 +9,12 @@ const MyQuestsPage = () => {
   const navigate = useNavigate();
 
   const handleNavigateToQuest = (quest) => {
-    if (quest.status !== 'Completed') {
+    console.log(quest.gameType)
+    console.log(quest.status)
+    if (quest.status !== 'Completed' && quest.gameType === 'one-player') {
       navigate('/quest-main')
+    } else if (quest.status !== 'Completed' && quest.gameType === 'two-player') {
+      navigate('/two-player')
     } else {
       alert("Quest is already completed")
     }
