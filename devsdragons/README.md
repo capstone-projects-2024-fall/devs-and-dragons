@@ -12,13 +12,30 @@ Using React frontned: node/npm.
 ```bash
 cd devsdragons
 npm install
+pip install pygame
+pip install pymongo
+pip install flask
+pip install bcrypt
+pip install uuid
+pip install certifi
+pip install re
+pip install flask_cors
+pip install opeanai
 ```
 ### Run MongoDB Backend before Vite Frontend
 
 ```bash
 cd devsdragons
 cd server
-python3 main.py
+python main.py
+```
+
+### Run Prototype PyGame locally
+```bash
+cd devsdragons
+cd src
+cd GAME
+python main.py
 ```
 
 ### Run Vite Frontend

@@ -36,9 +36,9 @@ const HUD = () => {
         </IconButton>
 
         {/* Icon for navigating to the guilds page */}
-        <IconButton component={Link} to="/guilds" color="inherit">  
+        <IconButton component={Link} to="/test" color="inherit">  
           <Groups />  
-          <Typography variant="caption">Guilds</Typography> 
+          <Typography variant="caption">GAME PROTOTYPE</Typography> 
         </IconButton>
 
         {/* Icon for navigating to the create quests page */}
@@ -51,12 +51,6 @@ const HUD = () => {
         <IconButton component={Link} to="/my-quests" color="inherit">  
           <ListAlt />  
           <Typography variant="caption">My Quests</Typography>  
-        </IconButton>
-
-        {/* Icon for navigating to the 'My Quests' page */}
-        <IconButton component={Link} to="/game" color="inherit">  
-          <ListAlt />  
-          <Typography variant="caption">My Game</Typography>  
         </IconButton>
 
         {/* Account icon with a dropdown menu that leads AccountPage and SettingsPage*/}

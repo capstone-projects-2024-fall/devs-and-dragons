@@ -57,6 +57,8 @@ const LoginPage = () => {
                 const userId = response.data.user_id;
                 // Store user ID in localStorage or sessionStorage
                 localStorage.setItem('user_id', userId);
+                // Show success alert
+                alert('Login successful!');
                 navigate('/home-page'); // Navigate to the HomePage
             }
 

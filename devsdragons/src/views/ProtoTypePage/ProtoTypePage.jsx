@@ -1,10 +1,10 @@
 import HUD from "../../components/HUD/HUD";
 
-const GuildsPage = () => (
+const ProtoTypePage = () => (
     <div>
-        <h1> Guilds Page </h1>
+        <h1> TEST </h1>
         <HUD />
     </div>
 );
 
-export default GuildsPage;
+export default ProtoTypePage;
