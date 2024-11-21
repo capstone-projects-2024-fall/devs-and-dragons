@@ -18,6 +18,7 @@ export default function initDragonAnimation() {
             this.y = (canvasHeight - this.height) / 2;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
+            this.currentAnimation = "idle"
             this.changeAnimation('dragonIdle', 3); // Set defauly animation to idle
         }
 
@@ -26,6 +27,7 @@ export default function initDragonAnimation() {
             this.maxFrame = frames;
             this.frameIndex = 0;
             this.playOnce = state !== 'dragonIdle'; // Only play once if not idle
+            this.currentAnimation = state;
         }
 
         draw(context) {
@@ -37,7 +39,12 @@ export default function initDragonAnimation() {
             if (this.tickCount > this.ticksPerFrame) {
                 this.tickCount = 0;
                 if (this.frameIndex >= this.maxFrame - 1 && this.playOnce) {
-                    this.changeAnimation('dragonIdle', 3); // Revert to idle after playing once
+                    if (this.currentAnimation === 'dragonDeath') {
+                        // Stay on the last frame of the death animation
+                        this.frameIndex = this.maxFrame - 1;
+                    } else {
+                        this.changeAnimation('dragonIdle', 3); // Revert to idle after playing once
+                    }
                 } else {
                     this.frameIndex = (this.frameIndex + 1) % this.maxFrame;  // Cycle through frames
                 }
