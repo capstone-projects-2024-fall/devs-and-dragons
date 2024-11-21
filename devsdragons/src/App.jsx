@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 
 //UNCOMMENT THESE IMPORTS UNTIL THE LINE BREAK TO VIEW GAME SCREEN
 import LoginPage from './views/LoginPage/LoginPage.jsx';
@@ -5,11 +6,6 @@ import AvatarPage from './views/Avatar/AvatarPage.jsx';
 import CreateQuestsPage from './views/QuestPage/CreateQuests.jsx';
 import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
-
-// import ProtoTypePage from './views/ProtoTypePage/ProtoTypePage.jsx';
-
-//import ProtoTypePage from './views/ProtoTypePage/ProtoTypePage.jsx';
-
 import CodeEditor from './views/Editor/CodeEditor.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -17,14 +13,11 @@ import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
+import Timer from './components/Timer/timer.jsx';
 
 
 //UNCOMMENT TO TEST GAME SCREEN
 // import PlayerAnimation from '../GAME/Player/player.jsx';
-import React, {useState} from 'react';
-
-//import PlayerAnimation from '../GAME/Player/player.jsx';
-
 
 
 
@@ -58,6 +51,9 @@ function App() {
         </QuestProvider>
       </Router>
     </ThemeProvider>
+
+    // // UNCOMMENT TO VIEW TIMER
+    // <Timer />
 
     //UNCOMMENT TO VIEW GAME SCREEN
 
