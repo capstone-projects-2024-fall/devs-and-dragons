@@ -26,19 +26,19 @@ const PlayerAnimation = () => {
             <div id="controls">
                 <p>Player Animations</p>
                 <div>
-                    <input type="radio" name="animation" id="idle" defaultChecked />
+                    <input type="button" name="animation" id="idle" defaultChecked />
                     <label htmlFor="idle">Idle</label>
                 </div>
                 <div>
-                    <input type="radio" name="animation" id="attack"  />
+                    <input type="button" name="animation" id="attack"  />
                     <label htmlFor="attack">Attack</label>
                 </div>
                 <div>
-                    <input type="radio" name="animation" id="hurt"  />
+                    <input type="button" name="animation" id="hurt"  />
                     <label htmlFor="hurt">Hurt</label>
                 </div>
                 <div>
-                    <input type="radio" name="animation" id="death"  />
+                    <input type="button" name="animation" id="death"  />
                     <label htmlFor="death">Death</label>
                 </div>
             </div>
