@@ -8,12 +8,13 @@ import CodeEditor from './views/Editor/CodeEditor.jsx';
 import QuestGameView from './views/QuestGameView/QuestGameView.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
 import TwoPlayerQuestPage from './views/QuestPage/TwoPlayerQuestPage.jsx';
+import PlayerAnimation from '../GAME/Player/player.jsx';
 
 
 function App() {
@@ -47,6 +48,9 @@ function App() {
         </QuestProvider>
       </Router>
     </ThemeProvider>
+    // <div>
+    //   <PlayerAnimation />
+    // </div>
   );
 }
 
