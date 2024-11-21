@@ -41,6 +41,10 @@ export default function initKnightAnimation() {
                 this.frameIndex = (this.frameIndex + 1) % this.maxFrame;  // Cycle through frames
             }
         }
+        setAnimation(newMax, newimageID){
+            this.maxFrame = newMax;
+            this.image = document.getElementById(newimageID);
+        }
     }
 
     // imageID: "playerIdle" --- max: 7
@@ -59,4 +63,24 @@ export default function initKnightAnimation() {
     }
     
     animate();
+
+    const idle = document.getElementById("idle");
+    idle.addEventListener("click", () => {
+        knight.setAnimation(7, "playerIdle");
+    });
+
+    const attack = document.getElementById("attack");
+    attack.addEventListener("click", () => {
+        knight.setAnimation(6, "playerAttack1");
+    });
+
+    const hurt = document.getElementById("hurt");
+    hurt.addEventListener("click", () => {
+        knight.setAnimation(4, "playerHurt");
+    });
+
+    const death = document.getElementById("death");
+    death.addEventListener("click", () => {
+        knight.setAnimation(12, "playerDeath");
+    });
 }

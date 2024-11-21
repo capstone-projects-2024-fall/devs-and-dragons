@@ -23,13 +23,25 @@ const PlayerAnimation = () => {
             <img src={knightHurt} alt="Player Hurt SS" id="playerHurt" style={{display: "none"}} />
             <img src={knightIdle} alt="Player Idle SS" id="playerIdle" style={{display: "none"}} />
 
-            {/* <div id="controls">
+            <div id="controls">
                 <p>Player Animations</p>
                 <div>
-                    <input type="radio" name="animation" id="all" defaultChecked />
-                    <label htmlFor="all">All</label>
+                    <input type="radio" name="animation" id="idle" defaultChecked />
+                    <label htmlFor="idle">Idle</label>
                 </div>
-            </div> */}
+                <div>
+                    <input type="radio" name="animation" id="attack"  />
+                    <label htmlFor="attack">Attack</label>
+                </div>
+                <div>
+                    <input type="radio" name="animation" id="hurt"  />
+                    <label htmlFor="hurt">Hurt</label>
+                </div>
+                <div>
+                    <input type="radio" name="animation" id="death"  />
+                    <label htmlFor="death">Death</label>
+                </div>
+            </div>
             <canvas id="playerCanvas"></canvas>
         </div>
     )
