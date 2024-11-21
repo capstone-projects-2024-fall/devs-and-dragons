@@ -47,6 +47,9 @@ export default function initDragonAnimation() {
 
     const dragon = new Dragon(canvas.width, canvas.height, "dragonIdle", 3);
 
+    document.getElementById("idle").addEventListener("click", () => {
+        dragon.changeAnimation('dragonIdle', 3);
+    });
     document.getElementById("attack").addEventListener("click", () => {
         dragon.changeAnimation('dragonAttack', 15);
     });
