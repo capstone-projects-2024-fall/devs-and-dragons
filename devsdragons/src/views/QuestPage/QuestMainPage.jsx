@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
 
 // StarRating component to display stars based on the grade
 function StarRating({ grade }) {
-    const totalStars = 5; 
+    const totalStars = 5;
     const filledStars = Math.round(grade / 2); // Calculate the number of filled stars based on the grade
 
     return (
@@ -16,65 +17,82 @@ function StarRating({ grade }) {
 }
 
 function QuestMainPage() {
-    const [questions, setQuestions] = useState([]);
+    const [quest, setQuest] = useState(null); // Stores quest data
     const [feedbacks, setFeedbacks] = useState([]); // Array to store feedback for each question
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Controls the display of new questions
 
+    const location = useLocation();
+    const questId = new URLSearchParams(location.search).get("quest_id"); // Extract quest_id from URL
+
     useEffect(() => {
-        handleSetQuestions();
-    }, []);
+        if (!questId) {
+            alert("No quest ID provided.");
+            return;
+        }
 
-    function handleSetQuestions() { // First we will get the questions based on the questForm
-        fetch('http://127.0.0.1:5000/quest-parameters?quest_id=0')
+        // Fetch quest details from the backend
+        fetch(`http://127.0.0.1:5000/quest-parameters?quest_id=${questId}`)
             .then(response => response.json())
-            .then(data => setQuestions(data))
-            .catch(error => console.error('Error fetching questions:', error));
-    }
+            .then(data => setQuest(data))
+            .catch(error => console.error('Error fetching quest data:', error));
+    }, [questId]);
 
-    function submitCode(answer, language, questionIndex) { // submitting the code from the user for grading
-        const question = questions[questionIndex];
-        console.log(`Code submitted for question ${question}`, answer, language);
+    const submitCode = (answer, language, questionIndex) => {
+        if (!quest || !quest.questions[questionIndex]) {
+            console.error("Question not found.");
+            return;
+        }
+
+        const question = quest.questions[questionIndex]; // Get the current question
+        console.log(`Submitting code for question ${question}:`, answer, language);
 
         fetch("http://127.0.0.1:5000/check_answer", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ question, answer })
+            body: JSON.stringify({ question, answer, language }) // Include question, answer, and language
         })
-        .then(response => response.text())
-        .then(text => {
-            // Parsing the text response to extract Grade and Advice
-            const gradeMatch = text.match(/Grade:\s*(\d+)/);
-            const adviceMatch = text.match(/Advice:\s*(.+)/);
+            .then(response => response.text())
+            .then(text => {
+                // Parse the response to extract Grade and Advice
+                const gradeMatch = text.match(/Grade:\s*(\d+)/);
+                const adviceMatch = text.match(/Advice:\s*(.+)/);
 
-            const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
-            const advice = adviceMatch ? adviceMatch[1] : "";
+                const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
+                const advice = adviceMatch ? adviceMatch[1] : "";
 
-            // Update feedback for the specific question
-            setFeedbacks(prevFeedbacks => {
-                const newFeedbacks = [...prevFeedbacks];
-                newFeedbacks[questionIndex] = { grade, advice };
-                return newFeedbacks;
-            });
+                // Update feedback for the specific question
+                setFeedbacks(prevFeedbacks => {
+                    const newFeedbacks = [...prevFeedbacks];
+                    newFeedbacks[questionIndex] = { grade, advice };
+                    return newFeedbacks;
+                });
 
-            // Only reveal the next question if grade is at least 5
-            if (grade >= 2 && questionIndex === currentQuestionIndex) {
-                setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-            } 
-        })
-        .catch(error => console.error('Error submitting code:', error));
+                // Only reveal the next question if grade is at least 5
+                if (grade >= 5 && questionIndex === currentQuestionIndex) {
+                    setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+                }
+            })
+            .catch(error => console.error('Error submitting code:', error));
+    };
+
+    if (!quest) {
+        return <div>Loading quest...</div>;
     }
 
     return (
-        <>
-            <h1>Questions</h1>
+        <div className="quest-main-page">
+            <h1>{quest.questTitle}</h1>
+            <p><strong>Description:</strong> {quest.description}</p>
+            <p><strong>Background:</strong> {quest.background}</p>
+
             <div>
-                {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
+                {quest.questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
                     <div key={index} className="question-item">
                         <p><strong>Question:</strong> {question}</p>
                         <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, index)} />
-                        
+
                         {/* Feedback display for each question */}
                         {feedbacks[index] && (
                             <div className="feedback">
@@ -86,7 +104,7 @@ function QuestMainPage() {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 

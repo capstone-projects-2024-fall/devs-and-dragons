@@ -2,7 +2,7 @@ import { useState } from 'react';
 import HUD from '../../components/HUD/HUD';
 import axios from 'axios';
 import './CreateQuests.css'; // Import the CSS file for styling
-import { useContext} from 'react';
+import { useContext } from 'react';
 import { QuestContext } from './QuestContext'; 
 import { Navigate } from 'react-router-dom';
 
@@ -16,36 +16,48 @@ const CreateQuestsPage = () => {
   const [description, setDescription] = useState('');
   const [programmingLanguage, setProgrammingLanguage] = useState('');
   const [isPreview, setIsPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // State for loading spinner
 
-  // Placeholder values for coding topics, enemies, and backgrounds
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
   const enemies = ['Evil wizard', 'Dragons', 'wizards', 'professor', 'scientist'];
   const backgrounds = ['Forest', 'Desert', 'Cave', 'Mountain'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
 
-  const {addQuest} = useContext(QuestContext); // taking a context object and assing that to QuestContext
+  const { addQuest } = useContext(QuestContext);
 
   const handleCreateQuest = async (e) => {
     e.preventDefault();
+  
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      alert("User is not logged in.");
+      return;
+    }
 
+    setIsLoading(true); // Start the loading state
     try {
-      const response = await axios.post('http://127.0.0.1:5000/quest-parameters', { questTitle, codingTopic, problemCount, difficultyLevel, enemy, background, description, programmingLanguage });
-      console.log(response.data);
-      if (response.status === 200) {
-        const newQuest = {
-          id: Math.random().toString(36).substr(2, 9), 
-          title: questTitle,
-          type: 'Adventure', // Adjust as necessary
-          difficulty: difficultyLevel,
-          status: 'Not Started'
-        };
-        addQuest(newQuest);
-        alert('Quest created successfully');
-        Navigate("/my-quests")
+      const response = await axios.post('http://127.0.0.1:5000/quest-parameters', {
+        questTitle,
+        codingTopic,
+        problemCount,
+        difficultyLevel,
+        enemy,
+        background,
+        description,
+        programmingLanguage,
+        user_id: userId,
+      });
 
+      if (response.status === 200) {
+        const questId = response.data.quest_id;
+        console.log("Quest created successfully. ID:", questId);
+        alert('Quest created successfully');
+        setIsLoading(false); // End the loading state
+        Navigate("/my-quests");
       }
     } catch (error) {
       console.error('Error creating quest:', error);
+      setIsLoading(false); // End the loading state in case of error
     }
   };
 
@@ -175,7 +187,9 @@ const CreateQuestsPage = () => {
             />
           </label>
 
-          <button type="submit" className="submit-button">Create Quest</button>
+          <button type="submit" className="submit-button" disabled={isLoading}>
+            {isLoading ? "Creating Quest..." : "Create Quest"}
+          </button>
         </form>
       ) : (
         <div className="quest-preview">
@@ -198,3 +212,4 @@ const CreateQuestsPage = () => {
 };
 
 export default CreateQuestsPage;
+
