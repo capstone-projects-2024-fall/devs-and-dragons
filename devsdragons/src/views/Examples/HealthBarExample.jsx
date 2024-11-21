@@ -1,13 +1,12 @@
-// src/views/Examples/HealthBarExample.jsx
 import React from 'react';
-import PlayerHealthBar from '../../components/PlayerHealthBar/PlayerHealthBar.jsx';
+import HealthBar from '../../components/HealthBar/HealthBar.js'; // Explicitly reference .js
 
-const HealthBarExample = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', height: '100vh'}}>
-            <PlayerHealthBar />
-        </div>
-    );
-};
+const HealthBarExample = () => (
+    React.createElement(
+        'div',
+        { style: { display: 'flex', justifyContent: 'center', marginTop: '20px' } },
+        React.createElement(HealthBar, { startingHealthPlayer: 100, startingHealthDragon: 150 })
+    )
+);
 
 export default HealthBarExample;

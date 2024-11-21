@@ -1,41 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-from tkinter.messagebox import QUESTION
-
 import pygame
 from pygame.time import Clock
-import random
 
 import button
 
