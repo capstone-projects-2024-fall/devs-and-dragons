@@ -14,10 +14,14 @@ sidebar_position: 4
   * Enemy
   * Background
 * Users must be able to create and customize an Avatar
+* Users must be able to create parties of two to four to start a quest
+* Users must be able to join parties
+* Users can add other users
+  * User can search for another's username and click "Add Friend"
+* Users can create guilds to host multiple guild parties and assign multiple quests
 * Game must include a timer for each party member
 * Game must be able to generate coding problems based on topic and difficulty chosen
 * Game must be able grade answers based on correct output
-* Users must be able to seek guidance through the helper-bot
 * Users must make an account
 * Users must be able to log in created account
 * Users must be able to log into existing accounts
@@ -26,7 +30,7 @@ sidebar_position: 4
  
 
 ## Non-Functional Requirements
-
+* Application must be able to support multiple users via websockets
 * Users can track their progress
   * Dashboard with KPIs (Key performance indicators)
 * The backend must generate questions based on the topic the user selected

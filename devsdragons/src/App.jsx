@@ -1,3 +1,4 @@
+
 //UNCOMMENT THESE IMPORTS UNTIL THE LINE BREAK TO VIEW GAME SCREEN
 import LoginPage from './views/LoginPage/LoginPage.jsx';
 import AvatarPage from './views/Avatar/AvatarPage.jsx';
@@ -13,8 +14,10 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
 
+//UNCOMMENT TO TEST GAME SCREEN
 // import PlayerAnimation from '../GAME/Player/player.jsx';
 import React, {useState} from 'react';
+
 
 
 
@@ -42,13 +45,14 @@ function App() {
             <Route path="/create-quests" element={<CreateQuestsPage />}/>
             <Route path="/my-quests" element={<MyQuestsPage/>} />
             <Route path="/quest-main" element={<QuestMainPage />} /> 
+            <Route path="/guilds" element={<GuildsPage />} />
             <Route path="/avatar" element={<AvatarPage />} />
           </Routes>
         </QuestProvider>
       </Router>
     </ThemeProvider>
-
     //UNCOMMENT TO VIEW GAME SCREEN
+
     // <div>
     //   <PlayerAnimation />
     // </div>
