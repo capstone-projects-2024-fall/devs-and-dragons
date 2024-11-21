@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.3.2">
 <title data-rh="true">Use-case descriptions | Project Techtrek</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/use-case-descriptions"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Use-case descriptions | Project Techtrek"><meta data-rh="true" name="description" content="Use Case 1 - Account Creation"><meta data-rh="true" property="og:description" content="Use Case 1 - Account Creation"><link data-rh="true" rel="icon" href="/project-techtrek/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/use-case-descriptions"><link data-rh="true" rel="alternate" href="https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/use-case-descriptions" hreflang="en"><link data-rh="true" rel="alternate" href="https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/use-case-descriptions" hreflang="x-default"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><link rel="stylesheet" href="/project-techtrek/assets/css/styles.e4cc120d.css">
-<script src="/project-techtrek/assets/js/runtime~main.986187e6.js" defer="defer"></script>
+<script src="/project-techtrek/assets/js/runtime~main.e4e52154.js" defer="defer"></script>
 <script src="/project-techtrek/assets/js/main.be661c51.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -20,9 +20,12 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-2---logging-in">Use Case 2 - Logging In<a href="#use-case-2---logging-in" class="hash-link" aria-label="Direct link to Use Case 2 - Logging In" title="Direct link to Use Case 2 - Logging In">​</a></h2>
 <p>A user wants to log in to an account they created.</p>
 <ol>
-<li>The user navigates to the site&#x27;s landing page.</li>
-<li>The user selects the ‘login’ button.</li>
-<li>The user enters their username and password.</li>
+<li>The user navigates to the site&#x27;s landing page</li>
+<li>The user selects the ‘login’ button</li>
+<li>The user enters their username and password</li>
+<li>After providing the correct credentials, the user will receive a 2FA code in their email</li>
+<li>The user enters the 2FA code</li>
+<li>After providing the correct 2FA code, the user is brought to the home page</li>
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-3---quest-creation">Use Case 3 - Quest Creation<a href="#use-case-3---quest-creation" class="hash-link" aria-label="Direct link to Use Case 3 - Quest Creation" title="Direct link to Use Case 3 - Quest Creation">​</a></h2>
 <p>A user wants to create a new quest.</p>
@@ -49,16 +52,68 @@
 <li>The user selects a color-scheme for the selected avatar.</li>
 <li>User selects &quot;Save Changes&quot; button.</li>
 </ol>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-5---starting-a-quest">Use Case 5 - Starting a Quest<a href="#use-case-5---starting-a-quest" class="hash-link" aria-label="Direct link to Use Case 5 - Starting a Quest" title="Direct link to Use Case 5 - Starting a Quest">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-5---starting-a-quest-solo">Use Case 5 - Starting a Quest Solo<a href="#use-case-5---starting-a-quest-solo" class="hash-link" aria-label="Direct link to Use Case 5 - Starting a Quest Solo" title="Direct link to Use Case 5 - Starting a Quest Solo">​</a></h2>
 <p>A user wants to start a quest by themselves.</p>
 <ol>
 <li>From the homepage, the user selects &quot;Quests&quot; tab.</li>
 <li>The user selects the dropdown menu option, &quot;My Quests.&quot;</li>
 <li>The quests the user made are displayed, the user selects the quests interested in starting.</li>
 <li>The user selects &quot;Start Quest&quot; button.</li>
+<li>The user selects &quot;Solo&quot; button.</li>
 </ol>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-6---playing-a-quest">Use Case 6 - Playing a Quest<a href="#use-case-6---playing-a-quest" class="hash-link" aria-label="Direct link to Use Case 6 - Playing a Quest" title="Direct link to Use Case 6 - Playing a Quest">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-6---playing-a-quest-solo">Use Case 6 - Playing a Quest Solo<a href="#use-case-6---playing-a-quest-solo" class="hash-link" aria-label="Direct link to Use Case 6 - Playing a Quest Solo" title="Direct link to Use Case 6 - Playing a Quest Solo">​</a></h2>
 <p>After a user starts a quest in <strong>Use Case 5</strong>, they want to play and try to complete the quest.</p>
+<ol>
+<li>The quest begins by displaying the quest briefing to the user, providing a story for the user.</li>
+<li>The game screen is now displayed to the user where they can see:<!-- -->
+<ul>
+<li>User&#x27;s avatar</li>
+<li>User&#x27;s health bar</li>
+<li>Enemy</li>
+<li>Enemy&#x27;s health bar</li>
+<li>Timer</li>
+<li>Code Editor</li>
+</ul>
+</li>
+<li>The user is prompted with a question.</li>
+<li>The timer begins to tick down.</li>
+<li>The user writes code in the provided code editor.</li>
+<li>The user clicks the &quot;Submit&quot; button.</li>
+<li>The GPT-bot analyzes the user&#x27;s submission and provides feedback with a rating from 1 to 3.</li>
+<li>Based on the GPT-bot’s rating:<!-- -->
+<ul>
+<li><strong>Feedback is provided to the user</strong>:<!-- -->
+<ul>
+<li>If the rating is 1, the user’s health bar decreases, and the quest continues with the timer reset for a new attempt.</li>
+<li>If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.</li>
+<li>If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-7---creating-a-party-to-start-a-quest">Use Case 7 - Creating a Party to Start a Quest<a href="#use-case-7---creating-a-party-to-start-a-quest" class="hash-link" aria-label="Direct link to Use Case 7 - Creating a Party to Start a Quest" title="Direct link to Use Case 7 - Creating a Party to Start a Quest">​</a></h2>
+<p>A user wants to form a party to undertake a quest together.</p>
+<ol>
+<li>From the homepage, the user selects the &quot;Quests&quot; tab.</li>
+<li>The user selects the dropdown menu option &quot;My Quests.&quot;</li>
+<li>The quests the user has created are displayed; the user selects the quest they are interested in starting.</li>
+<li>The user selects the “Start Quest” button.</li>
+<li>The user is prompted to play the quest &#x27;solo&#x27; for singleplayer, or &#x27;form party&#x27; for multiplayer.</li>
+<li>The user selects the &quot;Form Party&quot; button.</li>
+<li>The user creates a party code and shares it with their peers.</li>
+<li>The user waits for the party size to reach two to four members, then clicks the “Start Quest” button.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-8---join-a-party">Use Case 8 - Join a Party<a href="#use-case-8---join-a-party" class="hash-link" aria-label="Direct link to Use Case 8 - Join a Party" title="Direct link to Use Case 8 - Join a Party">​</a></h2>
+<p>A user wants to join another user’s party.</p>
+<ol>
+<li>From the home page, the user clicks on the “Join Party” button.</li>
+<li>The user enters the party code.</li>
+<li>The user selects the “Join” button.</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-9---playing-a-quest-with-a-party">Use Case 9 - Playing a Quest with a Party<a href="#use-case-9---playing-a-quest-with-a-party" class="hash-link" aria-label="Direct link to Use Case 9 - Playing a Quest with a Party" title="Direct link to Use Case 9 - Playing a Quest with a Party">​</a></h2>
+<p>Two users want to solve a coding problem together during a quest.</p>
 <ol>
 <li>The quest begins by displaying the quest briefing to the user, providing a story for the user.</li>
 <li>The game screen is now displayed to the user where they can see:<!-- -->
@@ -79,8 +134,11 @@
 </li>
 <li>The user writes code in the provided code editor.</li>
 <li>The user clicks the &quot;Submit&quot; button.</li>
+<li>The second user in the party adds onto the code editor to solve the problem if needed.</li>
+<li>The second user clicks the &quot;Submit&quot; button.</li>
 <li>The GPT-bot analyzes the user&#x27;s submission and provides feedback with a rating from 1 to 3.</li>
-<li>Based on the GPT-bot’s rating:<!-- -->
+<li>Based on the GPT-bot’s rating:</li>
+</ol>
 <ul>
 <li><strong>Feedback is provided to the user</strong>:<!-- -->
 <ul>
@@ -90,15 +148,8 @@
 </ul>
 </li>
 </ul>
-</li>
-<li>The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.</li>
-</ol>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="use-case-7---recieve-help-from-helper-bot">Use Case 7 - Recieve help from helper bot<a href="#use-case-7---recieve-help-from-helper-bot" class="hash-link" aria-label="Direct link to Use Case 7 - Recieve help from helper bot" title="Direct link to Use Case 7 - Recieve help from helper bot">​</a></h2>
-<p>A user wants to get help from the helper bot.</p>
-<ol>
-<li>During the quest, the user selects the &quot;Help&quot; icon button.</li>
-<li>The helper bot analyzes the current progress of the user&#x27;s solution to the question and provides feedback.</li>
-<li>The feedback is displayed to the user in the code editor.</li>
-</ol></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/capstone-projects-2024-fall/project-techtrek/edit/main/documentation/docs/requirements/use-case-descriptions.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>bhoiwalapreet</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/project-techtrek/docs/requirements/features-and-requirements"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Features and Requirements</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/project-techtrek/docs/category/system-architecture"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">System Architecture</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#use-case-1---account-creation" class="table-of-contents__link toc-highlight">Use Case 1 - Account Creation</a></li><li><a href="#use-case-2---logging-in" class="table-of-contents__link toc-highlight">Use Case 2 - Logging In</a></li><li><a href="#use-case-3---quest-creation" class="table-of-contents__link toc-highlight">Use Case 3 - Quest Creation</a></li><li><a href="#use-case-4---create-avatar" class="table-of-contents__link toc-highlight">Use Case 4 - Create Avatar</a></li><li><a href="#use-case-5---starting-a-quest" class="table-of-contents__link toc-highlight">Use Case 5 - Starting a Quest</a></li><li><a href="#use-case-6---playing-a-quest" class="table-of-contents__link toc-highlight">Use Case 6 - Playing a Quest</a></li><li><a href="#use-case-7---recieve-help-from-helper-bot" class="table-of-contents__link toc-highlight">Use Case 7 - Recieve help from helper bot</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/project-techtrek/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/capstone-projects-2024-fall/project-techtrek" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2024 Project Techtrek, Inc. Built with Docusaurus.</div></div></div></footer></div>
+<ol start="11">
+<li>The two users continue to engage with the quest until all questions are answered, the user quits, or the user’s health bar reaches zero.</li>
+</ol></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/capstone-projects-2024-fall/project-techtrek/edit/main/documentation/docs/requirements/use-case-descriptions.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>justanimish</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/project-techtrek/docs/requirements/features-and-requirements"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Features and Requirements</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/project-techtrek/docs/category/system-architecture"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">System Architecture</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#use-case-1---account-creation" class="table-of-contents__link toc-highlight">Use Case 1 - Account Creation</a></li><li><a href="#use-case-2---logging-in" class="table-of-contents__link toc-highlight">Use Case 2 - Logging In</a></li><li><a href="#use-case-3---quest-creation" class="table-of-contents__link toc-highlight">Use Case 3 - Quest Creation</a></li><li><a href="#use-case-4---create-avatar" class="table-of-contents__link toc-highlight">Use Case 4 - Create Avatar</a></li><li><a href="#use-case-5---starting-a-quest-solo" class="table-of-contents__link toc-highlight">Use Case 5 - Starting a Quest Solo</a></li><li><a href="#use-case-6---playing-a-quest-solo" class="table-of-contents__link toc-highlight">Use Case 6 - Playing a Quest Solo</a></li><li><a href="#use-case-7---creating-a-party-to-start-a-quest" class="table-of-contents__link toc-highlight">Use Case 7 - Creating a Party to Start a Quest</a></li><li><a href="#use-case-8---join-a-party" class="table-of-contents__link toc-highlight">Use Case 8 - Join a Party</a></li><li><a href="#use-case-9---playing-a-quest-with-a-party" class="table-of-contents__link toc-highlight">Use Case 9 - Playing a Quest with a Party</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/project-techtrek/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/capstone-projects-2024-fall/project-techtrek" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2024 Project Techtrek, Inc. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
