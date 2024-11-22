@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect } from 'react';
 import "./game.css";
 import initGamePlayerAnimation from './gamePlayer.js';
 // import initGameEnemyAnimation from './gameEnemy.js';
@@ -19,7 +19,7 @@ const GameScreen = () => {
     useEffect(() => {
         initGamePlayerAnimation();
     }, []);
-    
+
     return (
         <div id="container">
             <img src={knightAttack1} alt="Player Attack 1 SS" id="playerAttack1" style={{display: "none"}} />
