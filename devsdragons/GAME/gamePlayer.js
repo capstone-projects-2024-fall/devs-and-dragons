@@ -50,16 +50,16 @@ export default function initGamePlayerAnimation() {
 
     const knight = new Knight(canvas.width, canvas.height, "playerIdle", 7);
 
-    // document.getElementById("idle").addEventListener("click", () => {
+    // document.getElementById("playerIdle").addEventListener("click", () => {
     //     knight.changeAnimation('playerIdle', 7);
     // });
-    // document.getElementById("attack").addEventListener("click", () => {
+    // document.getElementById("playerAttack").addEventListener("click", () => {
     //     knight.changeAnimation('playerAttack1', 6);
     // });
-    // document.getElementById("hurt").addEventListener("click", () => {
+    // document.getElementById("playerHurt").addEventListener("click", () => {
     //     knight.changeAnimation('playerHurt', 4);
     // });
-    // document.getElementById("death").addEventListener("click", () => {
+    // document.getElementById("playerDeath").addEventListener("click", () => {
     //     knight.changeAnimation('playerDeath', 12);
     // });
 
