@@ -1,5 +1,6 @@
 export default function initGameEnemyAnimation() {
-    const canvas = document.getElementById("gameCanvas");
+    const canvas = document.getElementById("enemyCanvas");
+    console.log("Canvas is being drawn to:", canvas);
     const ctx = canvas.getContext("2d");
     canvas.width = 1000;
     canvas.height = 1000;
@@ -9,13 +10,13 @@ export default function initGameEnemyAnimation() {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 5;
+            this.scale = 9;
             this.spriteWidth = 140;
             this.spriteHeight = 140;
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
-            this.x = (canvasWidth - this.width) / 2;
-            this.y = (canvasHeight - this.height) / 2;
+            this.x = (canvasWidth - this.width) ;
+            this.y = (canvasHeight - this.height) / 8;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
             this.currentAnimation = "idle"
@@ -54,18 +55,18 @@ export default function initGameEnemyAnimation() {
 
     const dragon = new Dragon(canvas.width, canvas.height, "dragonIdle", 3);
 
-    document.getElementById("idle").addEventListener("click", () => {
-        dragon.changeAnimation('dragonIdle', 3);
-    });
-    document.getElementById("attack").addEventListener("click", () => {
-        dragon.changeAnimation('dragonAttack', 15);
-    });
-    document.getElementById("hurt").addEventListener("click", () => {
-        dragon.changeAnimation('dragonHurt', 3);
-    });
-    document.getElementById("death").addEventListener("click", () => {
-        dragon.changeAnimation('dragonDeath', 4);
-    });
+    // document.getElementById("idle").addEventListener("click", () => {
+    //     dragon.changeAnimation('dragonIdle', 3);
+    // });
+    // document.getElementById("attack").addEventListener("click", () => {
+    //     dragon.changeAnimation('dragonAttack', 15);
+    // });
+    // document.getElementById("hurt").addEventListener("click", () => {
+    //     dragon.changeAnimation('dragonHurt', 3);
+    // });
+    // document.getElementById("death").addEventListener("click", () => {
+    //     dragon.changeAnimation('dragonDeath', 4);
+    // });
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

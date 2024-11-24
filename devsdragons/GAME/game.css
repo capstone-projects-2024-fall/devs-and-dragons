@@ -49,6 +49,10 @@
 }
 
 #container {
+    background-image: url('./Cloudy Vines.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -58,23 +62,28 @@
     padding: 10px;
     width: 1000px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
 }
 
-#constrols {
-    font-family: 'Bangers', cursive;
-    font-size: 40px;
-    margin: 10px;
-}
-
-#controls > p {
-    font-size: 15px;
-    color: black;
-}
-
-#gameCanvas {
+/* #canvas1 {
+    flex: 1;
     border: 1px solid black;
     background-color: grey;
     width: 1000px;
+} */
+
+#playerCanvas {
+    flex: 1;
+    /* border: 1px solid black; */
+    background-color: transparent;
+    width: 500px;
+}
+
+#enemyCanvas {
+    flex: 1;
+    /* border: 1px solid black; */
+    background-color: transparent;
+    width: 500px;
 }

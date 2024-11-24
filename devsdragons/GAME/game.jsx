@@ -1,7 +1,6 @@
 import React, {useEffect } from 'react';
 import "./game.css";
 import initGamePlayerAnimation from './gamePlayer.js';
-// import initGameEnemyAnimation from './gameEnemy.js';
 import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
 import knightAttack2 from "./GameAssets/Avatar/knight/knightAttack2.png";
 import knightAttack3 from "./GameAssets/Avatar/knight/knightAttack3.png";
@@ -14,10 +13,12 @@ import dragonIdle from "./GameAssets/Enemy/Dragon/dragonIdle.png";
 import dragonHurt from "./GameAssets/Enemy/Dragon/dragonHurt.png";
 import dragonDeath from "./GameAssets/Enemy/Dragon/dragonDeath.png";
 import dragonWalk from "./GameAssets/Enemy/Dragon/dragonWalk.png";
+import initGameEnemyAnimation from './gameEnemy.js';
 
 const GameScreen = () => {
     useEffect(() => {
         initGamePlayerAnimation();
+        initGameEnemyAnimation();
     }, []);
 
     return (
@@ -33,10 +34,9 @@ const GameScreen = () => {
             <img src={dragonHurt} alt="Dragon Hurt SS" id="dragonHurt" style={{display: "none"}} />
             <img src={dragonDeath} alt="Dragon Death SS" id="dragonDeath" style={{display: "none"}} />
             <img src={dragonWalk} alt="Dragon Walk SS" id="dragonWalk" style={{display: "none"}} />
-            <div id="controls">
-                <p>Here we will have buttons to trigger animation</p>
-            </div>
-            <canvas id="gameCanvas"></canvas>
+            {/* <canvas id="canvas1"></canvas> */}
+            <canvas id="playerCanvas"></canvas>
+            <canvas id="enemyCanvas"></canvas>
         </div>
     )
 }

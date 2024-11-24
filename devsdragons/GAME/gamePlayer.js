@@ -1,21 +1,22 @@
 export default function initGamePlayerAnimation() {
-    const canvas = document.getElementById("gameCanvas");
+    const canvas = document.getElementById("playerCanvas");
+    console.log("Canvas being drawn to:", canvas);
     const ctx = canvas.getContext("2d");
-    canvas.width = 1000;
-    canvas.height = 1000;
+    canvas.width = 500;
+    canvas.height = 500;
 
     class Knight {
         constructor(canvasWidth, canvasHeight, imageID, max) {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 6;
+            this.scale = 4;
             this.spriteWidth = 64;
             this.spriteHeight = 64;
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
             this.x = (canvasWidth - this.width) / 2;
-            this.y = (canvasHeight - this.height) / 2;
+            this.y = (canvasHeight - this.height);
             this.tickCount = 0;
             this.ticksPerFrame = 10;
             this.changeAnimation('playerIdle', 7); // Set default animation to idle
