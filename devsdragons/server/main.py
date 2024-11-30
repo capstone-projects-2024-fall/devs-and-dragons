@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 socketio = SocketIO(app, cors_allowed_origins="http://10.108.34.229:29000")
+socketio = SocketIO(app)
 
 
 password = "testKey125"
@@ -119,7 +120,6 @@ def handle_leave_room(data):
             del rooms[room]
         
 
-
 @socketio.on('send_message')
 def handle_send_message(data):
     print("This is the data handle_send_message socket: ", data)  # Log to check if data is received
@@ -128,6 +128,7 @@ def handle_send_message(data):
     username = data['username']
     
     emit('receive_message', {'username': username, 'message': message}, room=room)
+
 
 @socketio.on('code_update')
 def handle_code_update(data):
@@ -142,6 +143,7 @@ def handle_language_update(data):
     language = data['language']
     
     emit('language_update', {'language': language}, room=room)
+
 
 
 @app.route('/create_contact', methods=["POST"])

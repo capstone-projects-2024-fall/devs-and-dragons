@@ -11,6 +11,8 @@ function TwoPlayerQuestPage() {
     const {roomCode, isRoomCreator } = location.state || {};
 
     console.log("this is the roomCode:", roomCode)
+
+    
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [sharedCode, setSharedCode] = useState("");
@@ -20,6 +22,7 @@ function TwoPlayerQuestPage() {
     useEffect(() => {
         if(!roomCode) return;
 
+        
         socket.on("receive_message", (data) => {
             setMessages((prev) => [...prev, `${data.username}: ${data.message}`]);
         });
@@ -40,6 +43,7 @@ function TwoPlayerQuestPage() {
             username: localStorage.getItem('email') || 'player1',
             room: roomCode
         });
+        socket.emit('join_room', {room: roomCode});
 
         // cleaning any event listerners when the component unmounts
         return () => {

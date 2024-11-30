@@ -43,6 +43,7 @@ const CreateQuestsPage = () => {
 
     try {
       const response = await axios.post('/api/quest-parameters', { questTitle, codingTopic, problemCount, difficultyLevel, enemy, background, description, programmingLanguage, gameType, roomCode: gameType === 'two-player' ? roomCode: null,});
+
       console.log(response.data);
       if (response.status === 200) {
         const newQuest = {
@@ -88,12 +89,14 @@ const CreateQuestsPage = () => {
     }
     try {
       const response = await axios.post('/api/join_room', {
+
         room_code: roomCode,
         username: 'Player1',
       });
       if (response.status === 200) {
         alert('You have joined the room successfully!');
         navigate('/two-player', { state: { roomCode, isRoomCreator: true } });
+
       }
     } catch (error) {
       console.error('Error joining room:', error);
