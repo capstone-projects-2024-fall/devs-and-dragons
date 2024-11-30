@@ -49,7 +49,7 @@ const AvatarPage = () => {
     return (
         <div style={{ backgroundColor: 'pink', height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <h1> Avatar Page </h1>
-            {/*<HUD />*/}
+            <HUD />
 
            
             {/* wrapping all shapes in flex container to make sure they align next to each other*/}

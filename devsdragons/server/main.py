@@ -25,6 +25,7 @@ cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
 db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
+quests_collection = db["quests"] 
 quests_store = {}
 rooms = {}
 
@@ -260,10 +261,15 @@ def doesTheUserExist():
 
 @app.route("/quest-parameters", methods=["POST", "GET"])
 def getResponse():
-    messageFromChatGpt = ""
     if request.method == "POST":
         data = request.get_json()
         print(data)
+
+        user_id = data.get("user_id")  # Retrieve the user ID
+        if not user_id:
+            return jsonify({"message": "User ID is required"}), 400
+
+        # Extracting quest details
         questTitle = data.get('questTitle')
         codingTopic = data.get("codingTopic")
         problemCount = data.get("problemCount")
@@ -274,58 +280,89 @@ def getResponse():
         programmingLanguage = data.get("programmingLanguage")
         gameType = data.get("gameType")
         
-        
         user_input = (f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
-              f"I need {problemCount} computer science coding challenges on the topic '{codingTopic}', each in the language {programmingLanguage}. "
-              f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
-              f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
-              f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
-              f"Format the output as:\n"
-              f"Background: (Description of the scene)\n"
-              f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
-              f"that must be solved in {programmingLanguage} to progress)\n"
-              f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
-              f"… and so on up to Question {problemCount}.\n"
-              f"Example question format:\n"
-              f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
-              f"Use this storyline description for context: {description}")
-        
-        
-        
-        print(user_input)    
-        
-        response = openai.ChatCompletion.create(
-            model = "gpt-3.5-turbo",
-            messages = [
-                {"role": "system", "content": "You are a helpful assitant"},
-                {"role": "user", "content": user_input}
-            
-            ]
-        )
-        
-        #print(response)
-        messageFromChatGpt = response['choices'][0]['message']['content']
-        questions = messageFromChatGpt.split("Question")[1:]
-        quest_id = str(uuid.uuid4())
-        print("quest_id: ", quest_id)
-        quests_store[0] = questions
-        print(quests_store)
-        # The returned response is in json format, so we go inside choices and then inside choices, we look, at the 0 th element and then inside that
-        # the message and then acessing the content.
-        
-        return jsonify({"quest_id": quest_id}), 200
+                      f"I need {problemCount} computer science coding challenges on the topic '{codingTopic}', each in the language {programmingLanguage}. "
+                      f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
+                      f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
+                      f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
+                      f"Format the output as:\n"
+                      f"Background: (Description of the scene)\n"
+                      f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
+                      f"that must be solved in {programmingLanguage} to progress)\n"
+                      f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
+                      f"… and so on up to Question {problemCount}.\n"
+                      f"Example question format:\n"
+                      f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
+                      f"Use this storyline description for context: {description}")
 
-    
-    else:
-        if request.method == 'GET':
-            #questions = []
-            quest_id = request.args.get('quest_id')
-            print("received quest id:", quest_id, type(quest_id))
-            if int(quest_id) in quests_store:
-                questions = quests_store[int(quest_id)]
-                return jsonify(questions), 200
+        # Send request to OpenAI
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant"},
+                    {"role": "user", "content": user_input}
+                ]
+            )
+            messageFromChatGpt = response['choices'][0]['message']['content']
+            questions = messageFromChatGpt.split("Question")[1:]
+            quest_id = str(uuid.uuid4())
+
+            # Save the quest in the database
+            quest_data = {
+                "quest_id": quest_id,
+                "user_id": user_id,
+                "questTitle": questTitle,
+                "codingTopic": codingTopic,
+                "problemCount": problemCount,
+                "difficultyLevel": difficultyLevel,
+                "enemy": enemy,
+                "background": background,
+                "description": description,
+                "programmingLanguage": programmingLanguage,
+                "questions": questions
+            }
+
+            db["quests"].insert_one(quest_data)  # Save to the database
+
+            print("Quest ID: ", quest_id)
+            return jsonify({"quest_id": quest_id}), 200
+
+        except Exception as e:
+            print(f"Error generating quest: {e}")
+            return jsonify({"message": "Failed to generate quest"}), 500
+
+    elif request.method == "GET":
+        quest_id = request.args.get('quest_id')
+        print("Received quest ID:", quest_id)
+
+        try:
+            # Fetch the quest from the database
+            quest = db["quests"].find_one({"quest_id": quest_id}, {"_id": 0})
+            if quest:
+                return jsonify(quest), 200
             else:
-                return jsonify({"No questions found for the quest_id": quest_id})
+                return jsonify({"message": "No quest found for the provided quest_id"}), 404
+        except Exception as e:
+            print(f"Error fetching quest: {e}")
+            return jsonify({"message": "Failed to fetch quest"}), 500
+
+            
+
+@app.route("/user-quests", methods=["GET"])
+def get_user_quests():
+    user_id = request.args.get("user_id")
+    
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
+
+    try:
+        user_quests = list(db["quests"].find({"user_id": user_id}, {"_id": 0}))  # Fetch quests for the user
+        return jsonify(user_quests), 200
+    except Exception as e:
+        print(f"Error fetching quests for user {user_id}: {e}")
+        return jsonify({"message": "Failed to fetch user quests"}), 500
+
             
             
 
@@ -345,7 +382,7 @@ def checkAnswer():
     sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be an easy grader. Focus more on the logic than the syntax of the code. The return output should be: Grade, advice"
     
     response = openai.ChatCompletion.create(
-        model = "gpt-3.5-turbo",
+        model = "gpt-4",
         messages = [
             {"role": "system", "content": "You are a helpful assitant"},
             {"role": "user", "content": sendToOpenAI}
