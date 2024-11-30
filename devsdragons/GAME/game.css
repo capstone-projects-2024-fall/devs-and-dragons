@@ -4,86 +4,64 @@
     box-sizing: border-box;
 }
 
-#playerAttack1 {
+#playerAttack1, #playerAttack2, #playerAttack3,
+#playerDeath, #playerHurt, #playerIdle,
+#dragonAttack, #dragonIdle, #dragonHurt, #dragonDeath, #playerWalk {
     display: none;
 }
 
-#playerAttack2 {
-    display: none;
+#game-container {
+    display: flex;
+    flex-direction: row; /* Ensures side-by-side layout */
+    align-items: stretch; /* Aligns children's heights to match the tallest item */
+    height: 100vh; /* Limits the height to the viewport's height */
+    width: 100vw; /* Adjusts the width to fill the viewport */
+    overflow: hidden; /* Prevents any overflow from the container */
 }
 
-#playerAttack3 {
-    display: none;
+#canvas-container {
+    flex: 6.5;  /* Allocates 65% of the space to the canvas container */
+    display: flex;
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
 }
 
-#playerDeath {
-    display: none;
+#text-editor {
+    flex: 3.5;  /* Allocates 35% of the space to the text editor */
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow-y: auto; /* Allows scrolling within the editor */
 }
 
-#playerHurt {
-    display: none;
+.panel {
+    width: 100%;
+    padding: 10px;
+    background-color: green;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 1.2rem;
+    overflow: hidden; /* Ensures text does not overflow the panel */
 }
 
-#playerIdle {
-    display: none;
-}
-
-#dragonAttack {
-    display: none;
-}
-
-#dragonIdle {
-    display: none;
-}
-
-#dragonHurt {
-    display: none;
-}
-
-#dragonDeath {
-    display: none;
-}
-
-#playerWalk {
-    display: none;
-}
-
-#container {
+#canvas-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     background-image: url('./Cloudy Vines.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 5px 5px 5px black;
-    border: 1px solid black;
-    padding: 10px;
-    width: 1000px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    width: 100%; /* Full width of its parent */
+    height: 60%; /* Adjusts the height to a suitable portion of the container */
 }
 
-/* #canvas1 {
-    flex: 1;
-    border: 1px solid black;
-    background-color: grey;
-    width: 1000px;
-} */
-
-#playerCanvas {
-    flex: 1;
-    /* border: 1px solid black; */
+#playerCanvas, #enemyCanvas {
+    width: 45%; /* Reduces the width to ensure both canvases fit within the area */
+    height: 100%; /* Full height to maximize usage of the allocated area */
     background-color: transparent;
-    width: 500px;
 }
 
-#enemyCanvas {
-    flex: 1;
-    /* border: 1px solid black; */
-    background-color: transparent;
-    width: 500px;
-}
+
