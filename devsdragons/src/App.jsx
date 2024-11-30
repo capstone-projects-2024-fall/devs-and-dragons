@@ -3,17 +3,16 @@ import AvatarPage from './views/Avatar/AvatarPage.jsx';
 import CreateQuestsPage from './views/QuestPage/CreateQuests.jsx';
 import MyQuestsPage from './views/QuestPage/MyQuests.jsx';
 import HomePage from './views/HomePage/HomePage.jsx';
-import GuildsPage from './views/GuildPage/GuildPage.jsx';
 import CodeEditor from './views/Editor/CodeEditor.jsx';
-import QuestGameView from './views/QuestGameView/QuestGameView.jsx';
 import { DropDown, Button, Select, HUD } from './views/Examples'; // example views to showcase each component
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
-
+import TwoPlayerQuestPage from './views/QuestPage/TwoPlayerQuestPage.jsx';
+import PlayerAnimation from '../GAME/Player/player.jsx';
 
 
 function App() {
@@ -39,13 +38,15 @@ function App() {
             <Route path="/create-quests" element={<CreateQuestsPage />}/>
             <Route path="/my-quests" element={<MyQuestsPage/>} />
             <Route path="/quest-main" element={<QuestMainPage />} /> 
-            <Route path="/guilds" element={<GuildsPage />} />
+            <Route path="/two-player" element={<TwoPlayerQuestPage />} />
             <Route path="/avatar" element={<AvatarPage />} />
-            <Route path="/game" element={<QuestGameView />} />
           </Routes>
         </QuestProvider>
       </Router>
     </ThemeProvider>
+    // <div>
+    //   <PlayerAnimation />
+    // </div>
   );
 }
 
