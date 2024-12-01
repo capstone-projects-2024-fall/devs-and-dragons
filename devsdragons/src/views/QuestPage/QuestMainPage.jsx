@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
+import "./QuestMainPage.css";
 
 // Component to display a star rating based on the numerical grade
 function StarRating({ grade }) {
@@ -79,25 +80,29 @@ function QuestMainPage() {
 
     return (
         <div className="quest-main-page">
-            <h1>{quest.questTitle}</h1>
-            <p><strong>Description:</strong> {quest.description}</p>
-            <p><strong>Background:</strong> {quest.background}</p>
-            {currentQuestionIndex < quest.questions.length && (
-                <div key={currentQuestionIndex} className="question-item">
-                    <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
-                    <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
-                    {feedbacks[currentQuestionIndex] && (
-                        <div className="feedback">
-                            <h2>Feedback</h2>
-                            <StarRating grade={feedbacks[currentQuestionIndex].grade} />
-                            <p><strong>Advice:</strong> {feedbacks[currentQuestionIndex].advice}</p>
-                            {showContinueButton && (
-                                <button onClick={handleNextQuestion}>Continue</button>  // Button to proceed to the next question
-                            )}
-                        </div>
-                    )}
-                </div>
-            )}
+            <div className="content-section">
+                {/* <h1>{quest.questTitle}</h1>
+                <p><strong>Description:</strong> {quest.description}</p>
+                <p><strong>Background:</strong> {quest.background}</p> */}
+                {currentQuestionIndex < quest.questions.length && (
+                    <div key={currentQuestionIndex} className="question-item">
+                        <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
+                        {feedbacks[currentQuestionIndex] && (
+                            <div className="feedback">
+                                <h2>Feedback</h2>
+                                <StarRating grade={feedbacks[currentQuestionIndex].grade} />
+                                <p><strong>Advice:</strong> {feedbacks[currentQuestionIndex].advice}</p>
+                                {showContinueButton && (
+                                    <button onClick={handleNextQuestion}>Continue</button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+            <div className="code-editor-container">
+                <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
+            </div>
         </div>
     );
 }

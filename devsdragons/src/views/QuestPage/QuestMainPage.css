@@ -1,0 +1,47 @@
+
+.quest-main-page {
+    display: flex; /* Establishes a flex container */
+    flex-direction: row; /* Aligns children (content and editor) in a row */
+    width: 100%; /* Ensures the main page takes the full width of the viewport */
+    height: 100vh; /* Sets the height to fill the entire viewport height */
+}
+
+
+.content-section {
+    width: 60%; /* Assigns 60% of the total width to the content section */
+    overflow-y: auto; /* Allows scrolling if content is taller than the viewport */
+    padding: 20px; /* Provides padding around the content */
+}
+
+
+.code-editor-container {
+    width: 40%; /* Assigns 40% of the total width to the code editor section */
+    height: 100%; /* Makes sure the editor section takes the full height */
+    /* padding: 20px; Provides padding around the code editor */
+    border-left: 2px solid #ccc; /* Adds a visual separation between the content and editor */
+}
+
+
+.feedback {
+    margin-top: 20px; /* Adds space above the feedback section */
+    padding: 10px;
+    background-color: #f9f9f9; /* Gives a distinct background to highlight feedback */
+    border-radius: 5px; /* Softens the corners of the feedback box */
+}
+
+
+button {
+    padding: 10px 20px;
+    background-color: #4caf50; /* Green background for the continue button */
+    color: white; /* White text color for readability */
+    border: none; /* Removes default button border */
+    border-radius: 5px; /* Rounds the corners of the button */
+    cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+
+    &:hover {
+        background-color: #367c39; /* Darker shade of green on hover */
+    }
+}
+
+
