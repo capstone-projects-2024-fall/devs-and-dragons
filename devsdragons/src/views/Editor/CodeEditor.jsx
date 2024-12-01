@@ -17,11 +17,14 @@ const CodeEditor = ( { onCodeSubmit }) => {
   };
 
   const containerStyle = {
-    padding: '20px',
+    // padding: '20px',
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    borderRadius: '8px',
-    margin: '20px',
+    // borderRadius: '8px',
+    // margin: '20px',
+    height: '100vh', // Set the container to take full height of the viewport
+    display: 'flex',
+    flexDirection: 'column',
   };
 
   const headerStyle = {
@@ -39,7 +42,8 @@ const CodeEditor = ( { onCodeSubmit }) => {
   };
 
   const editorContainerStyle = {
-    margin: '10px 0',
+    flex: 1,
+    // margin: '10px 0',
     border: '1px solid #ddd',
     borderRadius: '5px',
   };
@@ -61,7 +65,7 @@ const CodeEditor = ( { onCodeSubmit }) => {
 
   return (
     <div style={containerStyle}>
-      <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3>
+      {/* <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3> */}
       <select
         style={selectStyle}
         value={language}
@@ -73,7 +77,7 @@ const CodeEditor = ( { onCodeSubmit }) => {
       </select>
       <div style={editorContainerStyle}>
         <Editor
-          height="30vh"
+          height="100%"
           language={language}
           theme="vs-light"
           value={code}
