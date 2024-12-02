@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-// if you want a 50 second timer, set TIME = 51
-// Desired time - 1 second
-const Timer = ({ TIME = "00:01:00" }) => {
+const Timer = ({ TIME = "00:01:00", onTimeout }) => {
     const Ref = useRef(null);
     const [timer, setTimer] = useState(TIME);
 
@@ -16,12 +14,7 @@ const Timer = ({ TIME = "00:01:00" }) => {
         const seconds = Math.floor((total / 1000) % 60);
         const minutes = Math.floor((total / 1000 / 60) % 60);
         const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-        return {
-            total,
-            hours,
-            minutes,
-            seconds,
-        };
+        return { total, hours, minutes, seconds };
     };
 
     const startTimer = (endtime) => {
@@ -30,6 +23,9 @@ const Timer = ({ TIME = "00:01:00" }) => {
             setTimer(
                 `${hours > 9 ? hours : "0" + hours}:${minutes > 9 ? minutes : "0" + minutes}:${seconds > 9 ? seconds : "0" + seconds}`
             );
+        } else {
+            clearInterval(Ref.current); // Stop the timer
+            if (onTimeout) onTimeout(); // Trigger the timeout callback
         }
     };
 
@@ -43,13 +39,13 @@ const Timer = ({ TIME = "00:01:00" }) => {
 
     const getDeadTime = () => {
         let deadline = new Date();
-        deadline.setSeconds(deadline.getSeconds() + parseTime(TIME));  // set to TIME seconds from now
+        deadline.setSeconds(deadline.getSeconds() + parseTime(TIME)); // Add TIME seconds to the current time
         return deadline;
     };
 
     useEffect(() => {
         clearTimer(getDeadTime());
-        return () => { if (Ref.current) clearInterval(Ref.current); }; // cleanup on component unmount
+        return () => { if (Ref.current) clearInterval(Ref.current); }; // Cleanup on component unmount
     }, []);
 
     const onClickReset = () => {

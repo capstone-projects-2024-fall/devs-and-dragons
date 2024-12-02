@@ -1,9 +1,22 @@
-
 .quest-main-page {
     display: flex; /* Establishes a flex container */
     flex-direction: row; /* Aligns children (content and editor) in a row */
     width: 100%; /* Ensures the main page takes the full width of the viewport */
     height: 100vh; /* Sets the height to fill the entire viewport height */
+}
+
+/* Timer Container Styles */
+.timer-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f1f1f1;
+    border: 2px solid #4caf50;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
 
