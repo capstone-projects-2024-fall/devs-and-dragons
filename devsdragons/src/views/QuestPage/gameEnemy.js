@@ -15,12 +15,12 @@ export default function initGameEnemyAnimation() {
             this.spriteHeight = 140;
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
-            this.x = (canvasWidth - this.width) ;
+            this.x = (canvasWidth - this.width);
             this.y = (canvasHeight - this.height) / 8;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
-            this.currentAnimation = "idle"
-            this.changeAnimation('dragonIdle', 3); // Set defauly animation to idle
+            this.currentAnimation = "idle";
+            this.changeAnimation('dragonIdle', 3); // Set default animation to idle
         }
 
         changeAnimation(state, frames) {
@@ -64,4 +64,5 @@ export default function initGameEnemyAnimation() {
 
     animate();
 
+    return dragon; // Return the Dragon instance
 }

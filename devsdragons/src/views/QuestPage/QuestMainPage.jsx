@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
 import Timer from '../../components/Timer/timer';
@@ -40,6 +40,8 @@ function QuestMainPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [showContinueButton, setShowContinueButton] = useState(false);
+    const playerRef = useRef(null);
+    const enemyRef = useRef(null);
 
     const location = useLocation();
     const questId = new URLSearchParams(location.search).get("quest_id");
@@ -93,7 +95,7 @@ function QuestMainPage() {
     useEffect(() => {
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
-                initGamePlayerAnimation();
+                playerRef.current = initGamePlayerAnimation();
             }
         }, 100); // Short delay to ensure the canvas is ready
         return () => clearTimeout(timer);
@@ -103,7 +105,7 @@ function QuestMainPage() {
     useEffect(() => {
         const enemyTimer = setTimeout(() => {
             if (document.getElementById("enemyCanvas")) {
-                initGameEnemyAnimation();
+                enemyRef.current = initGameEnemyAnimation();
             }
         }, 100);
         return () => clearTimeout(enemyTimer);
@@ -134,6 +136,28 @@ function QuestMainPage() {
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
+
+             // Trigger animations based on grade
+             if (playerRef.current) {
+                if (grade >= 7) {
+                    playerRef.current.changeAnimation("playerAttack1", 6); // Attack animation
+                } else if (grade <= 5) {
+                    playerRef.current.changeAnimation("playerHurt", 5); // Hurt animation
+                } else {
+                    playerRef.current.changeAnimation("playerIdle", 7); // Idle animation
+                }
+            }
+
+            if (enemyRef.current) {
+                if (grade >= 7) {
+                    enemyRef.current.changeAnimation("dragonHurt", 4); // Hurt animation
+                } else if (grade <= 5) {
+                    enemyRef.current.changeAnimation("dragonAttack", 5); // Attack animation
+                } else {
+                    enemyRef.current.changeAnimation("dragonIdle", 3); // Idle animation
+                }
+            }
+            
 
             setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex);
         })
