@@ -1,51 +1,44 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 
-const CodeEditor = ( { onCodeSubmit }) => {
+const CodeEditor = ({ onCodeSubmit }) => {
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("javascript");
-
+  const [theme, setTheme] = useState("vs-light"); // Default to light mode
 
   const handleEditorChange = (value) => {
     setCode(value);
   };
 
   const runCode = () => {
-    // passing the code, and the language to the parent component
+    onCodeSubmit(code);
+  };
 
-    onCodeSubmit(code, language);
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "vs-light" ? "vs-dark" : "vs-light"));
   };
 
   const containerStyle = {
-    // padding: '20px',
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    // borderRadius: '8px',
-    // margin: '20px',
-    height: '100vh', // Set the container to take full height of the viewport
+    height: '700px', // Reduced height for the editor
     display: 'flex',
     flexDirection: 'column',
-  };
-
-  const headerStyle = {
-    color: 'black',
-    fontSize: '1.5rem',
-    margin: '10px 0',
-  };
-
-  const selectStyle = {
-    margin: '10px 0',
-    padding: '8px',
-    borderRadius: '5px',
-    border: '1px solid #333',
-    fontSize: '1rem',
+    padding: '10px',
+    boxSizing: 'border-box',
   };
 
   const editorContainerStyle = {
-    flex: 1,
-    // margin: '10px 0',
+    flex: 1, // Takes all available space above the button
     border: '1px solid #ddd',
     borderRadius: '5px',
+    overflow: 'hidden',
+  };
+
+  const buttonContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '10px',
   };
 
   const buttonStyle = {
@@ -63,35 +56,49 @@ const CodeEditor = ( { onCodeSubmit }) => {
     backgroundColor: '#0056b3',
   };
 
+  const toggleButtonStyle = {
+    padding: '10px',
+    fontSize: '1rem',
+    backgroundColor: '#6c757d',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  };
+
+  const toggleButtonHoverStyle = {
+    backgroundColor: '#5a6268',
+  };
+
   return (
     <div style={containerStyle}>
-      {/* <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3> */}
-      <select
-        style={selectStyle}
-        value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-      >
-        <option value="javascript">JavaScript</option>
-        <option value="python">Python</option>
-        <option value="java">Java</option>
-      </select>
       <div style={editorContainerStyle}>
         <Editor
-          height="100%"
-          language={language}
-          theme="vs-light"
+          height="100%" // Adjusts dynamically to container size
+          theme={theme} // Dynamically switch between light and dark themes
           value={code}
           onChange={handleEditorChange}
         />
       </div>
-      <button
-        style={buttonStyle}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')}
-        onClick={runCode}
-      >
-        Submit
-      </button>
+      <div style={buttonContainerStyle}>
+        <button
+          style={toggleButtonStyle}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = toggleButtonHoverStyle.backgroundColor)}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = '#6c757d')}
+          onClick={toggleTheme}
+        >
+          Toggle {theme === "vs-light" ? "Dark" : "Light"} Mode
+        </button>
+        <button
+          style={buttonStyle}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')}
+          onClick={runCode}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 };

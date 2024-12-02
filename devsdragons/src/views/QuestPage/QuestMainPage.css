@@ -1,60 +1,48 @@
 .quest-main-page {
-    display: flex; /* Establishes a flex container */
-    flex-direction: row; /* Aligns children (content and editor) in a row */
-    width: 100%; /* Ensures the main page takes the full width of the viewport */
-    height: 100vh; /* Sets the height to fill the entire viewport height */
+    display: flex;
+    flex-direction: row; /* Layout children side by side */
+    justify-content: space-between; /* Space between question and the right section */
+    align-items: flex-start; /* Align items at the top */
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in dimensions */
 }
 
-/* Timer Container Styles */
+/* Question Section (Left Side) */
+.content-section {
+    width: 40%; /* Take up 40% of the width */
+    height: 100%; /* Full height for vertical scrolling if needed */
+    overflow-y: auto; /* Scroll if content exceeds available height */
+    padding: 10px;
+}
+
+/* Right Side (Timer + Editor Stack) */
+.right-container {
+    width: 50%; /* Take up 60% of the width */
+    display: flex;
+    flex-direction: column; /* Stack timer and code editor vertically */
+    align-items: stretch; /* Stretch to fill the container width */
+}
+
+/* Timer Container (Top of the Right Side) */
 .timer-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
+    width: 100%; /* Full width of the right container */
+    height: 60%; /* Adjust height dynamically */
     background-color: #f1f1f1;
     border: 2px solid #4caf50;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    z-index: 1000; /* Ensure it appears above other elements */
+    font-size: 14px;
+    margin-bottom: 10px; /* Add space between timer and editor */
 }
 
-
-.content-section {
-    width: 60%; /* Assigns 60% of the total width to the content section */
-    overflow-y: auto; /* Allows scrolling if content is taller than the viewport */
-    padding: 20px; /* Provides padding around the content */
-}
-
-
+/* Code Editor Container (Below Timer) */
 .code-editor-container {
-    width: 40%; /* Assigns 40% of the total width to the code editor section */
-    height: 100%; /* Makes sure the editor section takes the full height */
-    /* padding: 20px; Provides padding around the code editor */
-    border-left: 2px solid #ccc; /* Adds a visual separation between the content and editor */
+    width: 100%; /* Full width of the right container */
+    height: calc(100% - 80px); /* Fill remaining height, assuming timer height is ~80px */
+    padding: 20px;
+    overflow-y: auto; /* Add scrolling for long content */
 }
-
-
-.feedback {
-    margin-top: 20px; /* Adds space above the feedback section */
-    padding: 10px;
-    background-color: #f9f9f9; /* Gives a distinct background to highlight feedback */
-    border-radius: 5px; /* Softens the corners of the feedback box */
-}
-
-
-button {
-    padding: 10px 20px;
-    background-color: #4caf50; /* Green background for the continue button */
-    color: white; /* White text color for readability */
-    border: none; /* Removes default button border */
-    border-radius: 5px; /* Rounds the corners of the button */
-    cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-
-    &:hover {
-        background-color: #367c39; /* Darker shade of green on hover */
-    }
-}
-
-

@@ -114,11 +114,13 @@ function QuestMainPage() {
                     </div>
                 )}
             </div>
-            <div className="code-editor-container">
-                <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
-            </div>
-            <div className="timer-container">
-                <Timer TIME={getTimerLength()} onTimeout={handleAutoSubmit} />
+            <div className="right-container">
+                <div className="timer-container">
+                    <Timer TIME={getTimerLength()} onTimeout={handleAutoSubmit} />
+                </div>
+                <div className="code-editor-container">
+                    <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
+                 </div>
             </div>
         </div>
     );
