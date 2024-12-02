@@ -9,6 +9,16 @@
     box-sizing: border-box; /* Include padding in dimensions */
 }
 
+.question-display {
+    background-color: #f1f1f1;
+    border: 2px solid #4caf50;
+    /* padding: 5px; */
+    /* border-radius: 5px; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 14px;
+}
+
 /* Question Section (Left Side) */
 .content-section {
     width: 60%; /* Take up 40% of the width */
@@ -38,7 +48,7 @@
 #playerCanvas {
     position: absolute; /* Anchor to the container */
     top: 70%; /* Center vertically within the container */
-    left: 10%; /* Align to the left side */
+    left: 1%; /* Align to the left side */
     transform: translateY(-50%); /* Adjust for true centering */
     background-color: transparent;
     border: 1px solid #ccc;
@@ -47,7 +57,7 @@
 #enemyCanvas {
     position: absolute; /* Anchor to the container */
     top: 70%; /* Center vertically within the container */
-    right: 10%; /* Align to the right side */
+    right: 1%; /* Align to the right side */
     transform: translateY(-50%); /* Adjust for true centering */
     background-color: transparent;
     border: 1px solid #ccc;
@@ -60,27 +70,27 @@
     width: 40%; /* Take up 60% of the width */
     display: flex;
     flex-direction: column; /* Stack timer and code editor vertically */
-    align-items: stretch; /* Stretch to fill the container width */
+    /* align-items: stretch;  */
 }
 
 /* Timer Container (Top of the Right Side) */
 .timer-container {
     width: 100%; /* Full width of the right container */
-    height: 60%; /* Adjust height dynamically */
+    height: 30%; /* Adjust height dynamically */
     background-color: #f1f1f1;
     border: 2px solid #4caf50;
-    padding: 5px;
-    border-radius: 5px;
+    /* padding: 5px; */
+    /* border-radius: 5px; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-size: 14px;
-    margin-bottom: 10px; /* Add space between timer and editor */
+    /* margin-bottom: 10px; */
 }
 
 /* Code Editor Container (Below Timer) */
 .code-editor-container {
     width: 100%; /* Full width of the right container */
     height: calc(100% - 80px); /* Fill remaining height, assuming timer height is ~80px */
-    padding: 20px;
-    overflow-y: auto; /* Add scrolling for long content */
+    /* padding: 20px; */
+    /* overflow-y: auto; Add scrolling for long content */
 }

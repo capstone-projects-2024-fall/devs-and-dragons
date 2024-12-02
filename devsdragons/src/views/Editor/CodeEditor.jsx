@@ -20,7 +20,7 @@ const CodeEditor = ({ onCodeSubmit }) => {
   const containerStyle = {
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    height: '700px', // Reduced height for the editor
+    height: '600px', // Reduced height for the editor
     display: 'flex',
     flexDirection: 'column',
     padding: '10px',
@@ -73,14 +73,6 @@ const CodeEditor = ({ onCodeSubmit }) => {
 
   return (
     <div style={containerStyle}>
-      <div style={editorContainerStyle}>
-        <Editor
-          height="100%" // Adjusts dynamically to container size
-          theme={theme} // Dynamically switch between light and dark themes
-          value={code}
-          onChange={handleEditorChange}
-        />
-      </div>
       <div style={buttonContainerStyle}>
         <button
           style={toggleButtonStyle}
@@ -98,6 +90,14 @@ const CodeEditor = ({ onCodeSubmit }) => {
         >
           Submit
         </button>
+      </div>
+      <div style={editorContainerStyle}>
+        <Editor
+          height="100%" // Adjusts dynamically to container size
+          theme={theme} // Dynamically switch between light and dark themes
+          value={code}
+          onChange={handleEditorChange}
+        />
       </div>
     </div>
   );

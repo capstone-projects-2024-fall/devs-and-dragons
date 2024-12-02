@@ -185,7 +185,9 @@ function QuestMainPage() {
             <div className="content-section">
                 {currentQuestionIndex < quest.questions.length && (
                     <div key={currentQuestionIndex} className="question-item">
-                        <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
+                        <div className="question-display">
+                            <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
+                        </div>
                         <div className="game-screen-container" style={{ backgroundImage: `url(${getBackgroundStyle()})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                             <div id="game-container">
                                 {/* Hidden images for animation frames */}
