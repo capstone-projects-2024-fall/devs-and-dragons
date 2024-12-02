@@ -88,6 +88,8 @@ function QuestMainPage() {
             .catch(error => console.error('Error fetching quest data:', error));
     }, [questId]);
 
+
+    // draw player
     useEffect(() => {
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
@@ -98,6 +100,15 @@ function QuestMainPage() {
         return () => clearTimeout(timer); // Cleanup the timer
     }, []);
     
+    //draw enemy
+    useEffect(() => {
+        const enemyTimer = setTimeout(() => {
+            if (document.getElementById("enemyCanvas")) {
+                initGameEnemyAnimation();
+            }
+        }, 500); // Wait for 500ms before initializing the enemy animation
+        return () => clearTimeout(enemyTimer);
+    }, []);
       
 
     const submitCode = (answer, language, questionIndex) => {
