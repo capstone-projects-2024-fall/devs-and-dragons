@@ -19,7 +19,14 @@
 
 .game-screen-container {
     height: 700px;
-    background-color: yellow;
+    background: linear-gradient(to bottom, #ffe680, #ffcc33); /* Your background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative; /* Ensures canvases position themselves relative to this container */
+    overflow: hidden; /* Prevents any overflowing content */
+    background-attachment: absolute; /* Keeps the background fixed */
+    background-size: cover; /* Ensures the image covers the container */
+    background-position: center;
 }
 
 .game-container {
@@ -29,17 +36,19 @@
 }
 
 #playerCanvas {
-    position: absolute;
-    top: 380px;
-    left: 40px;
-    background-color: transparent; /* Optional: adds a background color to the canvas */
-    border: 1px solid #ccc; /* Adds a subtle border around the canvas */
+    position: absolute; /* Anchor to the container */
+    top: 70%; /* Center vertically within the container */
+    left: 10%; /* Align to the left side */
+    transform: translateY(-50%); /* Adjust for true centering */
+    background-color: transparent;
+    border: 1px solid #ccc;
 }
 
 #enemyCanvas {
-    position: absolute;
-    top: 350px;
-    left: 600px;
+    position: absolute; /* Anchor to the container */
+    top: 70%; /* Center vertically within the container */
+    right: 10%; /* Align to the right side */
+    transform: translateY(-50%); /* Adjust for true centering */
     background-color: transparent;
     border: 1px solid #ccc;
 }
