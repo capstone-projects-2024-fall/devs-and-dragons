@@ -89,26 +89,26 @@ function QuestMainPage() {
     }, [questId]);
 
 
-    // draw player
+    // Initialize or re-initialize the player animation
     useEffect(() => {
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
                 initGamePlayerAnimation();
             }
-        }, 500); // Wait for 500ms before initializing
-    
-        return () => clearTimeout(timer); // Cleanup the timer
-    }, []);
-    
-    //draw enemy
+        }, 100); // Short delay to ensure the canvas is ready
+        return () => clearTimeout(timer);
+    }, [currentQuestionIndex]); // Depend on currentQuestionIndex to re-trigger when it changes
+
+    // Initialize or re-initialize the enemy animation
     useEffect(() => {
         const enemyTimer = setTimeout(() => {
             if (document.getElementById("enemyCanvas")) {
                 initGameEnemyAnimation();
             }
-        }, 500); // Wait for 500ms before initializing the enemy animation
+        }, 100);
         return () => clearTimeout(enemyTimer);
-    }, []);
+    }, [currentQuestionIndex]); // Depend on currentQuestionIndex to re-trigger when it changes
+
       
 
     const submitCode = (answer, language, questionIndex) => {
@@ -124,10 +124,11 @@ function QuestMainPage() {
         })
         .then(response => response.text())
         .then(text => {
-            const gradeMatch = text.match(/Grade:\\s*(\\d+)/);
-            const adviceMatch = text.match(/Advice:\\s*(.+)/);
+            const gradeMatch = text.match(/Grade:\s*(\d+)/);
+            const adviceMatch = text.match(/Advice:\s*(.+)/);
             const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
             const advice = adviceMatch ? adviceMatch[1] : "";
+
             setFeedbacks(prevFeedbacks => {
                 const newFeedbacks = [...prevFeedbacks];
                 newFeedbacks[questionIndex] = { grade, advice };
