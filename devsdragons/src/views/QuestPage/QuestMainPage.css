@@ -36,6 +36,14 @@
     border: 1px solid #ccc; /* Adds a subtle border around the canvas */
 }
 
+#enemyCanvas {
+    position: absolute;
+    top: 350px;
+    left: 600px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+}
+
 
 
 /* Right Side (Timer + Editor Stack) */

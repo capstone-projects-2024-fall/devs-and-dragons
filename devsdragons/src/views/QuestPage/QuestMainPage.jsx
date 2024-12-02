@@ -6,6 +6,7 @@ import "./QuestMainPage.css";
 
 //Animations
 import initGamePlayerAnimation from './gamePlayer';
+import initGameEnemyAnimation from './gameEnemy';
 
 //Images
 import forestImage from './Forest.png'; 
@@ -16,6 +17,11 @@ import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
 import knightDeath from "./GameAssets/Avatar/knight/knightDeath.png";
 import knightHurt from "./GameAssets/Avatar/knight/knightHurt.png";
 import knightIdle from "./GameAssets/Avatar/knight/knightIdle.png";
+import dragonAttack from "./GameAssets/Enemy/Dragon/dragonAttack.png";
+import dragonIdle from "./GameAssets/Enemy/Dragon/dragonIdle.png";
+import dragonHurt from "./GameAssets/Enemy/Dragon/dragonHurt.png";
+import dragonDeath from "./GameAssets/Enemy/Dragon/dragonDeath.png";
+import dragonWalk from "./GameAssets/Enemy/Dragon/dragonWalk.png";
 
 function StarRating({ grade }) {
     const totalStars = 5;
@@ -151,7 +157,13 @@ function QuestMainPage() {
                                 <img src={knightDeath} alt="Player Death" style={{ display: "none" }} id="playerDeath" />
                                 <img src={knightHurt} alt="Player Hurt" style={{ display: "none" }} id="playerHurt" />
                                 <img src={knightIdle} alt="Player Idle" style={{ display: "none" }} id="playerIdle" />
+                                <img src={dragonAttack} alt="Dragon Attack SS" id="dragonAttack" style={{display: "none"}} />
+                                <img src={dragonIdle} alt="Dragon Idle SS" id="dragonIdle" style={{display: "none"}} />
+                                <img src={dragonHurt} alt="Dragon Hurt SS" id="dragonHurt" style={{display: "none"}} />
+                                <img src={dragonDeath} alt="Dragon Death SS" id="dragonDeath" style={{display: "none"}} />
+                                <img src={dragonWalk} alt="Dragon Walk SS" id="dragonWalk" style={{display: "none"}} />
                                 <canvas id="playerCanvas" width="500" height="500"></canvas>
+                                <canvas id="enemyCanvas" width="500" height="500"></canvas>
                             </div>
                         </div>
                         {feedbacks[currentQuestionIndex] && (
