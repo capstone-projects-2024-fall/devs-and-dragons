@@ -11,15 +11,20 @@
 
 /* Question Section (Left Side) */
 .content-section {
-    width: 40%; /* Take up 40% of the width */
+    width: 60%; /* Take up 40% of the width */
     height: 100%; /* Full height for vertical scrolling if needed */
     overflow-y: auto; /* Scroll if content exceeds available height */
     padding: 10px;
 }
 
+.game-screen-container {
+    height: 700px;
+    background-color: yellow;
+}
+
 /* Right Side (Timer + Editor Stack) */
 .right-container {
-    width: 50%; /* Take up 60% of the width */
+    width: 40%; /* Take up 60% of the width */
     display: flex;
     flex-direction: column; /* Stack timer and code editor vertically */
     align-items: stretch; /* Stretch to fill the container width */
