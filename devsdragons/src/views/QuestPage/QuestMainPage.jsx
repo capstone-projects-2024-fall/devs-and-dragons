@@ -83,8 +83,16 @@ function QuestMainPage() {
     }, [questId]);
 
     useEffect(() => {
-        initGamePlayerAnimation();
+        const timer = setTimeout(() => {
+            if (document.getElementById("playerCanvas")) {
+                initGamePlayerAnimation();
+            }
+        }, 500); // Wait for 500ms before initializing
+    
+        return () => clearTimeout(timer); // Cleanup the timer
     }, []);
+    
+      
 
     const submitCode = (answer, language, questionIndex) => {
         if (!quest || !quest.questions[questionIndex]) {
