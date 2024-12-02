@@ -20,7 +20,7 @@ const CreateQuestsPage = () => {
 
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
   const enemies = ['Evil wizard', 'Dragons', 'wizards', 'professor', 'scientist'];
-  const backgrounds = ['Forest', 'Desert', 'Cave', 'Mountain'];
+  const backgrounds = ['Forest', 'Desert', 'Castle Ruins', 'River Crossing'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
 
   const { addQuest } = useContext(QuestContext);
