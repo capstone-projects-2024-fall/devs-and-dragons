@@ -3,10 +3,19 @@ import { useLocation } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
 import Timer from '../../components/Timer/timer';
 import "./QuestMainPage.css";
+
+//Animations
+import initGamePlayerAnimation from './gamePlayer';
+
+//Images
 import forestImage from './Forest.png'; 
 import desertImage from './Desert.png';
 import riverImage from './RiverCrossing.png';
 import castleImage from './CastleRuins.png';
+import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
+import knightDeath from "./GameAssets/Avatar/knight/knightDeath.png";
+import knightHurt from "./GameAssets/Avatar/knight/knightHurt.png";
+import knightIdle from "./GameAssets/Avatar/knight/knightIdle.png";
 
 function StarRating({ grade }) {
     const totalStars = 5;
@@ -73,6 +82,10 @@ function QuestMainPage() {
             .catch(error => console.error('Error fetching quest data:', error));
     }, [questId]);
 
+    useEffect(() => {
+        initGamePlayerAnimation();
+    }, []);
+
     const submitCode = (answer, language, questionIndex) => {
         if (!quest || !quest.questions[questionIndex]) {
             console.error("Question not found.");
@@ -124,7 +137,14 @@ function QuestMainPage() {
                     <div key={currentQuestionIndex} className="question-item">
                         <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
                         <div className="game-screen-container" style={{ backgroundImage: `url(${getBackgroundStyle()})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                            <p>GAME SCREEN</p>
+                            <div id="game-container">
+                                {/* Hidden images for animation frames */}
+                                <img src={knightAttack1} alt="Player Attack 1" style={{ display: "none" }} id="playerAttack1" />
+                                <img src={knightDeath} alt="Player Death" style={{ display: "none" }} id="playerDeath" />
+                                <img src={knightHurt} alt="Player Hurt" style={{ display: "none" }} id="playerHurt" />
+                                <img src={knightIdle} alt="Player Idle" style={{ display: "none" }} id="playerIdle" />
+                                <canvas id="playerCanvas" width="500" height="500"></canvas>
+                            </div>
                         </div>
                         {feedbacks[currentQuestionIndex] && (
                             <div className="feedback">

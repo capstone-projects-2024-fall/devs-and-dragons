@@ -1,6 +1,6 @@
 export default function initGamePlayerAnimation() {
     const canvas = document.getElementById("playerCanvas");
-    console.log("Canvas being drawn to:", canvas);
+    if (!canvas) return; // Ensure canvas exists
     const ctx = canvas.getContext("2d");
     canvas.width = 500;
     canvas.height = 500;
@@ -19,14 +19,17 @@ export default function initGamePlayerAnimation() {
             this.y = (canvasHeight - this.height);
             this.tickCount = 0;
             this.ticksPerFrame = 10;
-            this.changeAnimation('playerIdle', 7); // Set default animation to idle
+            this.maxFrame = max;
+            this.frameIndex = 0;
+            this.playOnce = false;
+            this.changeAnimation('playerIdle', 7);
         }
 
         changeAnimation(state, frames) {
             this.image = document.getElementById(state);
             this.maxFrame = frames;
             this.frameIndex = 0;
-            this.playOnce = state !== 'playerIdle'; // Only play once if not idle
+            this.playOnce = state !== 'playerIdle';
         }
 
         draw(context) {
@@ -40,35 +43,20 @@ export default function initGamePlayerAnimation() {
             if (this.tickCount > this.ticksPerFrame) {
                 this.tickCount = 0;
                 if (this.frameIndex >= this.maxFrame - 1 && this.playOnce) {
-                    this.changeAnimation('playerIdle', 7); // Revert to idle after playing once
+                    this.changeAnimation('playerIdle', 7);
                 } else {
-                    this.frameIndex = (this.frameIndex + 1) % this.maxFrame;  // Cycle through frames
+                    this.frameIndex = (this.frameIndex + 1) % this.maxFrame;
                 }
             }
         }
     }
 
     const knight = new Knight(canvas.width, canvas.height, "playerIdle", 7);
-
-    // document.getElementById("playerIdle").addEventListener("click", () => {
-    //     knight.changeAnimation('playerIdle', 7);
-    // });
-    // document.getElementById("playerAttack").addEventListener("click", () => {
-    //     knight.changeAnimation('playerAttack1', 6);
-    // });
-    // document.getElementById("playerHurt").addEventListener("click", () => {
-    //     knight.changeAnimation('playerHurt', 4);
-    // });
-    // document.getElementById("playerDeath").addEventListener("click", () => {
-    //     knight.changeAnimation('playerDeath', 12);
-    // });
-
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         knight.draw(ctx);
         knight.update();
         requestAnimationFrame(animate);
     }
-
     animate();
 }

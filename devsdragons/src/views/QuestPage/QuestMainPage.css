@@ -22,6 +22,25 @@
     background-color: yellow;
 }
 
+.game-container {
+    width: 100%;  /* Adjust the width as needed */
+    height: 500px; /* Match the height of the canvas or adjust as needed */
+    display: flex;
+    justify-content: center; /* Center the canvas horizontally */
+    align-items: center; /* Center the canvas vertically */
+    background-color: #f0f0f0; /* Optional: adds a background color to the container */
+    margin: 20px 0; /* Adds some space around the container */
+}
+
+#playerCanvas {
+    width: 500px; /* Width of the canvas */
+    height: 500px; /* Height of the canvas */
+    background-color: transparent; /* Optional: adds a background color to the canvas */
+    border: 1px solid #ccc; /* Adds a subtle border around the canvas */
+}
+
+
+
 /* Right Side (Timer + Editor Stack) */
 .right-container {
     width: 40%; /* Take up 60% of the width */
