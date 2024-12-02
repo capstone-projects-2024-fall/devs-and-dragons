@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
 import Timer from '../../components/Timer/timer';
 import "./QuestMainPage.css";
@@ -42,6 +42,10 @@ function QuestMainPage() {
     const [showContinueButton, setShowContinueButton] = useState(false);
     const playerRef = useRef(null);
     const enemyRef = useRef(null);
+    const [playerHealth, setPlayerHealth] = useState(100); // Initial health
+    const [dragonHealth, setDragonHealth] = useState(100); // Initial health
+    const [gameOver, setGameOver] = useState(false);
+    const [gameWin, setGameWin] = useState(false);
 
     const location = useLocation();
     const questId = new URLSearchParams(location.search).get("quest_id");
@@ -71,7 +75,7 @@ function QuestMainPage() {
             case "easy":
                 return "00:03:00";
             case "medium":
-                return "00:05:00";
+                return "00:00:10";
             case "hard":
                 return "00:07:00";
             default:
@@ -111,7 +115,20 @@ function QuestMainPage() {
         return () => clearTimeout(enemyTimer);
     }, [currentQuestionIndex]); // Depend on currentQuestionIndex to re-trigger when it changes
 
-      
+    //win lose check
+    useEffect(() => {
+        if (playerHealth <= 0) {
+            setGameOver(true);
+        }
+    }, [playerHealth]);
+
+    useEffect(() => {
+        if (dragonHealth <= 0) {
+            setGameWin(true);
+        }
+    }, [dragonHealth]);
+    
+    
 
     const submitCode = (answer, language, questionIndex) => {
         if (!quest || !quest.questions[questionIndex]) {
@@ -138,26 +155,44 @@ function QuestMainPage() {
             });
 
              // Trigger animations based on grade
-             if (playerRef.current) {
-                if (grade >= 7) {
-                    playerRef.current.changeAnimation("playerAttack1", 6); // Attack animation
-                } else if (grade <= 5) {
-                    playerRef.current.changeAnimation("playerHurt", 5); // Hurt animation
-                } else {
-                    playerRef.current.changeAnimation("playerIdle", 7); // Idle animation
-                }
-            }
+            //  if (playerRef.current) {
+            //     if (grade >= 7) {
+            //         playerRef.current.changeAnimation("playerAttack1", 6); // Attack animation
+            //     } else if (grade <= 5) {
+            //         playerRef.current.changeAnimation("playerHurt", 5); // Hurt animation
+            //     } else {
+            //         playerRef.current.changeAnimation("playerIdle", 7); // Idle animation
+            //     }
+            // }
 
-            if (enemyRef.current) {
-                if (grade >= 7) {
-                    enemyRef.current.changeAnimation("dragonHurt", 4); // Hurt animation
-                } else if (grade <= 5) {
-                    enemyRef.current.changeAnimation("dragonAttack", 5); // Attack animation
-                } else {
-                    enemyRef.current.changeAnimation("dragonIdle", 3); // Idle animation
-                }
-            }
+            // if (enemyRef.current) {
+            //     if (grade >= 7) {
+            //         enemyRef.current.changeAnimation("dragonHurt", 4); // Hurt animation
+            //     } else if (grade <= 5) {
+            //         enemyRef.current.changeAnimation("dragonAttack", 5); // Attack animation
+            //     } else {
+            //         enemyRef.current.changeAnimation("dragonIdle", 3); // Idle animation
+            //     }
+            // }
             
+              // Health Logic
+              const totalQuestions = quest.questions.length;
+
+              if (grade >= 7) {
+                  // Player attacks successfully
+                  setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
+                  playerRef.current?.changeAnimation("playerAttack1", 6); // Attack animation
+                  enemyRef.current?.changeAnimation("dragonHurt", 4); // Hurt animation
+              } else if (grade <= 5) {
+                  // Enemy attacks successfully
+                  setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0
+                  playerRef.current?.changeAnimation("playerHurt", 5); // Hurt animation
+                  enemyRef.current?.changeAnimation("dragonAttack", 5); // Attack animation
+              } else {
+                  // Neutral animations
+                  playerRef.current?.changeAnimation("playerIdle", 7);
+                  enemyRef.current?.changeAnimation("dragonIdle", 3);
+              }
 
             setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex);
         })
@@ -173,6 +208,7 @@ function QuestMainPage() {
         const question = quest.questions[currentQuestionIndex];
         if (question) {
             submitCode("", "auto", currentQuestionIndex); // Auto-submit with empty answer and "auto" as language
+            // setPlayerHealth((prev) => Math.max(prev - 25, 0)); 
         }
     };
 
@@ -180,6 +216,23 @@ function QuestMainPage() {
         return <div>Loading quest...</div>;
     }
 
+    if (gameWin) {
+        return (
+            <div className="win-screen">
+                <h1>You Win!</h1>
+            </div>
+        );
+    }
+
+    if (gameOver) {
+        return (
+            <div className="lose-screen">
+                <h1>You Lose!</h1>
+            </div>
+        );
+    }
+
+    
     return (
         <div className="quest-main-page">
             <div className="content-section">
@@ -200,8 +253,32 @@ function QuestMainPage() {
                                 <img src={dragonHurt} alt="Dragon Hurt SS" id="dragonHurt" style={{display: "none"}} />
                                 <img src={dragonDeath} alt="Dragon Death SS" id="dragonDeath" style={{display: "none"}} />
                                 <img src={dragonWalk} alt="Dragon Walk SS" id="dragonWalk" style={{display: "none"}} />
-                                <canvas id="playerCanvas" width="500" height="500"></canvas>
-                                <canvas id="enemyCanvas" width="500" height="500"></canvas>
+
+                                <div className="player-section">
+                                    <div className="health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${playerHealth}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="playerCanvas" width="500" height="500"></canvas>
+                                </div>
+
+                                {/* Enemy Section */}
+                                <div className="enemy-section">
+                                    <div className="health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${dragonHealth}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="enemyCanvas" width="500" height="500"></canvas>
+                                </div>
+
                             </div>
                         </div>
                         {feedbacks[currentQuestionIndex] && (

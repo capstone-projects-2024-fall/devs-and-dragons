@@ -27,41 +27,103 @@
     padding: 10px;
 }
 
+/* Game Screen Container */
 .game-screen-container {
-    height: 700px;
-    background: linear-gradient(to bottom, #ffe680, #ffcc33); /* Your background */
+    display: flex; /* Flexbox for row layout */
+    justify-content: space-between; /* Space between player and enemy sections */
+    align-items: center; /* Align canvases vertically */
+    width: 100%; /* Full width */
+    padding: 20px; /* Optional padding around the container */
+    box-sizing: border-box; /* Include padding in dimensions */
+}
+
+/* Game Container for Row Layout */
+#game-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the top */
+    width: 100%;
+    height: 400px;
+  
+    box-sizing: border-box;
+}
+
+/* Player and Enemy Sections */
+.player-section,
+.enemy-section {
+    display: flex;
+    flex-direction: column; /* Stack health bar above canvas */
+    align-items: center; /* Center align content horizontally */
+    width: 45%; /* Equal width for both sections */
+}
+
+/* Player and Enemy Sections */
+.player-section,
+.enemy-section {
+    display: flex;
+    flex-direction: column; /* Stack health bar above canvas */
+    align-items: center; /* Center align content horizontally */
+    width: 45%; /* Equal width for both sections */
+    position: relative; /* Parent for absolute positioning of health bar */
+}
+
+/* Health Bar Container */
+.health-bar-container {
+    position: absolute; /* Position relative to the parent section */
+    top: 10px; /* Place above the canvas */
+    width: 80%; /* Adjust width as needed */
+    height: 20px; /* Height of the health bar */
+    z-index: 10; /* Ensure it appears above the canvas */
+    display: flex;
+    justify-content: center; /* Center the health bar within the container */
+}
+
+/* Health Bar */
+.health-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    position: relative; /* Ensures canvases position themselves relative to this container */
-    overflow: hidden; /* Prevents any overflowing content */
-    background-attachment: absolute; /* Keeps the background fixed */
-    background-size: cover; /* Ensures the image covers the container */
-    background-position: center;
+    overflow: hidden;
 }
 
-.game-container {
-    width: 100%;  /* Adjust the width as needed */
-    height: 500px; /* Match the height of the canvas or adjust as needed */
-    background-color: #f0f0f0; /* Optional: adds a background color to the container */
+/* Health Bar Inner */
+.health-bar-inner {
+    height: 100%;
+    background-color: #4caf50; /* Green for health */
+    transition: width 0.3s ease; /* Smooth transition for health reduction */
 }
 
+/* Canvas Styles */
+canvas {
+    width: 500px; /* Set explicit width */
+    height: 500px; /* Set explicit height */
+}
+
+
+/* Player Canvas */
 #playerCanvas {
-    position: absolute; /* Anchor to the container */
-    top: 70%; /* Center vertically within the container */
-    left: 1%; /* Align to the left side */
-    transform: translateY(-50%); /* Adjust for true centering */
-    background-color: transparent;
-    border: 1px solid #ccc;
+    position: relative; /* Keep position within the flow */
+    width: 100%;
+    height:auto;
+    transform: translateY(100px); /* Move canvas up by 20px */
+   
 }
 
+
+/* Enemy Canvas */
 #enemyCanvas {
-    position: absolute; /* Anchor to the container */
-    top: 70%; /* Center vertically within the container */
-    right: 1%; /* Align to the right side */
-    transform: translateY(-50%); /* Adjust for true centering */
-    background-color: transparent;
-    border: 1px solid #ccc;
+    position: relative;
+    width: 100%; /* Adjust width */
+    height: auto;
+    transform: translateY(60px);
+ 
 }
+
+
+
 
 
 

@@ -10,7 +10,7 @@ export default function initGameEnemyAnimation() {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 4;
+            this.scale = 5;
             this.spriteWidth = 140;
             this.spriteHeight = 140;
             this.width = this.spriteWidth * this.scale;
