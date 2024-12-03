@@ -73,9 +73,9 @@ function QuestMainPage() {
         if (!quest || !quest.difficultyLevel) return "00:03:00"; // Default to 3 minutes
         switch (quest.difficultyLevel.toLowerCase()) {
             case "easy":
-                return "00:03:00";
+                return "00:05:01";
             case "medium":
-                return "00:00:10";
+                return "00:10:01";
             case "hard":
                 return "00:07:00";
             default:

@@ -63,9 +63,9 @@ const CreateQuestsPage = () => {
 
   return (
     <div className="create-quest-page">
-      <h1 className="create-quest-title">Create Quests</h1>
+     
       <HUD />
-
+      <h1 className="create-quest-title">Create Quests</h1>
       {!isPreview ? (
         <form onSubmit={handleCreateQuest} className="quest-form">
           <label className="form-label">

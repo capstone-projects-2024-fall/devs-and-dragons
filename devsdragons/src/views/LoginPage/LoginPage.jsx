@@ -59,7 +59,7 @@ const LoginPage = () => {
                 localStorage.setItem('user_id', userId);
                 // Show success alert
                 alert('Login successful!');
-                navigate('/home-page'); // Navigate to the HomePage
+                navigate('/my-quests'); // Navigate to the HomePage
             }
 
         } catch (error) {
