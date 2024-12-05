@@ -7,21 +7,32 @@ import "./QuestMainPage.css";
 //Animations
 import initGamePlayerAnimation from './gamePlayer';
 import initGameEnemyAnimation from './gameEnemy';
+import initMushRoomAnimation from './mushroom';
 
-//Images
+//BACKGROUND IMAGES
 import forestImage from './Forest.png'; 
 import desertImage from './Desert.png';
 import riverImage from './RiverCrossing.png';
 import castleImage from './CastleRuins.png';
+
+//KNIGHT IMAGES
 import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
 import knightDeath from "./GameAssets/Avatar/knight/knightDeath.png";
 import knightHurt from "./GameAssets/Avatar/knight/knightHurt.png";
 import knightIdle from "./GameAssets/Avatar/knight/knightIdle.png";
-import dragonAttack from "./GameAssets/Enemy/Dragon/dragonAttack.png";
-import dragonIdle from "./GameAssets/Enemy/Dragon/dragonIdle.png";
-import dragonHurt from "./GameAssets/Enemy/Dragon/dragonHurt.png";
-import dragonDeath from "./GameAssets/Enemy/Dragon/dragonDeath.png";
-import dragonWalk from "./GameAssets/Enemy/Dragon/dragonWalk.png";
+
+//DRAGON IMAGES
+import dragonAttack from "./GameAssets/Dragon/dragonAttack.png";
+import dragonIdle from "./GameAssets/Dragon/dragonIdle.png";
+import dragonHurt from "./GameAssets/Dragon/dragonHurt.png";
+import dragonDeath from "./GameAssets/Dragon/dragonDeath.png";
+import dragonWalk from "./GameAssets/Dragon/dragonWalk.png";
+
+//MUSHROOM IMAGES
+import mushroomIdle from "./GameAssets/Mushroom/mushroomIdle.png";
+import mushroomAttack from "./GameAssets/Mushroom/mushroomAttack.png";
+import mushroomHurt from "./GameAssets/Mushroom/mushroomHurt.png";
+import mushroomDeath from "./GameAssets/Mushroom/mushroomDeath.png";
 
 function StarRating({ grade }) {
     const totalStars = 5;
@@ -47,6 +58,17 @@ function QuestMainPage() {
     const [gameOver, setGameOver] = useState(false);
     const [gameWin, setGameWin] = useState(false);
 
+    //ENEMY SPRITESHEET AND FRAME INIT
+    const [enemyIdleSS, setEnemyIdleSS] = useState(null);
+    const [enemyIdleFrames, setEnemyIdleFrames] = useState(0);
+    const [enemyHurtSS, setEnemyHurtSS] = useState(null);
+    const [enemyHurtFrames, setEnemyHurtFrames] = useState(0);
+    const [enemyAttackSS, setEnemyAttackSS] = useState(null);
+    const [enemyAttackFrames, setEnemyAttackFrames] = useState(0);
+    const [enemyDeathSS, setEnemyDeathSS] = useState(null);
+    const [enemyDeathFrames, setEnemyDeathFrames] = useState(0);
+
+
     const location = useLocation();
     const questId = new URLSearchParams(location.search).get("quest_id");
 
@@ -68,12 +90,23 @@ function QuestMainPage() {
         }
     };
 
+    // Determine what Enemy was selcted for the quest
+    const initializeEnemyAnimation = () => {
+    if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
+    if (quest.enemy === "Dragon") {
+        return initGameEnemyAnimation();
+    } else if (quest.enemy === "Mr. Mushroom") {
+        return initMushRoomAnimation();
+    }
+    return null; // Default to null if no match
+    };
+
     // Determine the timer length based on quest difficulty
     const getTimerLength = () => {
         if (!quest || !quest.difficultyLevel) return "00:03:00"; // Default to 3 minutes
         switch (quest.difficultyLevel.toLowerCase()) {
             case "easy":
-                return "00:05:01";
+                return "00:00:05";
             case "medium":
                 return "00:10:01";
             case "hard":
@@ -94,26 +127,78 @@ function QuestMainPage() {
             .catch(error => console.error('Error fetching quest data:', error));
     }, [questId]);
 
-
-    // Initialize or re-initialize the player animation
+    // Init Player Animation based on background
     useEffect(() => {
+        const getAdjustY = () => {
+            switch (quest?.background) {
+                case "Desert":
+                    return 0; // Example offset for Desert background
+                case "Castle Ruins":
+                    return 50; // Example offset for Castle Ruins background
+                case "Forest":
+                    return 50; // Example offset for Forest background
+                case "River Crossing":
+                    return -120; // Example offset for River Crossing background
+                default:
+                    return 0; // Default offset
+            }
+        };
+    
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
-                playerRef.current = initGamePlayerAnimation();
+                playerRef.current = initGamePlayerAnimation(getAdjustY());
             }
         }, 100); // Short delay to ensure the canvas is ready
         return () => clearTimeout(timer);
-    }, [currentQuestionIndex]); // Depend on currentQuestionIndex to re-trigger when it changes
+    }, [currentQuestionIndex, quest]); // Depend on quest to reinitialize if background changes
+    
+    // Set enemy animation parameters
+    useEffect(() => {
+        const setEnemyAnimations = () => {
+            if (!quest || !quest.enemy) return;
+    
+            switch (quest.enemy) {
+                case "Dragon":
+                    setEnemyIdleSS("dragonIdle");
+                    setEnemyIdleFrames(3);
+                    setEnemyHurtSS("dragonHurt");
+                    setEnemyHurtFrames(4);
+                    setEnemyAttackSS("dragonAttack");
+                    setEnemyAttackFrames(5);
+                    setEnemyDeathSS("dragonDeath");
+                    setEnemyDeathFrames(6);
+                    break;
+    
+                case "Mr. Mushroom":
+                    setEnemyIdleSS("mushroomIdle");
+                    setEnemyIdleFrames(7);
+                    setEnemyHurtSS("mushroomHurt");
+                    setEnemyHurtFrames(5);
+                    setEnemyAttackSS("mushroomAttack");
+                    setEnemyAttackFrames(10);
+                    setEnemyDeathSS("mushroomDeath");
+                    setEnemyDeathFrames(11);
+                    break;
+    
+                default:
+                    console.warn("Unknown enemy type");
+                    break;
+            }
+        };
+    
+        setEnemyAnimations();
+    
+    }, [quest]);
 
-    // Initialize or re-initialize the enemy animation
+    // Init Enemy Animation
     useEffect(() => {
         const enemyTimer = setTimeout(() => {
             if (document.getElementById("enemyCanvas")) {
-                enemyRef.current = initGameEnemyAnimation();
+                enemyRef.current = initializeEnemyAnimation();
             }
         }, 100);
         return () => clearTimeout(enemyTimer);
-    }, [currentQuestionIndex]); // Depend on currentQuestionIndex to re-trigger when it changes
+    }, [currentQuestionIndex, quest]); 
 
     //win lose check
     useEffect(() => {
@@ -153,46 +238,26 @@ function QuestMainPage() {
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
-
-             // Trigger animations based on grade
-            //  if (playerRef.current) {
-            //     if (grade >= 7) {
-            //         playerRef.current.changeAnimation("playerAttack1", 6); // Attack animation
-            //     } else if (grade <= 5) {
-            //         playerRef.current.changeAnimation("playerHurt", 5); // Hurt animation
-            //     } else {
-            //         playerRef.current.changeAnimation("playerIdle", 7); // Idle animation
-            //     }
-            // }
-
-            // if (enemyRef.current) {
-            //     if (grade >= 7) {
-            //         enemyRef.current.changeAnimation("dragonHurt", 4); // Hurt animation
-            //     } else if (grade <= 5) {
-            //         enemyRef.current.changeAnimation("dragonAttack", 5); // Attack animation
-            //     } else {
-            //         enemyRef.current.changeAnimation("dragonIdle", 3); // Idle animation
-            //     }
-            // }
             
               // Health Logic
               const totalQuestions = quest.questions.length;
 
-              if (grade >= 7) {
-                  // Player attacks successfully
-                  setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
-                  playerRef.current?.changeAnimation("playerAttack1", 6); // Attack animation
-                  enemyRef.current?.changeAnimation("dragonHurt", 4); // Hurt animation
-              } else if (grade <= 5) {
-                  // Enemy attacks successfully
-                  setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0
-                  playerRef.current?.changeAnimation("playerHurt", 5); // Hurt animation
-                  enemyRef.current?.changeAnimation("dragonAttack", 5); // Attack animation
-              } else {
-                  // Neutral animations
-                  playerRef.current?.changeAnimation("playerIdle", 7);
-                  enemyRef.current?.changeAnimation("dragonIdle", 3);
-              }
+            if (grade >= 7) {
+                // Player attacks successfully
+                setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
+                playerRef.current?.changeAnimation("playerAttack1", 6);
+                enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
+            } else if (grade <= 5) {
+                // Enemy attacks successfully
+                setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0
+                playerRef.current?.changeAnimation("playerHurt", 5);
+                enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames);
+            } else {
+                // Neutral animations
+                playerRef.current?.changeAnimation("playerIdle", 7);
+                enemyRef.current?.changeAnimation(enemyIdleSS, enemyIdleFrames);
+            }
+            
 
             setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex);
         })
@@ -253,6 +318,11 @@ function QuestMainPage() {
                                 <img src={dragonHurt} alt="Dragon Hurt SS" id="dragonHurt" style={{display: "none"}} />
                                 <img src={dragonDeath} alt="Dragon Death SS" id="dragonDeath" style={{display: "none"}} />
                                 <img src={dragonWalk} alt="Dragon Walk SS" id="dragonWalk" style={{display: "none"}} />
+                                <img src={mushroomIdle} alt="Mushroom Idle SS" id="mushroomIdle" style={{display: "none"}} />
+                                <img src={mushroomAttack} alt="Mushroom Attack SS" id="mushroomAttack" style={{display: "none"}} />
+                                <img src={mushroomHurt} alt="Mushroom Hurt SS" id="mushroomHurt" style={{display: "none"}} />
+                                <img src={mushroomDeath} alt="Mushroom Death SS" id="mushroomDeath" style={{display: "none"}} />
+
 
                                 <div className="player-section">
                                     <div className="health-bar-container">
