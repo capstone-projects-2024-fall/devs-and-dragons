@@ -1,32 +1,35 @@
-export default function initGamePlayerAnimation() {
+export default function initGamePlayerAnimation(adjust_y) {
     const canvas = document.getElementById("playerCanvas");
-    console.log("Canvas being drawn to:", canvas);
+    if (!canvas) return null; // Return null if canvas is not found
     const ctx = canvas.getContext("2d");
     canvas.width = 500;
     canvas.height = 500;
 
     class Knight {
-        constructor(canvasWidth, canvasHeight, imageID, max) {
+        constructor(canvasWidth, canvasHeight, imageID, max, adjust_y) {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 4;
+            this.scale = 6;
             this.spriteWidth = 64;
             this.spriteHeight = 64;
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
             this.x = (canvasWidth - this.width) / 2;
-            this.y = (canvasHeight - this.height);
+            this.y = canvasHeight - this.height + adjust_y;
             this.tickCount = 0;
-            this.ticksPerFrame = 10;
-            this.changeAnimation('playerIdle', 7); // Set default animation to idle
+            this.ticksPerFrame = 5;
+            this.maxFrame = max;
+            this.frameIndex = 0;
+            this.playOnce = false;
+            this.changeAnimation("playerIdle", 7);
         }
 
         changeAnimation(state, frames) {
             this.image = document.getElementById(state);
             this.maxFrame = frames;
             this.frameIndex = 0;
-            this.playOnce = state !== 'playerIdle'; // Only play once if not idle
+            this.playOnce = state !== "playerIdle";
         }
 
         draw(context) {
@@ -40,35 +43,22 @@ export default function initGamePlayerAnimation() {
             if (this.tickCount > this.ticksPerFrame) {
                 this.tickCount = 0;
                 if (this.frameIndex >= this.maxFrame - 1 && this.playOnce) {
-                    this.changeAnimation('playerIdle', 7); // Revert to idle after playing once
+                    this.changeAnimation("playerIdle", 7); // Revert to idle animation after playOnce
                 } else {
-                    this.frameIndex = (this.frameIndex + 1) % this.maxFrame;  // Cycle through frames
+                    this.frameIndex = (this.frameIndex + 1) % this.maxFrame;
                 }
             }
         }
     }
 
-    const knight = new Knight(canvas.width, canvas.height, "playerIdle", 7);
-
-    // document.getElementById("playerIdle").addEventListener("click", () => {
-    //     knight.changeAnimation('playerIdle', 7);
-    // });
-    // document.getElementById("playerAttack").addEventListener("click", () => {
-    //     knight.changeAnimation('playerAttack1', 6);
-    // });
-    // document.getElementById("playerHurt").addEventListener("click", () => {
-    //     knight.changeAnimation('playerHurt', 4);
-    // });
-    // document.getElementById("playerDeath").addEventListener("click", () => {
-    //     knight.changeAnimation('playerDeath', 12);
-    // });
-
+    const knight = new Knight(canvas.width, canvas.height, "playerIdle", 7, adjust_y);
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         knight.draw(ctx);
         knight.update();
         requestAnimationFrame(animate);
     }
-
     animate();
+    return knight; // Return the Knight instance
 }
+

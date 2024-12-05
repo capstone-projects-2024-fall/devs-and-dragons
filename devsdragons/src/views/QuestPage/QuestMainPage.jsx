@@ -1,12 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CodeEditor from '../Editor/CodeEditor';
+import Timer from '../../components/Timer/timer';
 import "./QuestMainPage.css";
 
-// Component to display a star rating based on the numerical grade
+//Animations
+import initGamePlayerAnimation from './gamePlayer';
+import initGameEnemyAnimation from './gameEnemy';
+import initMushRoomAnimation from './mushroom';
+
+//BACKGROUND IMAGES
+import forestImage from './Forest.png'; 
+import desertImage from './Desert.png';
+import riverImage from './RiverCrossing.png';
+import castleImage from './CastleRuins.png';
+
+//KNIGHT IMAGES
+import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
+import knightDeath from "./GameAssets/Avatar/knight/knightDeath.png";
+import knightHurt from "./GameAssets/Avatar/knight/knightHurt.png";
+import knightIdle from "./GameAssets/Avatar/knight/knightIdle.png";
+
+//DRAGON IMAGES
+import dragonAttack from "./GameAssets/Dragon/dragonAttack.png";
+import dragonIdle from "./GameAssets/Dragon/dragonIdle.png";
+import dragonHurt from "./GameAssets/Dragon/dragonHurt.png";
+import dragonDeath from "./GameAssets/Dragon/dragonDeath.png";
+import dragonWalk from "./GameAssets/Dragon/dragonWalk.png";
+
+//MUSHROOM IMAGES
+import mushroomIdle from "./GameAssets/Mushroom/mushroomIdle.png";
+import mushroomAttack from "./GameAssets/Mushroom/mushroomAttack.png";
+import mushroomHurt from "./GameAssets/Mushroom/mushroomHurt.png";
+import mushroomDeath from "./GameAssets/Mushroom/mushroomDeath.png";
+
 function StarRating({ grade }) {
     const totalStars = 5;
-    const filledStars = Math.round(grade / 2);  // Calculate filled stars as half of the grade
+    const filledStars = Math.round(grade / 2);
     return (
         <div className="star-rating">
             {[...Array(totalStars)].map((_, index) => (
@@ -17,18 +47,78 @@ function StarRating({ grade }) {
 }
 
 function QuestMainPage() {
-    const [quest, setQuest] = useState(null); // State to store the current quest data
-    const [feedbacks, setFeedbacks] = useState([]); // State to store feedback for each question
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // State to track the current question index
-    const [showContinueButton, setShowContinueButton] = useState(false); // State to control the display of the "Continue" button
+    const [quest, setQuest] = useState(null);
+    const [feedbacks, setFeedbacks] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [showContinueButton, setShowContinueButton] = useState(false);
+    const playerRef = useRef(null);
+    const enemyRef = useRef(null);
+    const [playerHealth, setPlayerHealth] = useState(100); // Initial health
+    const [dragonHealth, setDragonHealth] = useState(100); // Initial health
+    const [gameOver, setGameOver] = useState(false);
+    const [gameWin, setGameWin] = useState(false);
+
+    //ENEMY SPRITESHEET AND FRAME INIT
+    const [enemyIdleSS, setEnemyIdleSS] = useState(null);
+    const [enemyIdleFrames, setEnemyIdleFrames] = useState(0);
+    const [enemyHurtSS, setEnemyHurtSS] = useState(null);
+    const [enemyHurtFrames, setEnemyHurtFrames] = useState(0);
+    const [enemyAttackSS, setEnemyAttackSS] = useState(null);
+    const [enemyAttackFrames, setEnemyAttackFrames] = useState(0);
+    const [enemyDeathSS, setEnemyDeathSS] = useState(null);
+    const [enemyDeathFrames, setEnemyDeathFrames] = useState(0);
+
 
     const location = useLocation();
-    const questId = new URLSearchParams(location.search).get("quest_id"); // Extract quest_id from URL parameters
+    const questId = new URLSearchParams(location.search).get("quest_id");
 
-    // Fetch quest details from the server when the component mounts or the questId changes
+    // Function to get the background style URL
+    const getBackgroundStyle = () => {
+        if (!quest || !quest.background) return forestImage; // Use imported image as default
+
+        switch (quest.background) {
+            case 'Desert':
+                return desertImage;
+            case 'Castle Ruins':
+                return castleImage;
+            case 'Forest':
+                return forestImage; 
+            case 'River Crossing':
+                return riverImage;
+            default:
+                return forestImage; // Use default
+        }
+    };
+
+    // Determine what Enemy was selcted for the quest
+    const initializeEnemyAnimation = () => {
+    if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
+    if (quest.enemy === "Dragon") {
+        return initGameEnemyAnimation();
+    } else if (quest.enemy === "Mr. Mushroom") {
+        return initMushRoomAnimation();
+    }
+    return null; // Default to null if no match
+    };
+
+    // Determine the timer length based on quest difficulty
+    const getTimerLength = () => {
+        if (!quest || !quest.difficultyLevel) return "00:03:00"; // Default to 3 minutes
+        switch (quest.difficultyLevel.toLowerCase()) {
+            case "easy":
+                return "00:00:05";
+            case "medium":
+                return "00:10:01";
+            case "hard":
+                return "00:07:00";
+            default:
+                return "00:03:00";
+        }
+    };
+
     useEffect(() => {
         if (!questId) {
-            alert("No quest ID provided."); // Alert the user if no quest ID is in the URL
+            alert("No quest ID provided.");
             return;
         }
         fetch(`http://127.0.0.1:5000/quest-parameters?quest_id=${questId}`)
@@ -37,19 +127,104 @@ function QuestMainPage() {
             .catch(error => console.error('Error fetching quest data:', error));
     }, [questId]);
 
-    // Function to handle the submission of code
+    // Init Player Animation based on background
+    useEffect(() => {
+        const getAdjustY = () => {
+            switch (quest?.background) {
+                case "Desert":
+                    return 0; // Example offset for Desert background
+                case "Castle Ruins":
+                    return 50; // Example offset for Castle Ruins background
+                case "Forest":
+                    return 50; // Example offset for Forest background
+                case "River Crossing":
+                    return -120; // Example offset for River Crossing background
+                default:
+                    return 0; // Default offset
+            }
+        };
+    
+        const timer = setTimeout(() => {
+            if (document.getElementById("playerCanvas")) {
+                playerRef.current = initGamePlayerAnimation(getAdjustY());
+            }
+        }, 100); // Short delay to ensure the canvas is ready
+        return () => clearTimeout(timer);
+    }, [currentQuestionIndex, quest]); // Depend on quest to reinitialize if background changes
+    
+    // Set enemy animation parameters
+    useEffect(() => {
+        const setEnemyAnimations = () => {
+            if (!quest || !quest.enemy) return;
+    
+            switch (quest.enemy) {
+                case "Dragon":
+                    setEnemyIdleSS("dragonIdle");
+                    setEnemyIdleFrames(3);
+                    setEnemyHurtSS("dragonHurt");
+                    setEnemyHurtFrames(4);
+                    setEnemyAttackSS("dragonAttack");
+                    setEnemyAttackFrames(5);
+                    setEnemyDeathSS("dragonDeath");
+                    setEnemyDeathFrames(6);
+                    break;
+    
+                case "Mr. Mushroom":
+                    setEnemyIdleSS("mushroomIdle");
+                    setEnemyIdleFrames(7);
+                    setEnemyHurtSS("mushroomHurt");
+                    setEnemyHurtFrames(5);
+                    setEnemyAttackSS("mushroomAttack");
+                    setEnemyAttackFrames(10);
+                    setEnemyDeathSS("mushroomDeath");
+                    setEnemyDeathFrames(11);
+                    break;
+    
+                default:
+                    console.warn("Unknown enemy type");
+                    break;
+            }
+        };
+    
+        setEnemyAnimations();
+    
+    }, [quest]);
+
+    // Init Enemy Animation
+    useEffect(() => {
+        const enemyTimer = setTimeout(() => {
+            if (document.getElementById("enemyCanvas")) {
+                enemyRef.current = initializeEnemyAnimation();
+            }
+        }, 100);
+        return () => clearTimeout(enemyTimer);
+    }, [currentQuestionIndex, quest]); 
+
+    //win lose check
+    useEffect(() => {
+        if (playerHealth <= 0) {
+            setGameOver(true);
+        }
+    }, [playerHealth]);
+
+    useEffect(() => {
+        if (dragonHealth <= 0) {
+            setGameWin(true);
+        }
+    }, [dragonHealth]);
+    
+    
+
     const submitCode = (answer, language, questionIndex) => {
         if (!quest || !quest.questions[questionIndex]) {
-            console.error("Question not found."); // Log error if the question isn't found
+            console.error("Question not found.");
             return;
         }
         const question = quest.questions[questionIndex];
         fetch("http://127.0.0.1:5000/check_answer", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ question, answer, language }) // Send the question, answer, and language to the server
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question, answer, language })
         })
         .then(response => response.text())
         .then(text => {
@@ -57,36 +232,125 @@ function QuestMainPage() {
             const adviceMatch = text.match(/Advice:\s*(.+)/);
             const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
             const advice = adviceMatch ? adviceMatch[1] : "";
+
             setFeedbacks(prevFeedbacks => {
                 const newFeedbacks = [...prevFeedbacks];
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
+            
+              // Health Logic
+              const totalQuestions = quest.questions.length;
 
-            setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex); // Show continue button if correct
+            if (grade >= 7) {
+                // Player attacks successfully
+                setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
+                playerRef.current?.changeAnimation("playerAttack1", 6);
+                enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
+            } else if (grade <= 5) {
+                // Enemy attacks successfully
+                setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0
+                playerRef.current?.changeAnimation("playerHurt", 5);
+                enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames);
+            } else {
+                // Neutral animations
+                playerRef.current?.changeAnimation("playerIdle", 7);
+                enemyRef.current?.changeAnimation(enemyIdleSS, enemyIdleFrames);
+            }
+            
+
+            setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex);
         })
         .catch(error => console.error('Error submitting code:', error));
     };
 
-    // Function to advance to the next question
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-        setShowContinueButton(false); // Hide the "Continue" button
+        setShowContinueButton(false);
+    };
+
+    const handleAutoSubmit = () => {
+        const question = quest.questions[currentQuestionIndex];
+        if (question) {
+            submitCode("", "auto", currentQuestionIndex); // Auto-submit with empty answer and "auto" as language
+            // setPlayerHealth((prev) => Math.max(prev - 25, 0)); 
+        }
     };
 
     if (!quest) {
-        return <div>Loading quest...</div>; // Display loading message if quest data isn't available yet
+        return <div>Loading quest...</div>;
     }
 
+    if (gameWin) {
+        return (
+            <div className="win-screen">
+                <h1>You Win!</h1>
+            </div>
+        );
+    }
+
+    if (gameOver) {
+        return (
+            <div className="lose-screen">
+                <h1>You Lose!</h1>
+            </div>
+        );
+    }
+
+    
     return (
         <div className="quest-main-page">
             <div className="content-section">
-                {/* <h1>{quest.questTitle}</h1>
-                <p><strong>Description:</strong> {quest.description}</p>
-                <p><strong>Background:</strong> {quest.background}</p> */}
                 {currentQuestionIndex < quest.questions.length && (
                     <div key={currentQuestionIndex} className="question-item">
-                        <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
+                        <div className="question-display">
+                            <p><strong>Question:</strong> {quest.questions[currentQuestionIndex]}</p>
+                        </div>
+                        <div className="game-screen-container" style={{ backgroundImage: `url(${getBackgroundStyle()})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                            <div id="game-container">
+                                {/* Hidden images for animation frames */}
+                                <img src={knightAttack1} alt="Player Attack 1" style={{ display: "none" }} id="playerAttack1" />
+                                <img src={knightDeath} alt="Player Death" style={{ display: "none" }} id="playerDeath" />
+                                <img src={knightHurt} alt="Player Hurt" style={{ display: "none" }} id="playerHurt" />
+                                <img src={knightIdle} alt="Player Idle" style={{ display: "none" }} id="playerIdle" />
+                                <img src={dragonAttack} alt="Dragon Attack SS" id="dragonAttack" style={{display: "none"}} />
+                                <img src={dragonIdle} alt="Dragon Idle SS" id="dragonIdle" style={{display: "none"}} />
+                                <img src={dragonHurt} alt="Dragon Hurt SS" id="dragonHurt" style={{display: "none"}} />
+                                <img src={dragonDeath} alt="Dragon Death SS" id="dragonDeath" style={{display: "none"}} />
+                                <img src={dragonWalk} alt="Dragon Walk SS" id="dragonWalk" style={{display: "none"}} />
+                                <img src={mushroomIdle} alt="Mushroom Idle SS" id="mushroomIdle" style={{display: "none"}} />
+                                <img src={mushroomAttack} alt="Mushroom Attack SS" id="mushroomAttack" style={{display: "none"}} />
+                                <img src={mushroomHurt} alt="Mushroom Hurt SS" id="mushroomHurt" style={{display: "none"}} />
+                                <img src={mushroomDeath} alt="Mushroom Death SS" id="mushroomDeath" style={{display: "none"}} />
+
+
+                                <div className="player-section">
+                                    <div className="health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${playerHealth}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="playerCanvas" width="500" height="500"></canvas>
+                                </div>
+
+                                {/* Enemy Section */}
+                                <div className="enemy-section">
+                                    <div className="health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${dragonHealth}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="enemyCanvas" width="500" height="500"></canvas>
+                                </div>
+
+                            </div>
+                        </div>
                         {feedbacks[currentQuestionIndex] && (
                             <div className="feedback">
                                 <h2>Feedback</h2>
@@ -100,8 +364,13 @@ function QuestMainPage() {
                     </div>
                 )}
             </div>
-            <div className="code-editor-container">
-                <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
+            <div className="right-container">
+                <div className="timer-container">
+                    <Timer TIME={getTimerLength()} onTimeout={handleAutoSubmit} />
+                </div>
+                <div className="code-editor-container">
+                    <CodeEditor onCodeSubmit={(code, language) => submitCode(code, language, currentQuestionIndex)} />
+                 </div>
             </div>
         </div>
     );
