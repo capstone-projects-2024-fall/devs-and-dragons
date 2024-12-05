@@ -213,6 +213,7 @@ function QuestMainPage() {
         }
     }, [dragonHealth]);
     
+    //Resize if full screen is larger than 1440x570
     useEffect(() => {
         function handleResize() {
             const adjustCanvasSize = () => {
