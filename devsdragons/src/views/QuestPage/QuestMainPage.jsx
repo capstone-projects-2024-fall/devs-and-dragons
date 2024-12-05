@@ -10,10 +10,10 @@ import initGameEnemyAnimation from './gameEnemy';
 import initMushRoomAnimation from './mushroom';
 
 //BACKGROUND IMAGES
-import forestImage from './Forest.png'; 
-import desertImage from './Desert.png';
-import riverImage from './RiverCrossing.png';
-import castleImage from './CastleRuins.png';
+import forestImage from './GameAssets/Backgrounds/Forest.png'; 
+import desertImage from './GameAssets/Backgrounds/Desert.png';
+import riverImage from './GameAssets/Backgrounds/RiverCrossing.png';
+import castleImage from './GameAssets/Backgrounds/CastleRuins.png';
 
 //KNIGHT IMAGES
 import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
