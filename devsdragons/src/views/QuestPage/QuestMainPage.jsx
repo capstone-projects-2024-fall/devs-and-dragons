@@ -90,15 +90,51 @@ function QuestMainPage() {
         }
     };
 
+    // Adjust Y position for enemy based on enemy type and background
+    const getEnemyAdjust_Y = () => {
+        switch (quest?.enemy) {
+            case "Dragon":
+                switch (quest?.background) {
+                    case "Desert":
+                        return 8;
+                    case "Castle Ruins":
+                        return 9;
+                    case "Forest":
+                        return 8;
+                    case "River Crossing":
+                        return 0;
+                    default:
+                        return 0;
+                }
+            case "Mr. Mushroom":
+                switch (quest?.background) {
+                    case "Desert":
+                        return 50;
+                    case "Castle Ruins":
+                        return 10;
+                    case "Forest":
+                        return 30;
+                    case "River Crossing":
+                        return 10;
+                    default:
+                        return 0;
+                }
+            default:
+                return 0; // Default offset if no specific adjustments needed
+        }
+    };
+
     // Determine what Enemy was selcted for the quest
-    const initializeEnemyAnimation = () => {
-    if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
-    if (quest.enemy === "Dragon") {
-        return initGameEnemyAnimation();
-    } else if (quest.enemy === "Mr. Mushroom") {
-        return initMushRoomAnimation();
-    }
-    return null; // Default to null if no match
+    const initializeEnemyAnimation = (getEnemyAdjust_Y) => {
+        if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
+
+        if (quest.enemy === "Dragon") {
+            return initGameEnemyAnimation(getEnemyAdjust_Y);
+        } else if (quest.enemy === "Mr. Mushroom") {
+            return initMushRoomAnimation(getEnemyAdjust_Y);
+        }
+
+        return null; // Default to null if no match
     };
 
     // Determine the timer length based on quest difficulty
@@ -129,16 +165,16 @@ function QuestMainPage() {
 
     // Init Player Animation based on background
     useEffect(() => {
-        const getAdjustY = () => {
+        const getPlayerAdjustY = () => {
             switch (quest?.background) {
                 case "Desert":
-                    return 0; // Example offset for Desert background
+                    return 0; 
                 case "Castle Ruins":
-                    return 50; // Example offset for Castle Ruins background
+                    return 50; 
                 case "Forest":
-                    return 50; // Example offset for Forest background
+                    return 50; 
                 case "River Crossing":
-                    return -120; // Example offset for River Crossing background
+                    return -120;
                 default:
                     return 0; // Default offset
             }
@@ -146,7 +182,7 @@ function QuestMainPage() {
     
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
-                playerRef.current = initGamePlayerAnimation(getAdjustY());
+                playerRef.current = initGamePlayerAnimation(getPlayerAdjustY());
             }
         }, 100); // Short delay to ensure the canvas is ready
         return () => clearTimeout(timer);
@@ -192,13 +228,19 @@ function QuestMainPage() {
 
     // Init Enemy Animation
     useEffect(() => {
+        const adjust_y = getEnemyAdjust_Y();  // Compute adjust_y based on current enemy and background
+        console.log("Adjust Y for enemy:", adjust_y);  // Logging to see the computed value
+
         const enemyTimer = setTimeout(() => {
             if (document.getElementById("enemyCanvas")) {
-                enemyRef.current = initializeEnemyAnimation();
+                console.log("Reinitializing enemy animation with adjust_y:", adjust_y);
+                enemyRef.current = initializeEnemyAnimation(adjust_y);
             }
-        }, 100);
+        }, 100);  
+
         return () => clearTimeout(enemyTimer);
-    }, [currentQuestionIndex, quest]); 
+    }, [currentQuestionIndex, quest, quest?.background, quest?.enemy]);  // Dependency on background and enemy to re-trigger the effect
+
 
     //win lose check
     useEffect(() => {
