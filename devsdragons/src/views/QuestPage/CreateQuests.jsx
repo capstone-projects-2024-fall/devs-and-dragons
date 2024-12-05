@@ -19,7 +19,7 @@ const CreateQuestsPage = () => {
   const [isLoading, setIsLoading] = useState(false); // State for loading spinner
 
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
-  const enemies = ['Evil wizard', 'Dragons', 'wizards', 'professor', 'scientist'];
+  const enemies = ['Mr. Mushroom', 'Dragon'];
   const backgrounds = ['Forest', 'Desert', 'Castle Ruins', 'River Crossing'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
 
