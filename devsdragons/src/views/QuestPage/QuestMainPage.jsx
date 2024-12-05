@@ -213,6 +213,30 @@ function QuestMainPage() {
         }
     }, [dragonHealth]);
     
+    useEffect(() => {
+        function handleResize() {
+            const adjustCanvasSize = () => {
+                const scale = window.innerWidth / 1440;
+                const newWidth = 500 * scale;
+                const newHeight = 500 * scale;
+                return { width: newWidth, height: newHeight };
+            };
+
+            const canvasSize = adjustCanvasSize();
+            const playerCanvas = document.getElementById('playerCanvas');
+            const enemyCanvas = document.getElementById('enemyCanvas');
+            if (playerCanvas && enemyCanvas) {
+                playerCanvas.width = canvasSize.width;
+                playerCanvas.height = canvasSize.height;
+                enemyCanvas.width = canvasSize.width;
+                enemyCanvas.height = canvasSize.height;
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Call on component mount to adjust immediately
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
 
     const submitCode = (answer, language, questionIndex) => {
