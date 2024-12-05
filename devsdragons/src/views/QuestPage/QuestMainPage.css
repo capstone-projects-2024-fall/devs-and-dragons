@@ -56,15 +56,6 @@
     flex-direction: column; /* Stack health bar above canvas */
     align-items: center; /* Center align content horizontally */
     width: 45%; /* Equal width for both sections */
-}
-
-/* Player and Enemy Sections */
-.player-section,
-.enemy-section {
-    display: flex;
-    flex-direction: column; /* Stack health bar above canvas */
-    align-items: center; /* Center align content horizontally */
-    width: 45%; /* Equal width for both sections */
     position: relative; /* Parent for absolute positioning of health bar */
 }
 
