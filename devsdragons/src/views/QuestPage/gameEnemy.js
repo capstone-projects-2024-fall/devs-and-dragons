@@ -19,7 +19,7 @@ export default function initGameEnemyAnimation() {
             this.y = (canvasHeight - this.height) / 8;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
-            this.currentAnimation = "idle";
+            this.currentAnimation = "dragonIdle";
             this.changeAnimation('dragonIdle', 3); // Set default animation to idle
         }
 
