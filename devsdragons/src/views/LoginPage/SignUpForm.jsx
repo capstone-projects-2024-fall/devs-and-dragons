@@ -92,7 +92,7 @@ const SignUpForm = ({ onClose }) => {
             password: password,
         };
         try {
-            const response = await axios.post('http://127.0.0.1:5000/create_contact', newUser);
+            const response = await axios.post('/api/create_contact', newUser);
             console.log(response.data);
             setSuccessMessage('Account created');
             onClose();

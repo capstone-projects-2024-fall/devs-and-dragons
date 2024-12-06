@@ -6,9 +6,9 @@ export const QuestContext = createContext();
 // Create a provider component
 export const QuestProvider = ({ children }) => {
   const [quests, setQuests] = useState([
-    { id: 1, title: 'The Algorithmic Forest', type: 'Adventure', difficulty: 'Medium', status: 'In Progress' },
-    { id: 2, title: 'Sorting Odyssey', type: 'Puzzle', difficulty: 'Hard', status: 'Completed' },
-    { id: 3, title: 'Recursive Battle', type: 'Combat', difficulty: 'Easy', status: 'Not Started' }
+    { id: 1, title: 'The Algorithmic Forest', type: 'Adventure', difficulty: 'Medium', status: 'In Progress', gameType: 'singlePlayer'},
+    { id: 2, title: 'Sorting Odyssey', type: 'Puzzle', difficulty: 'Hard', status: 'Completed', gameType: 'singlePlayer'},
+    { id: 3, title: 'Recursive Battle', type: 'Combat', difficulty: 'Easy', status: 'Not Started', gameType: 'singlePlayer'}
   ]);
 
   // Adding a quest to the previous list of quest items.
