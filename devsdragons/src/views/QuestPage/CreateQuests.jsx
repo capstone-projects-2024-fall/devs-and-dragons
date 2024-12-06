@@ -27,8 +27,8 @@ const CreateQuestsPage = () => {
 
   // Placeholder values for coding topics, enemies, and backgrounds
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
-  const enemies = ['Evil wizard', 'Dragons', 'wizards', 'professor', 'scientist'];
-  const backgrounds = ['Forest', 'Desert', 'Cave', 'Mountain'];
+  const enemies = ['Mr. Mushroom', 'Dragon'];
+  const backgrounds = ['Forest', 'Desert', 'Castle Ruins', 'River Crossing'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
 
   const {addQuest} = useContext(QuestContext); // taking a context object and assing that to QuestContext
@@ -117,9 +117,8 @@ const CreateQuestsPage = () => {
 
   return (
     <div className="create-quest-page">
-      <h1 className="create-quest-title">Create Quests</h1>
+     
       <HUD />
-  
       {!isPreview ? (
         <form onSubmit={handleCreateQuest} className="quest-form">
           <label className="form-label">
