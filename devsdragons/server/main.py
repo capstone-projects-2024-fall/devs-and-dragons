@@ -14,10 +14,8 @@ import uuid
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
-socketio = SocketIO(app, cors_allowed_origins="http://10.108.34.229:29000")
-socketio = SocketIO(app)
-
-
+# change the HOST according to your wifi
+socketio = SocketIO(app, cors_allowed_origins="http://192.168.1.208:30000")
 password = "testKey125"
 # For better readability
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -26,8 +24,9 @@ db = cluster_connection["techQuest"]
 collection = db["userInfo"]
 sequence_collection = db["sequences"]
 quests_collection = db["quests"] 
+
 quests_store = {}
-rooms = {}
+rooms = db["rooms"]
 
 # Initialize the sequence counter (this is done only once when setting up)
 if sequence_collection.find_one({"_id": "user_id"}) is None:
@@ -69,40 +68,86 @@ def index():
 
 @app.route("/create_room", methods=["POST"])
 def create_room():
+    room = {}
     room_code = str(uuid.uuid4())[:6]
-    rooms[room_code] = {"players": []}
-    return jsonify({"room_code": room_code})
+    username = request.json.get("username")
+    quest_id = request.json.get("quest_id")
+    print("quest_id generated for the game create_room()", quest_id)
+    room[room_code] = {
+        "players": [username],
+        "roomCreator": username,
+        "quest_id": quest_id,
+        
+    }
+    db["rooms"].insert_one(room)
+    return jsonify({"room_code": room_code, "quest_id": quest_id, "message": "Room created successfully!"})
+
 
 @app.route("/join_room", methods=["POST"])
-def join_room():
+def join_room_http():
     data = request.get_json()
     room_code = data.get("room_code")
     username = data.get("username")
     
-    if room_code not in rooms:
-        return jsonify({"error": "Room does not exist"})
+    if not room_code or not username:
+        return jsonify({"error": "room_code and username are required"}), 400
     
-    if username in rooms[room_code]["players"]:
-        return jsonify({"error": "Username already taken"})
+    print("room code person wants to join and username", room_code, username)
     
-    rooms[room_code]["players"].append(username)
-    return jsonify({"message": f"{username}", "room_code": room_code})
+    try:
+        
+        # roomDetails = db["rooms"].find_one({f"{room_code}.roomCreator": room_code})
+        roomDetails = db["rooms"].find_one({f"{room_code}.roomCreator": {"$exists": True}})
+        print("room details", roomDetails)
+        
+        if not roomDetails:
+            print(f"No room found for roomCode: {room_code}")
+            return jsonify({"error": "Room does not exist"}), 404
+
+        
+        players = roomDetails[room_code].get("players", [])
+        if username in players:
+            return jsonify({"error": "Username already taken"}), 400
+        players.append(username)
+
+        # Update the database with the new player
+        db["rooms"].update_one(
+            {"_id": roomDetails["_id"]},
+            {"$set": {f"{room_code}.players": players}}
+        )
+        questRoom = db["quests"].find_one({"roomCode": room_code})
+        quest_id = questRoom["quest_id"]
+        
+        return jsonify({"room_code": room_code, "quest_id": quest_id, "message": f"{username} joined the room successfully!"})
+
+    except Exception as e:
+        print(f"Error processing join room request: {e}")
+        return jsonify({"error": "Failed to join room"}), 500
+
+
+   
+    #rooms[room_code]["players"].append(username)
+   
 
 @socketio.on('join_room')
 def handle_join_room(data):
     print("This is the data handle_join_room socket: ", data)
     username = data["username"]
-    room = data["room"]
+    room_code = data["room"]
     
-    
-    if room not in rooms:
-        emit("error", {'message': 'Room does not exist'})
-        return 
-    
-    join_room(room)
-    if username not in rooms[room]["players"]:
-        rooms[room]["players"].append(username)
-    emit('user_joined', {'username': username, 'players': rooms[room]['players']}, room=room)
+    # if room_code not in rooms:
+    #     emit("error", {'message': 'Room does not exist'})
+    #     return 
+    roomDetails = db["rooms"].find_one({f"{room_code}.roomCreator": {"$exists": True}})
+    players = roomDetails[room_code].get("players", [])
+    is_room_creator = roomDetails[room_code].get("roomCreator")
+
+    join_room(room_code)
+    emit('user_joined', {
+        'username': username, 
+        'players': players,
+        'isRoomCreator': is_room_creator
+        }, room=room_code)
     
 
 @socketio.on('leave_room')
@@ -124,22 +169,53 @@ def handle_leave_room(data):
 @socketio.on('send_message')
 def handle_send_message(data):
     print("This is the data handle_send_message socket: ", data)  # Log to check if data is received
-    room = data['room']
     message = data['message']
     username = data['username']
+    room_code = data['room']
     
-    emit('receive_message', {'username': username, 'message': message}, room=room)
+    code_indicators = [
+        "def ", "class ", "import ", "from ", "print(", "lambda ", "if ", "else:", "elif ",
+        "try:", "except ", "with ", "for ", "while ", "return ", "pass", "continue", "break",
+        "=", "==", "!=", ">=", "<=", "async ", "await ", "yield ", "open(", "self.", "global ",
+        "nonlocal ", "#", "\"\"\"", "'''", "[", "]", "{", "}", "(", ")", ": ", "@", "->",
+        ".py", "True", "False", "None"
+    ]
+    
+    is_code = any(indicator in message for indicator in code_indicators)
 
+    if is_code:
+        warning_message = "⚠️ Warning: Code detected in the message!"
+        print(warning_message)
+        emit('receive_message', {'username': "System", 'message': warning_message}, room=room_code)
+    else:
+        emit('receive_message', {'username': username, 'message': message}, room=room_code)
+
+    
+    # if room not in rooms:
+    #     emit('error', {'message': 'User os not part of this room'})
+    #     return
+    
+    # check before sending message
+    
 
 @socketio.on('code_update')
 def handle_code_update(data):
+    print("This is the data handle_code_update socket: ", data)  # Log to check if data is received
     room = data['room']
     code = data['code']
     
-    emit('code_update', {'code': code}, room=room)
+    
+    
+    # if not room or not code:
+    #     print("Invalid data received in code_update:", data)
+    #     return
+    print(f"Broadcasting code update to room {room} with code: {code}")
+
+    emit('code_update', {'code': code, 'room': room}, room=room)
     
 @socketio.on('language_update')
 def handle_language_update(data):
+    print("This is the data handle_language_update socket: ", data) # Log
     room = data['room']
     language = data['language']
     
@@ -261,15 +337,13 @@ def doesTheUserExist():
 
 @app.route("/quest-parameters", methods=["POST", "GET"])
 def getResponse():
+    messageFromChatGpt = ""
     if request.method == "POST":
         data = request.get_json()
         print(data)
-
         user_id = data.get("user_id")  # Retrieve the user ID
         if not user_id:
             return jsonify({"message": "User ID is required"}), 400
-
-        # Extracting quest details
         questTitle = data.get('questTitle')
         codingTopic = data.get("codingTopic")
         problemCount = data.get("problemCount")
@@ -279,78 +353,98 @@ def getResponse():
         description = data.get("description")
         programmingLanguage = data.get("programmingLanguage")
         gameType = data.get("gameType")
+        roomCode = data.get("roomCode")
+        topics = []
+        
+        if codingTopic == "Data Structures":
+            topics.append('stack')
+            topics.append('queue')
+            topics.append('linked list')
+            topics.append('binary search tree')
+            topics.append('hash table')
+        
+        
+        
         
         user_input = (f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
-                      f"I need {problemCount} computer science coding challenges on the topic '{codingTopic}', each in the language {programmingLanguage}. "
-                      f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
-                      f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
-                      f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
-                      f"Format the output as:\n"
-                      f"Background: (Description of the scene)\n"
-                      f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
-                      f"that must be solved in {programmingLanguage} to progress)\n"
-                      f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
-                      f"… and so on up to Question {problemCount}.\n"
-                      f"Example question format:\n"
-                      f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
-                      f"Use this storyline description for context: {description}")
-
-        # Send request to OpenAI
+              f"I need {problemCount} computer science coding challenges on the topic '{topics}', each in the language {programmingLanguage}. "
+              f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
+              f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
+              f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
+              f"Format the output as:\n"
+              f"Background: (Description of the scene)\n"
+              f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
+              f"that must be solved in {programmingLanguage} to progress)\n"
+              f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
+              f"… and so on up to Question {problemCount}.\n"
+              f"Example question format:\n"
+              f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
+              f"Use this storyline description for context: {description}")
+        
+        print(user_input)
+        
+        
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant"},
+                model = "gpt-3.5-turbo",
+                messages = [
+                    {"role": "system", "content": "You are a helpful assitant"},
                     {"role": "user", "content": user_input}
+                
                 ]
             )
+        
+        #print(response)
             messageFromChatGpt = response['choices'][0]['message']['content']
             questions = messageFromChatGpt.split("Question")[1:]
             quest_id = str(uuid.uuid4())
-
-            # Save the quest in the database
+            
+            # The returned response is in json format, so we go inside choices and then inside choices, we look, at the 0 th element and then inside that
+            # the message and then acessing the content.
             quest_data = {
-                "quest_id": quest_id,
-                "user_id": user_id,
-                "questTitle": questTitle,
-                "codingTopic": codingTopic,
-                "problemCount": problemCount,
-                "difficultyLevel": difficultyLevel,
-                "enemy": enemy,
-                "background": background,
-                "description": description,
-                "programmingLanguage": programmingLanguage,
-                "questions": questions
-            }
+                    "quest_id": quest_id,
+                    "user_id": user_id,
+                    "questTitle": questTitle,
+                    "codingTopic": codingTopic,
+                    "problemCount": problemCount,
+                    "difficultyLevel": difficultyLevel,
+                    "enemy": enemy,
+                    "background": background,
+                    "description": description,
+                    "programmingLanguage": programmingLanguage,
+                    "gameType": gameType,
+                    "roomCode": roomCode,
+                    "questions": questions
+                }
+            print(questions)
 
             db["quests"].insert_one(quest_data)  # Save to the database
-
+            quests_store[0] = questions
             print("Quest ID: ", quest_id)
             return jsonify({"quest_id": quest_id}), 200
 
         except Exception as e:
             print(f"Error generating quest: {e}")
             return jsonify({"message": "Failed to generate quest"}), 500
-
     elif request.method == "GET":
         quest_id = request.args.get('quest_id')
         print("Received quest ID:", quest_id)
-
         try:
             # Fetch the quest from the database
             quest = db["quests"].find_one({"quest_id": quest_id}, {"_id": 0})
+            questions = quest["questions"]
+            # print(questions)
+            # print("questInformation", quest)
             if quest:
-                return jsonify(quest), 200
+                return jsonify(questions), 200
             else:
                 return jsonify({"message": "No quest found for the provided quest_id"}), 404
         except Exception as e:
             print(f"Error fetching quest: {e}")
             return jsonify({"message": "Failed to fetch quest"}), 500
-
-            
-
+        
 @app.route("/user-quests", methods=["GET"])
-def get_user_quests():
+def get_quest_info():
     user_id = request.args.get("user_id")
     
     if not user_id:
@@ -363,7 +457,32 @@ def get_user_quests():
         print(f"Error fetching quests for user {user_id}: {e}")
         return jsonify({"message": "Failed to fetch user quests"}), 500
 
-            
+@app.route("/quest_details", methods=["GET"])
+def get_user_quests():
+    quest_id = request.args.get("quest_id")
+    print("In the backend", quest_id)
+    if not quest_id:
+        return jsonify({"message": "Missing quest_id parameter"}), 400
+    
+    try:
+        quest = db["quests"].find_one({"quest_id": quest_id}) 
+        print(quest)
+        gameType = quest["gameType"]
+        roomCode = quest["roomCode"]
+        if not roomCode:
+            roomCode = ""
+        print("GameType & roomCode before returning", quest_id, gameType, roomCode)
+        
+        quest_details = {
+            "questId": quest_id,
+            "gameType": gameType,
+            "roomCode": roomCode
+        }
+        return jsonify(quest_details), 200
+
+    except Exception as e:
+        print(f"Error fetching quest details for quest_id {quest_id}: {e}")
+        return jsonify({"message": "Failed to fetch quest details"}), 500
             
 
 
@@ -379,10 +498,10 @@ def checkAnswer():
     answer = data.get('answer')
     print(answer)
     language = data.get('language')
-    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be an easy grader. Focus more on the logic than the syntax of the code. The return output should be: Grade, advice"
+    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be a tough grader, if the person has provided nothing give him a 0, if he is not meeting requirements give him a bad grade. But if the expectations are met provie good grade. Focus more on the logic than the syntax of the code. The return output should be: Grade, Advice"
     
     response = openai.ChatCompletion.create(
-        model = "gpt-4",
+        model = "gpt-3.5-turbo",
         messages = [
             {"role": "system", "content": "You are a helpful assitant"},
             {"role": "user", "content": sendToOpenAI}
@@ -415,7 +534,7 @@ for result in results:
 """
 
 if __name__ == '__main__':
-    HOST, PORT = '10.108.34.229', 29000
+    HOST, PORT = '192.168.1.208', 29000
     socketio.run(app, host=HOST, port=PORT, debug=True)
     app.run(debug=True)
 

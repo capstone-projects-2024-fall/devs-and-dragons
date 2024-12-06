@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Editor from '@monaco-editor/react';
 
-const CodeEditor = ( { onCodeSubmit }) => {
-  const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("javascript");
-
-
+const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
   const handleEditorChange = (value) => {
-    setCode(value);
+    if (onChange) {
+      onChange(value, "code"); // Notify the parent about code changes
+    }
   };
 
   const runCode = () => {
-    // passing the code, and the language to the parent component
-
-    onCodeSubmit(code, language);
+    onCodeSubmit(code, language); // Submit the code and language to the parent
   };
 
   const containerStyle = {
@@ -65,7 +61,7 @@ const CodeEditor = ( { onCodeSubmit }) => {
       <select
         style={selectStyle}
         value={language}
-        onChange={(e) => setLanguage(e.target.value)}
+        onChange={(e) => onChange(e.target.value, "language")} // Notify parent about language changes
       >
         <option value="javascript">JavaScript</option>
         <option value="python">Python</option>
@@ -76,8 +72,8 @@ const CodeEditor = ( { onCodeSubmit }) => {
           height="30vh"
           language={language}
           theme="vs-light"
-          value={code}
-          onChange={handleEditorChange}
+          value={code} // Controlled by the parent
+          onChange={handleEditorChange} // Notify parent when the editor content changes
         />
       </div>
       <button
@@ -92,4 +88,4 @@ const CodeEditor = ( { onCodeSubmit }) => {
   );
 };
 
-export default CodeEditor;
+export default MultiplayerCodeEditor;

@@ -34,7 +34,7 @@ const HomePage = () => {
     }
 
     try {
-      const response = await axios.get('http://127.0.0.1:5000/get_user_data', {
+      const response = await axios.get('/api/get_user_data', {
         params: {
           user_id: userId,
         },
@@ -56,7 +56,7 @@ const HomePage = () => {
   // Function to handle increment button click
   const handleIncrementClick = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/update_mock_field', {
+      const response = await axios.post('/api/update_mock_field', {
         user_id: userId,
         increment_value: 1,
       });

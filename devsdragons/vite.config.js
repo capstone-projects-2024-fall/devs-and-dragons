@@ -10,12 +10,12 @@ export default defineConfig({
     hot: true,
     proxy: {
       '/socket.io': {
-        target: 'http://10.108.34.229:29000', // Backend WebSocket URL
+        target: 'http://192.168.1.208:29000', // Backend WebSocket URL
         ws: true, // Enable WebSocket proxying
         changeOrigin: true
       },
       '/api': {
-        target: 'http://10.108.34.229:29000', // Backend server
+        target: 'http://192.168.1.208:29000', // Backend server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '') // Rewrite '/api' prefix
       }

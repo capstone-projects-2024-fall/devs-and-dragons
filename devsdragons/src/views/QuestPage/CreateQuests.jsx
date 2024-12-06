@@ -18,10 +18,12 @@ const CreateQuestsPage = () => {
   const [description, setDescription] = useState('');
   const [programmingLanguage, setProgrammingLanguage] = useState('');
   const [isPreview, setIsPreview] = useState(false);
-  const [gameType, setGameType] = useState('one-player');
+  const [gameType, setGameType] = useState('');
+  const [questId, setQuestID] = useState('');
   const [roomOption, setRoomOption] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRoomCreator, setRoomCreator] = useState(false)
 
   // Placeholder values for coding topics, enemies, and backgrounds
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
@@ -40,16 +42,16 @@ const CreateQuestsPage = () => {
     }
 
     setIsLoading(true);
-
+    const user_id = localStorage.getItem('user_id')
     try {
-      const response = await axios.post('/api/quest-parameters', { questTitle, codingTopic, problemCount, difficultyLevel, enemy, background, description, programmingLanguage, gameType, roomCode: gameType === 'two-player' ? roomCode: null,});
+      const response = await axios.post('/api/quest-parameters', { user_id, questTitle, codingTopic, problemCount, difficultyLevel, enemy, background, description, programmingLanguage, gameType, roomCode: gameType === 'two-player' ? roomCode: null,});
 
       console.log(response.data);
+      setQuestID(response.data.quest_id); 
       if (response.status === 200) {
         const newQuest = {
           id: Math.random().toString(36).substr(2, 9), 
           title: questTitle,
-          type: 'Adventure', // change the quest type later
           difficulty: difficultyLevel,
           status: 'Not Started',
           gameType: gameType,
@@ -58,8 +60,10 @@ const CreateQuestsPage = () => {
         };
         addQuest(newQuest);
         alert('Quest created successfully');
+        // if the quest is two-player then navigate directly to page else my-quests
+        console.log("gameType", gameType)
+        console.log("questID", response.data.quest_id);
         navigate("/my-quests")
-
       }
     } catch (error) {
       console.error('Error creating quest:', error);
@@ -71,7 +75,14 @@ const CreateQuestsPage = () => {
 
   const handleStartRoom = async () => {
     try {
-      const response = await axios.post('/api/create_room');
+      const username = localStorage.getItem('user_id');
+      const quest_id = localStorage.getItem('quest_id');
+      if (!username) {
+        alert("No user name provided")
+        return;
+      }
+      console.log("username", username)
+      const response = await axios.post('/api/create_room', {username, quest_id});
       if (response.status === 200) {
         setRoomCode(response.data.room_code);
         alert(`Room created! Your room code is: ${response.data.room_code}`);
@@ -89,13 +100,13 @@ const CreateQuestsPage = () => {
     }
     try {
       const response = await axios.post('/api/join_room', {
-
         room_code: roomCode,
-        username: 'Player1',
+        username: localStorage.getItem("user_id"),
       });
       if (response.status === 200) {
         alert('You have joined the room successfully!');
-        navigate('/two-player', { state: { roomCode, isRoomCreator: true } });
+        console.log("Joining the room frontend", response.data)
+        navigate('/two-player', { state: { roomCode: response.data.room_code, questData: response.data.quest_id} });
 
       }
     } catch (error) {
@@ -108,7 +119,7 @@ const CreateQuestsPage = () => {
     <div className="create-quest-page">
       <h1 className="create-quest-title">Create Quests</h1>
       <HUD />
-
+  
       {!isPreview ? (
         <form onSubmit={handleCreateQuest} className="quest-form">
           <label className="form-label">
@@ -140,7 +151,7 @@ const CreateQuestsPage = () => {
               </label>
             </div>
           </label>
-
+  
           {gameType === 'two-player' && (
             <div>
               <label className="form-label">
@@ -174,7 +185,7 @@ const CreateQuestsPage = () => {
                   </label>
                 </div>
               </label>
-
+  
               {roomOption === 'join-room' && (
                 <label className="form-label">
                   Room Code:
@@ -191,7 +202,7 @@ const CreateQuestsPage = () => {
                   </button>
                 </label>
               )}
-
+  
               {roomOption === 'start-room' && roomCode && (
                 <p>
                   <strong>Generated Room Code:</strong> {roomCode}
@@ -199,8 +210,8 @@ const CreateQuestsPage = () => {
               )}
             </div>
           )}
-
-          {gameType === 'one-player' || roomOption === 'start-room' ? (
+  
+          {(gameType === 'one-player' || roomOption === 'start-room') && (
             <>
               {/* Show the rest of the form only if "One Player" or "Start Room" is selected */}
               <label className="form-label">
@@ -214,7 +225,7 @@ const CreateQuestsPage = () => {
                   required
                 />
               </label>
-
+  
               <label className="form-label">
                 Coding Topic:
                 <input
@@ -231,7 +242,7 @@ const CreateQuestsPage = () => {
                   ))}
                 </datalist>
               </label>
-
+  
               <label className="form-label">
                 Amount of Problems (3-8):
                 <input
@@ -244,7 +255,7 @@ const CreateQuestsPage = () => {
                   required
                 />
               </label>
-
+  
               <label className="form-label">
                 Difficulty Level:
                 <select
@@ -259,7 +270,7 @@ const CreateQuestsPage = () => {
                   <option value="Hard">Hard</option>
                 </select>
               </label>
-
+  
               <label className="form-label">
                 Enemy:
                 <select
@@ -276,7 +287,7 @@ const CreateQuestsPage = () => {
                   ))}
                 </select>
               </label>
-
+  
               <label className="form-label">
                 Background:
                 <select
@@ -293,8 +304,8 @@ const CreateQuestsPage = () => {
                   ))}
                 </select>
               </label>
-
-              <label className='form-label'>
+  
+              <label className="form-label">
                 Programming Language:
                 <select
                   value={programmingLanguage}
@@ -310,7 +321,7 @@ const CreateQuestsPage = () => {
                   ))}
                 </select>
               </label>
-
+  
               <label className="form-label">
                 Description:
                 <textarea
@@ -321,9 +332,9 @@ const CreateQuestsPage = () => {
                   required
                 />
               </label>
-              </>
-            ) : null}
-
+            </>
+          )}
+  
           <button type="submit" className="submit-button" disabled={isLoading}>
             {isLoading ? 'Creating Quest...' : 'Create Quest'}
           </button>
@@ -335,6 +346,7 @@ const CreateQuestsPage = () => {
       )}
     </div>
   );
+
 };
 
 export default CreateQuestsPage;
