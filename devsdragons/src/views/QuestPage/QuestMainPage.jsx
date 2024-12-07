@@ -157,7 +157,7 @@ function QuestMainPage() {
             alert("No quest ID provided.");
             return;
         }
-        fetch(`http://127.0.0.1:5000/quest-parameters?quest_id=${questId}`)
+        fetch(`api/quest-parameters?quest_id=${questId}`)
             .then(response => response.json())
             .then(data => setQuest(data))
             .catch(error => console.error('Error fetching quest data:', error));
@@ -288,7 +288,7 @@ function QuestMainPage() {
             return;
         }
         const question = quest.questions[questionIndex];
-        fetch("http://127.0.0.1:5000/check_answer", {
+        fetch("api/check_answer", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ question, answer, language })
