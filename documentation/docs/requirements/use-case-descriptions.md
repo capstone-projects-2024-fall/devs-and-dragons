@@ -5,14 +5,15 @@ sidebar_position: 5
 # Use-case descriptions
 
 ## Use Case 1 - Account Creation
-A user wants to create a new account.
-1. The user opens the Devs & Dragons application for the first time.
+Intention: A user wants to create a new account.
+1. The user opens the Devs and Dragons application for the first time.
 2. The user selects the "Sign Up" button to begin the account registration process.
 3. The user enters the desired username, password, and email into the form.
-4. If any fields are filled out incorrectly, the user is notified and asked to try again.
+4. If any of the fields are filled out incorrectly, then the user is notified and asked to try again.
+5. The user creates an account.
 
 ## Use Case 2 - Logging In
-A user wants to log in to an account they created.
+Intention: A user wants to log in to an account they created.
 1. The user navigates to the site's landing page.
 2. The user enters their username and password.
 3. The user selects the "Begin Quest" button to log in.
@@ -27,13 +28,13 @@ A user wants to create their Avatar.
 2. The user selects between six avatar options.
 3. The user selects a color-scheme for the selected avatar.
 4. User selects "Save Changes" button.
+5. User creates a valid account.
 
 ## Use Case 4 - Starting a Quest Solo
 A user wants to start a quest by themselves.
 1. From the homepage, the user selects "Create Quests" tab.
-2. A create quest pages dialog/page is present. The user selects "One Player".
-3. The user is prompted with the quest form.
-The user fills out a form for the following:
+2. A “Create Quests” section is present. The user selects "One Player".
+3. The user is prompted with the quest form. The user fills out a form for the following:
    - Quest Title
    - Coding Topic
    - Amount of problems
@@ -41,10 +42,10 @@ The user fills out a form for the following:
    - Enemy
    - Background
    - Programming Language
-   - Description
-4. User reviews their input and selects the “Create Quest” button.
+   - Quest Description
+4. The user reviews their input and selects the “Create Quest” button.
 5. There is a confirmation dialog of a quest created.
-6. The user selects "Start Quest" button.
+6. The user selects the "Start Quest" button.
 
 ## Use Case 5 - Playing a Quest Solo
 After a user starts a quest in **Use Case 5**, they want to play and try to complete the quest.
