@@ -42,6 +42,7 @@ const MyQuestsPage = () => {
           state: {
             roomCode: questDetails.roomCode,
             questData: questDetails.questId,
+            isRoomCreator: true,
           },
         });
       } else {

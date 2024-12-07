@@ -155,15 +155,32 @@ def handle_leave_room(data):
     username = data["username"]
     room = data["room"]
     
-    if room in rooms and username in rooms[room]["players"]:
-        rooms[room]["players"].remove(username)
-        leave_room(room)
-        emit('user_left', {'username': username, 'players': rooms[room]['players']}, room=room)
-        # if not rooms[room]["players"]:
-        #     del rooms[room]
-        
-        if not rooms[room]["players"]:
-            del rooms[room]
+    try:
+        room_details = db["rooms"].find_one({f"{room}.roomCreator": {"$exists": True}})
+        if not room_details:
+            emit("error", {"message": "Room does not exist"})
+            return
+
+        players = room_details[room].get("players", [])
+        if username in players:
+            players.remove(username)
+
+            # Update the players list in the database
+            db["rooms"].update_one(
+                {"_id": room_details["_id"]},
+                {"$set": {f"{room}.players": players}}
+            )
+
+            leave_room(room)
+
+            emit('user_left', {'username': username, 'players': players}, room=room)
+            
+        else:
+            emit("error", {"message": "User not in the room"})
+
+    except Exception as e:
+        print(f"Error in handle_leave_room: {e}")
+        emit("error", {"message": "Failed to leave room"})
         
 
 @socketio.on('send_message')
@@ -220,6 +237,20 @@ def handle_language_update(data):
     language = data['language']
     
     emit('language_update', {'language': language}, room=room)
+    
+    
+@socketio.on('code_submit')
+def handle_code_submit(data):
+    room = data.get('room')
+    questionIndex = data.get('questionIndex')
+    grade = data.get('grade')
+    advice = data.get('advice')
+
+    emit('code_submit', {
+        'questionIndex': questionIndex,
+        'grade': grade,
+        'advice': advice
+    }, room=room)
 
 
 
@@ -432,11 +463,10 @@ def getResponse():
         try:
             # Fetch the quest from the database
             quest = db["quests"].find_one({"quest_id": quest_id}, {"_id": 0})
-            questions = quest["questions"]
             # print(questions)
             # print("questInformation", quest)
             if quest:
-                return jsonify(questions), 200
+                return jsonify(quest), 200
             else:
                 return jsonify({"message": "No quest found for the provided quest_id"}), 404
         except Exception as e:
