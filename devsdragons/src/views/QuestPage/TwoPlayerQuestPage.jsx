@@ -3,12 +3,15 @@ import { io } from 'socket.io-client';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MultiplayerCodeEditor from '../Editor/MultiplayerCodeEditor';
 import './TwoPlayerQuestPage.css';
-import HUD from '../../components/HUD/HUD';
+import ForestBackground from './GameAssets/Backgrounds/Forest.png';
+import DesertBackground from './GameAssets/Backgrounds/Desert.png';
+import RiverBackground from './GameAssets/Backgrounds/RiverCrossing.png';
+import CastleBackground from './GameAssets/Backgrounds/CastleRuins.png';
 
-// Connect to the backend server socket 
+// Connect to the backend server socket
 const socket = io('http://10.0.0.93:30000');
 
-// StarRating component to display stars based on the grade. Based directly on the grade.
+// StarRating component to display stars based on the grade
 function StarRating({ grade }) {
     const totalStars = 5;
     const filledStars = Math.round(grade / 2);
@@ -35,6 +38,7 @@ function TwoPlayerQuestPage() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [showContinueButton, setShowContinueButton] = useState(false);
+    const [gameBackground, setGameBackground] = useState(ForestBackground); // Default background
 
     // Fetch quest data
     useEffect(() => {
@@ -50,6 +54,27 @@ function TwoPlayerQuestPage() {
             })
             .catch(error => console.error('Error fetching quest data:', error));
     }, [roomCode, questData]);
+
+    // Dynamically set the background based on quest.background
+    useEffect(() => {
+        if (!quest || !quest.background) return;
+
+        const getBackgroundStyle = () => {
+            switch (quest.background) {
+                case 'Desert':
+                    return DesertBackground;
+                case 'Castle Ruins':
+                    return CastleBackground;
+                case 'River Crossing':
+                    return RiverBackground;
+                case 'Forest':
+                default:
+                    return ForestBackground;
+            }
+        };
+
+        setGameBackground(getBackgroundStyle());
+    }, [quest]);
 
     // Handle socket events
     useEffect(() => {
@@ -81,28 +106,22 @@ function TwoPlayerQuestPage() {
             if (data.feedbacks) {
                 setFeedbacks(data.feedbacks);
             }
-
-            const nextFeedback = data.feedbacks[data.questionIndex];
-            const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
-            console.log("Feedback for next question (from next_question event):", nextFeedback);
-            console.log("Setting showContinueButton in next_question handler:", shouldShowContinue);
-            setShowContinueButton(shouldShowContinue);
+            setShowContinueButton(data.showContinueButton);
         });
 
         socket.on('code_submit', (data) => {
             const { questionIndex, grade, advice } = data;
-            console.log("Code submit event received:", data);
-
             setFeedbacks((prevFeedbacks) => {
                 const newFeedbacks = [...prevFeedbacks];
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
 
-            // Determine and set showContinueButton based on the grade and current question index
-            const shouldShowContinue = grade >= 6 && questionIndex === currentQuestionIndex;
-            console.log("Setting showContinueButton in code_submit handler:", shouldShowContinue);
-            setShowContinueButton(shouldShowContinue);
+            if (grade >= 6 && questionIndex === currentQuestionIndex) {
+                setShowContinueButton(true);
+            } else {
+                setShowContinueButton(false);
+            }
         });
 
         socket.emit('join_room', {
@@ -117,7 +136,7 @@ function TwoPlayerQuestPage() {
             socket.off('next_question');
             socket.off('code_submit');
         };
-    }, [roomCode, currentQuestionIndex]);
+    }, [roomCode]);
 
     // Handle code submission
     const submitCode = (answer, language, questionIndex) => {
@@ -141,17 +160,13 @@ function TwoPlayerQuestPage() {
                     advice
                 });
 
-                // Update feedbacks for the current question
                 setFeedbacks((prevFeedbacks) => {
                     const newFeedbacks = [...prevFeedbacks];
                     newFeedbacks[questionIndex] = { grade, advice };
                     return newFeedbacks;
                 });
 
-                // Show continue button only if grade >= 6
-                const shouldShowContinue = grade >= 6;
-                console.log("Grade:", grade, "Setting showContinueButton in submitCode:", shouldShowContinue);
-                setShowContinueButton(shouldShowContinue);
+                setShowContinueButton(grade >= 6);
             })
             .catch(error => console.error('Error submitting code:', error));
     };
@@ -172,14 +187,7 @@ function TwoPlayerQuestPage() {
             feedbacks,
         });
 
-        setCurrentQuestionIndex(nextIndex);
-
-        // Reset showContinueButton based on the next question's feedback
-        const nextFeedback = feedbacks[nextIndex];
-        const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
-        console.log("Feedback for next question:", nextFeedback);
-        console.log("Setting showContinueButton in handleNextQuestion:", shouldShowContinue);
-        setShowContinueButton(shouldShowContinue);
+        setShowContinueButton(false);
     };
 
     // Handle chat message submission
@@ -223,6 +231,16 @@ function TwoPlayerQuestPage() {
                         <div className="question-display">
                             <p><strong>Question:</strong> {questions[currentQuestionIndex]}</p>
                         </div>
+                        <div
+                            className="game-screen"
+                            style={{
+                                backgroundImage: `url(${gameBackground})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                width: '100%',
+                                height: '400px',
+                            }}
+                        ></div>
                         {feedbacks[currentQuestionIndex] && (
                             <div className="feedback">
                                 <h2>Feedback</h2>
@@ -269,6 +287,7 @@ function TwoPlayerQuestPage() {
 }
 
 export default TwoPlayerQuestPage;
+
 
 
 
