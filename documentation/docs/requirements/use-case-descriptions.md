@@ -34,7 +34,7 @@ A user wants to create their Avatar.
 Intention: A user wants to start a quest for one player and play alone.
 1. From the homepage, the user selects the "Create Quests" button.
 2. A “Create Quests” section is present. The user selects "One Player".
-3. The user is prompted with the quest form. The user fills out a form for the following:
+3. The user is prompted with the quest form. The user fills out the form for the following:
    - Quest Title
    - Coding Topic
    - Amount of problems
