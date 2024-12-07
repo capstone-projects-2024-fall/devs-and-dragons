@@ -81,18 +81,28 @@ function TwoPlayerQuestPage() {
             if (data.feedbacks) {
                 setFeedbacks(data.feedbacks);
             }
-            setShowContinueButton(data.showContinueButton);
+
+            const nextFeedback = data.feedbacks[data.questionIndex];
+            const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
+            console.log("Feedback for next question (from next_question event):", nextFeedback);
+            console.log("Setting showContinueButton in next_question handler:", shouldShowContinue);
+            setShowContinueButton(shouldShowContinue);
         });
 
         socket.on('code_submit', (data) => {
             const { questionIndex, grade, advice } = data;
+            console.log("Code submit event received:", data);
+
             setFeedbacks((prevFeedbacks) => {
                 const newFeedbacks = [...prevFeedbacks];
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
 
-            setShowContinueButton(grade >= 5 && questionIndex === currentQuestionIndex);
+            // Determine and set showContinueButton based on the grade and current question index
+            const shouldShowContinue = grade >= 6 && questionIndex === currentQuestionIndex;
+            console.log("Setting showContinueButton in code_submit handler:", shouldShowContinue);
+            setShowContinueButton(shouldShowContinue);
         });
 
         socket.emit('join_room', {
@@ -107,7 +117,7 @@ function TwoPlayerQuestPage() {
             socket.off('next_question');
             socket.off('code_submit');
         };
-    }, [roomCode]);
+    }, [roomCode, currentQuestionIndex]);
 
     // Handle code submission
     const submitCode = (answer, language, questionIndex) => {
@@ -130,6 +140,18 @@ function TwoPlayerQuestPage() {
                     grade,
                     advice
                 });
+
+                // Update feedbacks for the current question
+                setFeedbacks((prevFeedbacks) => {
+                    const newFeedbacks = [...prevFeedbacks];
+                    newFeedbacks[questionIndex] = { grade, advice };
+                    return newFeedbacks;
+                });
+
+                // Show continue button only if grade >= 6
+                const shouldShowContinue = grade >= 6;
+                console.log("Grade:", grade, "Setting showContinueButton in submitCode:", shouldShowContinue);
+                setShowContinueButton(shouldShowContinue);
             })
             .catch(error => console.error('Error submitting code:', error));
     };
@@ -142,18 +164,22 @@ function TwoPlayerQuestPage() {
             room: roomCode,
             questionIndex: nextIndex,
             feedbacks,
-            showContinueButton: false
         });
 
         socket.emit('next_question', {
             room: roomCode,
             questionIndex: nextIndex,
             feedbacks,
-            showContinueButton: false
         });
 
         setCurrentQuestionIndex(nextIndex);
-        setShowContinueButton(false);
+
+        // Reset showContinueButton based on the next question's feedback
+        const nextFeedback = feedbacks[nextIndex];
+        const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
+        console.log("Feedback for next question:", nextFeedback);
+        console.log("Setting showContinueButton in handleNextQuestion:", shouldShowContinue);
+        setShowContinueButton(shouldShowContinue);
     };
 
     // Handle chat message submission
@@ -243,6 +269,8 @@ function TwoPlayerQuestPage() {
 }
 
 export default TwoPlayerQuestPage;
+
+
 
 
 
