@@ -21,10 +21,19 @@ A user wants to log in to an account they created.
 6. After providing the correct 2FA code, the user is brought to the home page.
 7. After the user clicks "Begin Quest", an alert confirms a successful login.
 
-## Use Case 3 - Quest Creation
-A user wants to create a new quest.
-1. From the home page, the user selects the “Create Quests” tab.
-2. The user fills out a form for the following:
+## Use Case 3 - Create Avatar
+A user wants to create their Avatar.
+1. From the homepage, the user selects "Avatar" tab.
+2. The user selects between six avatar options.
+3. The user selects a color-scheme for the selected avatar.
+4. User selects "Save Changes" button.
+
+## Use Case 4 - Starting a Quest Solo
+A user wants to start a quest by themselves.
+1. From the homepage, the user selects "Create Quests" tab.
+2. A create quest pages dialog/page is present. The user selects "One Player".
+3. The user is prompted with the quest form.
+The user fills out a form for the following:
    - Quest Title
    - Coding Topic
    - Amount of problems
@@ -33,24 +42,11 @@ A user wants to create a new quest.
    - Background
    - Programming Language
    - Description
-3. User reviews their input and selects the “Create Quest” button.
+4. User reviews their input and selects the “Create Quest” button.
+5. There is a confirmation dialog of a quest created.
+6. The user selects "Start Quest" button.
 
-## Use Case 4 - Create Avatar
-A user wants to create their Avatar.
-1. From the homepage, the user selects "Avatar" tab.
-2. The user selects between six avatar options.
-3. The user selects a color-scheme for the selected avatar.
-4. User selects "Save Changes" button.
-
-## Use Case 5 - Starting a Quest Solo
-A user wants to start a quest by themselves.
-1. From the homepage, the user selects "Quests" tab.
-2. The user selects the dropdown menu option, "My Quests."
-3. The quests the user made are displayed, the user selects the quests interested in starting.
-4. The user selects "Start Quest" button.
-5. The user selects "Solo" button.
-
-## Use Case 6 - Playing a Quest Solo
+## Use Case 5 - Playing a Quest Solo
 After a user starts a quest in **Use Case 5**, they want to play and try to complete the quest.
 1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
 2. The game screen is now displayed to the user where they can see:
@@ -72,7 +68,7 @@ After a user starts a quest in **Use Case 5**, they want to play and try to comp
      - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
 9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
 
-## Use Case 7 - Creating a Party to Start a Quest
+## Use Case 6 - Creating a Party to Start a Quest
 A user wants to form a party to undertake a quest together.
 1. From the homepage, the user selects the "Quests" tab.
 2. The user selects the dropdown menu option "My Quests."
@@ -83,13 +79,13 @@ A user wants to form a party to undertake a quest together.
 7. The user creates a party code and shares it with their peers.
 8. The user waits for the party size to reach two to four members, then clicks the “Start Quest” button.
 
-## Use Case 8 - Join a Party
+## Use Case 7 - Join a Party
 A user wants to join another user’s party.
 1. From the home page, the user clicks on the “Join Party” button.
 2. The user enters the party code.
 3. The user selects the “Join” button.
 
-## Use Case 9 - Playing a Quest with a Party
+## Use Case 8 - Playing a Quest with a Party
 Two users want to solve a coding problem together during a quest.
 1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
 2. The game screen is now displayed to the user where they can see:
