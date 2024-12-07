@@ -76,7 +76,7 @@ Intention: After a user starts a quest in **Use Case 4**, they want to play and 
 
 9. The user continues to engage with the quest until all questions are answered, the enemy is defeated (enemy's health bar reaching 0), the user quits, or the user’s health bar reaches zero.
 
-## Use Case 6 - Creating a Party to Start a Quest
+## Use Case 6 - Creating a Quest to Play with a Party
 Intention: A user wants to form a party to undertake a quest together.
 
 1. From the homepage, the user selects the "Create Quests" button.
