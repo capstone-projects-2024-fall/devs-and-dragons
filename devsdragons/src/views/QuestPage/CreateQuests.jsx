@@ -23,12 +23,11 @@ const CreateQuestsPage = () => {
   const [roomOption, setRoomOption] = useState('');
   const [roomCode, setRoomCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isRoomCreator, setRoomCreator] = useState(false)
 
   // Placeholder values for coding topics, enemies, and backgrounds
   const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
-  const enemies = ['Mr. Mushroom', 'Dragon'];
-  const backgrounds = ['Forest', 'Desert', 'Castle Ruins', 'River Crossing'];
+  const enemies = ['Evil wizard', 'Dragons', 'wizards', 'professor', 'scientist'];
+  const backgrounds = ['Forest', 'Desert', 'Cave', 'Mountain'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
 
   const {addQuest} = useContext(QuestContext); // taking a context object and assing that to QuestContext
@@ -85,7 +84,6 @@ const CreateQuestsPage = () => {
       const response = await axios.post('/api/create_room', {username, quest_id});
       if (response.status === 200) {
         setRoomCode(response.data.room_code);
-        alert(`Room created! Your room code is: ${response.data.room_code}`);
       }
     } catch (error) {
       console.error("Error creating room: ", error);
@@ -106,7 +104,7 @@ const CreateQuestsPage = () => {
       if (response.status === 200) {
         alert('You have joined the room successfully!');
         console.log("Joining the room frontend", response.data)
-        navigate('/two-player', { state: { roomCode: response.data.room_code, questData: response.data.quest_id} });
+        navigate('/two-player', { state: { roomCode: response.data.room_code, questData: response.data.quest_id, isRoomCreator: false} });
 
       }
     } catch (error) {
@@ -117,8 +115,9 @@ const CreateQuestsPage = () => {
 
   return (
     <div className="create-quest-page">
-     
+      <h1 className="create-quest-title">Create Quests</h1>
       <HUD />
+  
       {!isPreview ? (
         <form onSubmit={handleCreateQuest} className="quest-form">
           <label className="form-label">

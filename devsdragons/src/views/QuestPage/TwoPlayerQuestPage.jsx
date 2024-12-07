@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MultiplayerCodeEditor from '../Editor/MultiplayerCodeEditor';
+import HUD from '../../components/HUD/HUD';
 
 // Connect to the backend server socket 
 const socket = io('http://192.168.1.208:30000');
@@ -22,9 +23,10 @@ function StarRating({ grade }) {
 
 function TwoPlayerQuestPage() {
     const location = useLocation();
+    const navigate = useNavigate();
     console.log("location state: ", location.state)
-    const { roomCode, questData } = location.state || {};
-
+    const { roomCode, questData, isRoomCreator } = location.state || {};
+    const [quest, setQuest] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [feedbacks, setFeedbacks] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -44,9 +46,16 @@ function TwoPlayerQuestPage() {
         console.log("TwoPlayerQuestPage.jsx printing quest_id", questData)
         console.log(user_id)
         fetch(`/api/quest-parameters?quest_id=${questData}`)
-            .then(response => response.json())
-            .then(data => setQuestions(data))
-            .catch(error => console.error('Error fetching questions:', error));
+        .then(response => response.json())
+        .then(data => {
+            if (data && Array.isArray(data.questions)) {
+                setQuestions(data.questions);
+            } else {
+                console.error('Invalid questions data:', data);
+                setQuestions([]); // Set to an empty array if questions are invalid
+            }
+        })
+        console.log(questions.length, "This is the length of questions")
     }, [roomCode, questData]);
 
     useEffect(() => {
@@ -54,7 +63,12 @@ function TwoPlayerQuestPage() {
 
         socket.on("user_joined", (data) => {
             // console.log("User joined event data:", data);
-            setMessages((prev) => [...prev, `The person joined ${data.username}, the players in the room ${data.players} and the room creator is ${data.isRoomCreator}`]);
+            setMessages((prev) => [...prev, `The person joined ${data.username}, the players in the room ${data.players}`]);
+        });
+
+        socket.on("user_left", (data) => {
+            console.log("User left event data:", data);
+            setMessages((prev) => [...prev, `The person left ${data.username}, the players in the room ${data.players}`]);
         });
 
         // Socket setup
@@ -77,10 +91,28 @@ function TwoPlayerQuestPage() {
             room: roomCode,
         });
 
+        socket.on('code_submit', (data) => {
+            console.log("Code submission received:", data);
+            const {questionIndex, grade, advice} = data;
+            setFeedbacks((prevFeedbacks) => {
+                const newFeedbacks = [...prevFeedbacks];
+                newFeedbacks[questionIndex] = { grade, advice };
+                return newFeedbacks;
+            });
+
+            if (grade >= 5 && questionIndex === currentQuestionIndex) {
+                setCurrentQuestionIndex((prevIndex) => {
+                    const nextIndex = prevIndex + 1;
+                    return nextIndex < questions.length ? nextIndex : prevIndex; // Stop at the last question
+                });
+            }
+        })
+
         return () => {
             socket.off('receive_message');
             socket.off('code_update');
             socket.off('language_update');
+            socket.off('code_submit');
         };
     }, [roomCode]);
 
@@ -103,15 +135,14 @@ function TwoPlayerQuestPage() {
                 const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
                 const advice = adviceMatch ? adviceMatch[1] : "";
 
-                setFeedbacks((prevFeedbacks) => {
-                    const newFeedbacks = [...prevFeedbacks];
-                    newFeedbacks[questionIndex] = { grade, advice };
-                    return newFeedbacks;
+                socket.emit('code_submit', {
+                    room: roomCode,
+                    questionIndex,
+                    grade,
+                    advice
                 });
 
-                if (grade >= 5 && questionIndex === currentQuestionIndex) {
-                    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-                }
+               
             })
             .catch(error => console.error('Error submitting code:', error));
     };
@@ -132,6 +163,12 @@ function TwoPlayerQuestPage() {
             setLanguage(value);
             socket.emit('language_update', { room: roomCode, language: value });
         }
+    };
+
+    const leaveRoom = () => {
+        const username = localStorage.getItem("user_id");
+        socket.emit('leave_room', { username, room: roomCode });
+        navigate("/my-quests");
     };
 
     return (
@@ -155,26 +192,39 @@ function TwoPlayerQuestPage() {
             </div>
             <div>
                 <h2>Questions</h2>
-                {questions.slice(0, currentQuestionIndex + 1).map((question, index) => (
-                    <div key={index} className="question-item">
-                        <p><strong>Question:</strong> {question}</p>
-                        <MultiplayerCodeEditor
-                            code={sharedCode}
-                            language={language}
-                            onChange={handleEditorChange}
-                            onCodeSubmit={(code, lang) => submitCode(code, lang, index)}
-                        />
-                        {feedbacks[index] && (
-                            <div className="feedback">
-                                <h3>Feedback</h3>
-                                <StarRating grade={feedbacks[index].grade} />
-                                <p><strong>Advice:</strong> {feedbacks[index].advice}</p>
+                {questions.length > 0 ? (
+                    questions.map((question, index) => (
+                        index <= currentQuestionIndex && ( // Explicitly check against currentQuestionIndex
+                            <div key={index} className="question-item">
+                                <p><strong>Question:</strong> {question}</p>
+                                <MultiplayerCodeEditor
+                                    code={sharedCode}
+                                    language={language}
+                                    onChange={handleEditorChange}
+                                    onCodeSubmit={(code, lang) => submitCode(code, lang, index)}
+                                />
+                                {feedbacks[index] && (
+                                    <div className="feedback">
+                                        <h3>Feedback</h3>
+                                        <StarRating grade={feedbacks[index].grade} />
+                                        <p><strong>Advice:</strong> {feedbacks[index].advice}</p>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                ))}
+                        )
+                    ))
+                ) : (
+                    <p>Loading questions or no questions available.</p>
+                )}
             </div>
-            {/* <button onClick={finalSubmit} style={{ marginTop: '20px' }}>Submit Final Solution</button> */}
+            {!isRoomCreator && (
+                <button
+                    style={{ marginTop: '20px', backgroundColor: 'red', color: 'white' }}
+                    onClick={leaveRoom}
+                >
+                    Leave Room
+                </button>
+            )}
         </div>
     );
 }
