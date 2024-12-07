@@ -30,7 +30,7 @@ A user wants to create their Avatar.
 4. User selects "Save Changes" button.
 5. User creates a valid account.
 
-## Use Case 4 - Starting a Quest Solo
+## Use Case 4 - Creating a Quest to Play Solo ("One Player")
 Intention: A user wants to start a quest for one player and play alone.
 1. From the homepage, the user selects the "Create Quests" button.
 2. A “Create Quests” section is present. The user selects "One Player".
