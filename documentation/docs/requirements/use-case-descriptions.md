@@ -96,7 +96,7 @@ Intention: A user wants to form a party to undertake a quest together.
    - Quest Description
 4. The user reviews their input and selects the “Create Quest” button.
 5. There is a confirmation dialog of a quest created.
-6. The user selects the "Start Quest" button.
+6. The user selects the "Start Quest" button to start the "Two Player" quest.
 
 ## Use Case 7 - Join a Party
 A user wants to join another user’s party.
