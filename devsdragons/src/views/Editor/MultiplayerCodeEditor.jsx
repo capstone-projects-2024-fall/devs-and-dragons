@@ -13,11 +13,13 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
   };
 
   const containerStyle = {
-    padding: '20px',
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    borderRadius: '8px',
-    margin: '20px',
+    height: '600px', // Reduced height for the editor
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '10px',
+    boxSizing: 'border-box',
   };
 
   const headerStyle = {
@@ -35,9 +37,10 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
   };
 
   const editorContainerStyle = {
-    margin: '10px 0',
+   
     border: '1px solid #ddd',
     borderRadius: '5px',
+    overflow: 'hidden',
   };
 
   const buttonStyle = {
@@ -57,8 +60,8 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
 
   return (
     <div style={containerStyle}>
-      <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3>
-      <select
+      {/* <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3> */}
+      {/* <select
         style={selectStyle}
         value={language}
         onChange={(e) => onChange(e.target.value, "language")} // Notify parent about language changes
@@ -66,7 +69,7 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
         <option value="javascript">JavaScript</option>
         <option value="python">Python</option>
         <option value="java">Java</option>
-      </select>
+      </select> */}
       <div style={editorContainerStyle}>
         <Editor
           height="30vh"

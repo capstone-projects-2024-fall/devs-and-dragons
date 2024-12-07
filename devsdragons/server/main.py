@@ -15,9 +15,10 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 # change the HOST according to your wifi
-socketio = SocketIO(app, cors_allowed_origins="http://192.168.1.208:30000")
+socketio = SocketIO(app, cors_allowed_origins="http://10.0.0.93:30000")
 password = "testKey125"
 # For better readability
+openai.api_key = ""
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
 db = cluster_connection["techQuest"]
@@ -251,6 +252,24 @@ def handle_code_submit(data):
         'grade': grade,
         'advice': advice
     }, room=room)
+
+# MULTIPLAYER GAME SOCKETS
+@socketio.on('next_question')
+def handle_next_question(data):
+    print("Received next_question event:", data)
+    room = data.get('room')
+    questionIndex = data.get('questionIndex')
+    feedbacks = data.get('feedbacks', [])
+    showContinueButton = data.get('showContinueButton', False)
+
+    # Broadcast the data to all users in the same room
+    emit('next_question', {
+        'questionIndex': questionIndex,
+        'feedbacks': feedbacks,
+        'showContinueButton': showContinueButton
+    }, room=room)
+
+    print(f"Broadcasted next_question to room {room}")
 
 
 
@@ -564,7 +583,7 @@ for result in results:
 """
 
 if __name__ == '__main__':
-    HOST, PORT = '192.168.1.208', 29000
+    HOST, PORT = '10.0.0.93', 29000
     socketio.run(app, host=HOST, port=PORT, debug=True)
     app.run(debug=True)
 
