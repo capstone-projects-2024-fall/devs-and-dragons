@@ -47,7 +47,7 @@ Intention: A user wants to start a quest for one player and play alone.
 5. There is a confirmation dialog of a quest created.
 6. The user selects the "Start Quest" button.
 
-## Use Case 5 - Playing a Quest Solo
+## Use Case 5 - Playing a "One Player" (aka Solo) Quest
 Intention: After a user starts a quest in **Use Case 4**, they want to play and try to complete the quest.
 1. The game screen is now displayed to the user where they can see:
    - User's avatar
