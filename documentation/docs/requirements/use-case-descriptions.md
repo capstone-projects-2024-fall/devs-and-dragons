@@ -37,7 +37,7 @@ Intention: A user wants to start a quest for one player and play alone.
 3. The user is prompted with the quest form. The user fills out the form for the following fields:
    - Quest Title
    - Coding Topic
-   - Amount of problems
+   - Amount of Problems (3 - 8)
    - Difficulty Level
    - Enemy
    - Background
@@ -88,7 +88,7 @@ Intention: A user wants to form a party to undertake a quest together.
 4. The generated room code is now available for the user to share with others and have them join the user's party. The user fills out the form for the following fields:
    - Quest Title
    - Coding Topic
-   - Amount of problems
+   - Amount of Problems (3 - 8)
    - Difficulty Level
    - Enemy
    - Background
