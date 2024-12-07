@@ -98,7 +98,7 @@ Intention: A user wants to form a party to undertake a quest together.
 5. There is a confirmation dialog of a quest created.
 6. The user selects the "Start Quest" button to start the "Two Player" quest.
 
-## Use Case 7 - Join a Party
+## Use Case 7 - Join an Existing Party for a "Two Player Quest"
 A user wants to join another user’s party.
 1. From the home page, the user clicks on the “Join Party” button.
 2. The user enters the party code.
