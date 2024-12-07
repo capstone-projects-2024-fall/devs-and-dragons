@@ -31,8 +31,8 @@ A user wants to create their Avatar.
 5. User creates a valid account.
 
 ## Use Case 4 - Starting a Quest Solo
-A user wants to start a quest by themselves.
-1. From the homepage, the user selects "Create Quests" tab.
+Intention: A user wants to start a quest for one player and play alone.
+1. From the homepage, the user selects the "Create Quests" button.
 2. A “Create Quests” section is present. The user selects "One Player".
 3. The user is prompted with the quest form. The user fills out a form for the following:
    - Quest Title
@@ -48,7 +48,7 @@ A user wants to start a quest by themselves.
 6. The user selects the "Start Quest" button.
 
 ## Use Case 5 - Playing a Quest Solo
-After a user starts a quest in **Use Case 5**, they want to play and try to complete the quest.
+After a user starts a quest in **Use Case 4**, they want to play and try to complete the quest.
 1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
 2. The game screen is now displayed to the user where they can see:
    - User's avatar
