@@ -36,6 +36,7 @@ function TwoPlayerQuestPage() {
     const [newMessage, setNewMessage] = useState("");
     const [showContinueButton, setShowContinueButton] = useState(false);
 
+    // Fetch quest data
     useEffect(() => {
         if (!roomCode || !questData) return;
 
@@ -50,6 +51,7 @@ function TwoPlayerQuestPage() {
             .catch(error => console.error('Error fetching quest data:', error));
     }, [roomCode, questData]);
 
+    // Handle socket events
     useEffect(() => {
         if (!roomCode) return;
 
@@ -73,22 +75,14 @@ function TwoPlayerQuestPage() {
             setLanguage(data.language);
         });
 
-        // NEXT QUESTION
         socket.on('next_question', (data) => {
-            // Update the current question index and relevant state for all users
+            console.log('Received next_question event:', data);
             setCurrentQuestionIndex(data.questionIndex);
-        
-            // Optionally synchronize feedbacks and other states
             if (data.feedbacks) {
                 setFeedbacks(data.feedbacks);
             }
-        
-            // Reset the "Continue" button visibility
             setShowContinueButton(data.showContinueButton);
         });
-        
-        
-        
 
         socket.on('code_submit', (data) => {
             const { questionIndex, grade, advice } = data;
@@ -110,11 +104,12 @@ function TwoPlayerQuestPage() {
             socket.off('receive_message');
             socket.off('code_update');
             socket.off('language_update');
-            socket.off('next_question'); //NEXT QUESTION
+            socket.off('next_question');
             socket.off('code_submit');
         };
     }, [roomCode]);
 
+    // Handle code submission
     const submitCode = (answer, language, questionIndex) => {
         const question = questions[questionIndex];
         fetch("/api/check_answer", {
@@ -139,12 +134,10 @@ function TwoPlayerQuestPage() {
             .catch(error => console.error('Error submitting code:', error));
     };
 
-    // NEXT QUESTION
+    // Handle next question
     const handleNextQuestion = () => {
-        console.log("index before increment:", currentQuestionIndex);
         const nextIndex = currentQuestionIndex + 1;
 
-        // ensure we are emmitting correct data
         console.log("Emitting next_question:", {
             room: roomCode,
             questionIndex: nextIndex,
@@ -152,19 +145,18 @@ function TwoPlayerQuestPage() {
             showContinueButton: false
         });
 
-        
         socket.emit('next_question', {
             room: roomCode,
             questionIndex: nextIndex,
             feedbacks,
             showContinueButton: false
         });
+
         setCurrentQuestionIndex(nextIndex);
         setShowContinueButton(false);
     };
-    
-    
 
+    // Handle chat message submission
     const sendMessage = () => {
         if (newMessage.trim()) {
             socket.emit('send_message', { room: roomCode, message: newMessage, username: localStorage.getItem('user_id') });
@@ -172,6 +164,7 @@ function TwoPlayerQuestPage() {
         }
     };
 
+    // Handle code editor changes
     const handleEditorChange = (value, type) => {
         if (type === 'code') {
             setSharedCode(value);
@@ -182,8 +175,9 @@ function TwoPlayerQuestPage() {
         }
     };
 
+    // Handle leaving the room
     const leaveRoom = () => {
-        const username = localStorage.getItem("user_id");
+        const username = localStorage.getItem('user_id');
         socket.emit('leave_room', { username, room: roomCode });
         navigate("/my-quests");
     };
@@ -249,6 +243,7 @@ function TwoPlayerQuestPage() {
 }
 
 export default TwoPlayerQuestPage;
+
 
 
 

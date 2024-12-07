@@ -321,7 +321,7 @@ const CreateQuestsPage = () => {
               </label>
   
               <label className="form-label">
-                Description:
+                Quest Description:
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
