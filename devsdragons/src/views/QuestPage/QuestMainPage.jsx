@@ -10,10 +10,10 @@ import initGameEnemyAnimation from './gameEnemy';
 import initMushRoomAnimation from './mushroom';
 
 //BACKGROUND IMAGES
-import forestImage from './Forest.png'; 
-import desertImage from './Desert.png';
-import riverImage from './RiverCrossing.png';
-import castleImage from './CastleRuins.png';
+import forestImage from './GameAssets/Backgrounds/Forest.png'; 
+import desertImage from './GameAssets/Backgrounds/Desert.png';
+import riverImage from './GameAssets/Backgrounds/RiverCrossing.png';
+import castleImage from './GameAssets/Backgrounds/CastleRuins.png';
 
 //KNIGHT IMAGES
 import knightAttack1 from "./GameAssets/Avatar/knight/knightAttack1.png";
@@ -90,15 +90,51 @@ function QuestMainPage() {
         }
     };
 
+    // Adjust Y position for enemy based on enemy type and background
+    const getEnemyAdjust_Y = () => {
+        switch (quest?.enemy) {
+            case "Dragon":
+                switch (quest?.background) {
+                    case "Desert":
+                        return 8;
+                    case "Castle Ruins":
+                        return 9;
+                    case "Forest":
+                        return 8;
+                    case "River Crossing":
+                        return 0;
+                    default:
+                        return 0;
+                }
+            case "Mr. Mushroom":
+                switch (quest?.background) {
+                    case "Desert":
+                        return 50;
+                    case "Castle Ruins":
+                        return 10;
+                    case "Forest":
+                        return 30;
+                    case "River Crossing":
+                        return 10;
+                    default:
+                        return 0;
+                }
+            default:
+                return 0; // Default offset if no specific adjustments needed
+        }
+    };
+
     // Determine what Enemy was selcted for the quest
-    const initializeEnemyAnimation = () => {
-    if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
-    if (quest.enemy === "Dragon") {
-        return initGameEnemyAnimation();
-    } else if (quest.enemy === "Mr. Mushroom") {
-        return initMushRoomAnimation();
-    }
-    return null; // Default to null if no match
+    const initializeEnemyAnimation = (getEnemyAdjust_Y) => {
+        if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
+
+        if (quest.enemy === "Dragon") {
+            return initGameEnemyAnimation(getEnemyAdjust_Y);
+        } else if (quest.enemy === "Mr. Mushroom") {
+            return initMushRoomAnimation(getEnemyAdjust_Y);
+        }
+
+        return null; // Default to null if no match
     };
 
     // Determine the timer length based on quest difficulty
@@ -129,16 +165,16 @@ function QuestMainPage() {
 
     // Init Player Animation based on background
     useEffect(() => {
-        const getAdjustY = () => {
+        const getPlayerAdjustY = () => {
             switch (quest?.background) {
                 case "Desert":
-                    return 0; // Example offset for Desert background
+                    return 0; 
                 case "Castle Ruins":
-                    return 50; // Example offset for Castle Ruins background
+                    return 50; 
                 case "Forest":
-                    return 50; // Example offset for Forest background
+                    return 50; 
                 case "River Crossing":
-                    return -120; // Example offset for River Crossing background
+                    return -120;
                 default:
                     return 0; // Default offset
             }
@@ -146,7 +182,7 @@ function QuestMainPage() {
     
         const timer = setTimeout(() => {
             if (document.getElementById("playerCanvas")) {
-                playerRef.current = initGamePlayerAnimation(getAdjustY());
+                playerRef.current = initGamePlayerAnimation(getPlayerAdjustY());
             }
         }, 100); // Short delay to ensure the canvas is ready
         return () => clearTimeout(timer);
@@ -192,13 +228,19 @@ function QuestMainPage() {
 
     // Init Enemy Animation
     useEffect(() => {
+        const adjust_y = getEnemyAdjust_Y();  // Compute adjust_y based on current enemy and background
+        console.log("Adjust Y for enemy:", adjust_y);  // Logging to see the computed value
+
         const enemyTimer = setTimeout(() => {
             if (document.getElementById("enemyCanvas")) {
-                enemyRef.current = initializeEnemyAnimation();
+                console.log("Reinitializing enemy animation with adjust_y:", adjust_y);
+                enemyRef.current = initializeEnemyAnimation(adjust_y);
             }
-        }, 100);
+        }, 100);  
+
         return () => clearTimeout(enemyTimer);
-    }, [currentQuestionIndex, quest]); 
+    }, [currentQuestionIndex, quest, quest?.background, quest?.enemy]);  // Dependency on background and enemy to re-trigger the effect
+
 
     //win lose check
     useEffect(() => {
@@ -213,6 +255,31 @@ function QuestMainPage() {
         }
     }, [dragonHealth]);
     
+    //Resize if full screen is larger than 1440x570
+    useEffect(() => {
+        function handleResize() {
+            const adjustCanvasSize = () => {
+                const scale = window.innerWidth / 1440;
+                const newWidth = 500 * scale;
+                const newHeight = 500 * scale;
+                return { width: newWidth, height: newHeight };
+            };
+
+            const canvasSize = adjustCanvasSize();
+            const playerCanvas = document.getElementById('playerCanvas');
+            const enemyCanvas = document.getElementById('enemyCanvas');
+            if (playerCanvas && enemyCanvas) {
+                playerCanvas.width = canvasSize.width;
+                playerCanvas.height = canvasSize.height;
+                enemyCanvas.width = canvasSize.width;
+                enemyCanvas.height = canvasSize.height;
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Call on component mount to adjust immediately
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
 
     const submitCode = (answer, language, questionIndex) => {

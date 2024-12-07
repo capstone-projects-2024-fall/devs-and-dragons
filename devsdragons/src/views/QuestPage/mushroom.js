@@ -1,12 +1,13 @@
-export default function initMushRoomAnimation() {
+export default function initMushRoomAnimation(adjust_y) {
     const canvas = document.getElementById("enemyCanvas");
     console.log("Canvas is being drawn to:", canvas);
+    console.log("Adjust Y passed to Mushroom:", adjust_y);
     const ctx = canvas.getContext("2d");
     canvas.width = 500;
     canvas.height = 500;
 
     class Mushroom {
-        constructor(canvasWidth, canvasHeight, imageID, ){
+        constructor(canvasWidth, canvasHeight, imageID, max, adjust_y){
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
@@ -16,9 +17,10 @@ export default function initMushRoomAnimation() {
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
             this.x = (canvasWidth - this.width)/ 5;
-            this.y = (canvasHeight - this.height) - 50;
+            this.y = (canvasHeight - this.height) - adjust_y;
             this.tickCount = 0;
             this.ticksPerFrame = 7;
+            this.maxFrame = max;
             this.currentAnimation = "mushroomIdle";
             this.changeAnimation("mushroomIdle", 7);
         }
@@ -54,7 +56,7 @@ export default function initMushRoomAnimation() {
         }
     }
 
-    const mushroom = new Mushroom(canvas.width, canvas.height, "mushroomIdle", 7);
+    const mushroom = new Mushroom(canvas.width, canvas.height, "mushroomIdle", 7, adjust_y);
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
