@@ -4,22 +4,22 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#4caf50',  // Green for primary
+      main: '#252241',  // Dark blue for primary
       contrastText: '#fff',  // White text on primary buttons
     },
     secondary: {
-      main: '#ff9800',  // Orange for secondary
+      main: '#ffd700',  // Gold for secondary
       contrastText: '#000',  // Black text on secondary buttons
     },
     error: {
-      main: '#f44336',  // Red for error state
+      main: '#ff4500',  // Orange-red for error state
     },
     background: {
-      default: '#836953',  // Set brown as the default background color
+      default: '#1a1a2e',  // Dark blue as the default background color
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',  // Default font
+    fontFamily: 'Cinzel, serif',  // Fantasy-themed font
     h1: {
       fontSize: '2rem',
       fontWeight: 700,
@@ -35,22 +35,24 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         html: {
-          height: '100%',  // Set html height to 100%
+          height: '100%',
         },
         body: {
-          backgroundColor: '#836953', // Apply brown background color to the entire body
-          margin: 0,  // Reset margin
-          height: '100%',  // Set body height to 100%
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',  // Ensure minimum full-height background
+          height: '100%',
+          margin: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a2e',  // Dark blue background
+          color: '#ddcf8a',  // Gold color for text
+          fontFamily: 'Cinzel, serif',
         },
-        '#root': {
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',  // Root div covers full view height
-          flexGrow: 1,  // Allow content to grow dynamically
-          backgroundColor: 'inherit',  // Inherit background color from the body
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,  // Default border radius for buttons
+          fontFamily: 'Cinzel, serif',  // Fantasy-themed font
         },
       },
     },
