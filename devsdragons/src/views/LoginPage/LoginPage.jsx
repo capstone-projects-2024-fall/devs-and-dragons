@@ -59,7 +59,7 @@ const LoginPage = () => {
                 localStorage.setItem('user_id', userId);
                 // Show success alert
                 alert('Login successful!');
-                navigate('/my-quests'); // Navigate to the HomePage
+                navigate('/home-page'); // Navigate to the HomePage
             }
 
         } catch (error) {
@@ -79,11 +79,12 @@ const LoginPage = () => {
 
     return (
         <div className="login-container">
-            <div className="quest-text">Let&apos;s begin your journey</div>
+            <div className="background-image"></div>
+            <div className="quest-text">Devs and Dragons</div>
             <form onSubmit={handleSubmit} className="login-form">
                 <input
                     type="text"
-                    placeholder="email"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="login-input"
@@ -99,7 +100,7 @@ const LoginPage = () => {
                 {loggedInSuccess && <p className="success-message">Logged in successfully, Let&apos;s begin the Journey!</p>}
                 <button type="submit" className="login-button">Begin Quest</button>
                 <div>
-                    <button type="button" onClick={signUpButton}>Sign Up</button>
+                    <button type="button" className='submit-login' onClick={signUpButton}>Sign Up</button>
                 </div>
             </form>
             {showSignUp && <SignUpForm onClose={handleSignUpClose} />}
