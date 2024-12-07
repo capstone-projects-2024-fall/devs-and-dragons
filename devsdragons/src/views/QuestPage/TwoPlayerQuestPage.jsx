@@ -5,7 +5,7 @@ import MultiplayerCodeEditor from '../Editor/MultiplayerCodeEditor';
 import HUD from '../../components/HUD/HUD';
 
 // Connect to the backend server socket 
-const socket = io('http://192.168.1.208:30000');
+const socket = io('http://10.0.0.93:30000');
 
 // StarRating component to display stars based on the grade. Based directly on the grade.
 function StarRating({ grade }) {
