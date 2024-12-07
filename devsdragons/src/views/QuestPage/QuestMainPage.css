@@ -100,7 +100,8 @@ canvas {
     width: 100%;
     height:auto;
     transform: translateY(100px); /* Move canvas up by 20px */
-   
+    box-shadow: none !important;
+    border: none !important;
 }
 
 
@@ -110,7 +111,8 @@ canvas {
     width: 100%; /* Adjust width */
     height: auto;
     transform: translateY(60px);
- 
+    box-shadow: none !important;
+    border: none !important;
 }
 
 
