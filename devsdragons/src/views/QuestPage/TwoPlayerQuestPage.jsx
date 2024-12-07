@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MultiplayerCodeEditor from '../Editor/MultiplayerCodeEditor';
+import './TwoPlayerQuestPage.css';
 import HUD from '../../components/HUD/HUD';
 
 // Connect to the backend server socket 
@@ -48,6 +49,12 @@ function TwoPlayerQuestPage() {
         fetch(`/api/quest-parameters?quest_id=${questData}`)
         .then(response => response.json())
         .then(data => {
+
+            console.log("Fetched quest data:", data);
+            
+            // Set the full quest object
+            setQuest(data);
+
             if (data && Array.isArray(data.questions)) {
                 setQuestions(data.questions);
             } else {
@@ -56,7 +63,18 @@ function TwoPlayerQuestPage() {
             }
         })
         console.log(questions.length, "This is the length of questions")
+        // console.log(quest.background, "is the background selected.")
     }, [roomCode, questData]);
+
+    // TEMPORARY FUNCTION TO ENSURE WE ARE PULLING DATA CORRECTLY
+    useEffect(() => {
+        if (quest) {
+            console.log(quest.background, "is the background selected.");
+            console.log(quest.enemy, "is who we are facing.");
+        } else {
+            console.log("Quest is not yet available.");
+        }
+    }, [quest]);
 
     useEffect(() => {
         if (!roomCode) return;
@@ -171,38 +189,77 @@ function TwoPlayerQuestPage() {
         navigate("/my-quests");
     };
 
-    return (
-        <div>
-            <h1>Room Code: {roomCode}</h1>
-            <h1>Two Player Quest</h1>
-            <div>
-                <h2>Collaborate with your teammate</h2>
-                <div style={{ border: '1px solid black', padding: '10px', height: '200px', overflowY: 'scroll' }}>
-                    {messages.map((msg, index) => (
-                        <p key={index}>{msg}</p>
-                    ))}
-                </div>
-                <input
-                    type="text"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Talk to your peer"
-                />
-                <button onClick={sendMessage}>Send</button>
+//     return (
+//         <div>
+//             <h1>Room Code: {roomCode}</h1>
+//             <div>
+//                 <h2>Collaborate with your teammate</h2>
+//                 <div style={{ border: '1px solid black', padding: '10px', height: '200px', overflowY: 'scroll' }}>
+//                     {messages.map((msg, index) => (
+//                         <p key={index}>{msg}</p>
+//                     ))}
+//                 </div>
+//                 <input
+//                     type="text"
+//                     value={newMessage}
+//                     onChange={(e) => setNewMessage(e.target.value)}
+//                     placeholder="Talk to your peer"
+//                 />
+//                 <button onClick={sendMessage}>Send</button>
+//             </div>
+//             <div>
+//                 {questions.length > 0 ? (
+//                     questions.map((question, index) => (
+//                         index <= currentQuestionIndex && ( // Explicitly check against currentQuestionIndex
+//                             <div key={index} className="question-item">
+//                                 <p><strong>Question:</strong> {question}</p>
+//                                 <MultiplayerCodeEditor
+//                                     code={sharedCode}
+//                                     language={language}
+//                                     onChange={handleEditorChange}
+//                                     onCodeSubmit={(code, lang) => submitCode(code, lang, index)}
+//                                 />
+//                                 {feedbacks[index] && (
+//                                     <div className="feedback">
+//                                         <h3>Feedback</h3>
+//                                         <StarRating grade={feedbacks[index].grade} />
+//                                         <p><strong>Advice:</strong> {feedbacks[index].advice}</p>
+//                                     </div>
+//                                 )}
+//                             </div>
+//                         )
+//                     ))
+//                 ) : (
+//                     <p>Loading questions or no questions available.</p>
+//                 )}
+//             </div>
+//             {!isRoomCreator && (
+//                 <button
+//                     style={{ marginTop: '20px', backgroundColor: 'red', color: 'white' }}
+//                     onClick={leaveRoom}
+//                 >
+//                     Leave Room
+//                 </button>
+//             )}
+//         </div>
+//     );
+// }
+return (
+    <div className="quest-main-page">
+        {/* Left Section */}
+        <div className="content-section">
+            <div className = "header">
+                <h4>Room Code: {roomCode}</h4>
+                <button className="leave-room-button" onClick={leaveRoom}>
+                        Leave
+                </button>
             </div>
-            <div>
-                <h2>Questions</h2>
+            <div className="question-display">
                 {questions.length > 0 ? (
                     questions.map((question, index) => (
                         index <= currentQuestionIndex && ( // Explicitly check against currentQuestionIndex
                             <div key={index} className="question-item">
                                 <p><strong>Question:</strong> {question}</p>
-                                <MultiplayerCodeEditor
-                                    code={sharedCode}
-                                    language={language}
-                                    onChange={handleEditorChange}
-                                    onCodeSubmit={(code, lang) => submitCode(code, lang, index)}
-                                />
                                 {feedbacks[index] && (
                                     <div className="feedback">
                                         <h3>Feedback</h3>
@@ -217,16 +274,48 @@ function TwoPlayerQuestPage() {
                     <p>Loading questions or no questions available.</p>
                 )}
             </div>
-            {!isRoomCreator && (
-                <button
-                    style={{ marginTop: '20px', backgroundColor: 'red', color: 'white' }}
-                    onClick={leaveRoom}
-                >
-                    Leave Room
-                </button>
-            )}
-        </div>
-    );
-}
 
+            <div className="game-screen-container">
+                <h1>Game Container Placeholder</h1>
+            </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="right-container">
+            {/* Timer */}
+            <div className="timer-container">
+                <h1>Timer Placeholder</h1>
+            </div>
+
+            {/* Chat */}
+            <div className="chat-container">
+                <h2>Collaborate with Your Teammate</h2>
+                <div style={{ border: '1px solid black', padding: '10px', height: '200px', overflowY: 'scroll' }}>
+                    {messages.map((msg, index) => (
+                        <p key={index}>{msg}</p>
+                    ))}
+                </div>
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Talk to your peer"
+                />
+                <button onClick={sendMessage}>Send</button>
+            </div>
+
+            {/* Code Editor */}
+            <div className="code-editor-container">
+                <MultiplayerCodeEditor
+                    code={sharedCode}
+                    language={language}
+                    onChange={handleEditorChange}
+                    onCodeSubmit={(code, lang) => submitCode(code, lang, currentQuestionIndex)}
+                />
+            </div>
+        </div>
+    
+    </div>
+);
+}
 export default TwoPlayerQuestPage;
