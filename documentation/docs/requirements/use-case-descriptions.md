@@ -85,7 +85,7 @@ Intention: A user wants to form a party to undertake a quest together.
 
 3. Selecting "Two Player", expands the the "Create Quests" section to now ask the user if they want to join an existing party/room or create a new party/room. The user selects "Start Room" which automatically prompts a new quest form on screen.
 
-4. The generated room code is now available for the user to share with others and have them join the user's party. The user fills out the form for the following:
+4. The generated room code is now available for the user to share with others and have them join the user's party. The user fills out the form for the following fields:
    - Quest Title
    - Coding Topic
    - Amount of problems
