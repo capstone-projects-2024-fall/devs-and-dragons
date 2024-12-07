@@ -48,37 +48,55 @@ Intention: A user wants to start a quest for one player and play alone.
 6. The user selects the "Start Quest" button.
 
 ## Use Case 5 - Playing a Quest Solo
-After a user starts a quest in **Use Case 4**, they want to play and try to complete the quest.
-1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
-2. The game screen is now displayed to the user where they can see:
+Intention: After a user starts a quest in **Use Case 4**, they want to play and try to complete the quest.
+1. The game screen is now displayed to the user where they can see:
    - User's avatar
    - User's health bar
    - Enemy
    - Enemy's health bar
    - Timer
-   - Code Editor
-3. The user is prompted with a question.
-4. The timer begins to tick down.
+   - Background
+   - Code Editor (Answer Space)
+   - Question
+2. The user is prompted with a question.
+3. The timer begins to tick down.
+4. The user can toggle to dark mode if wanted by pressing "Toggle Dark Mode".
 5. The user writes code in the provided code editor.
 6. The user clicks the "Submit" button.
-7. The GPT-bot analyzes the user's submission and provides feedback with a rating from 1 to 3.
+7. The GPT-bot analyzes the user's submission and provides feedback with a rating out of 10, but the user is shown an equal result out of 5 so they may digest it easily.
 8. Based on the GPT-bot’s rating:
+
    - **Feedback is provided to the user**:
-     - If the rating is 1, the user’s health bar decreases, and the quest continues with the timer reset for a new attempt.
-     - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
-     - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
-9. The user continues to engage with the quest until all questions are answered, the enemy is defeated, the user quits, or the user’s health bar reaches zero.
+
+     - If the rating is less than 5 / 10, the answer is not recognized as a valid solution. The answer's rating is correctly shown (around 40% stars filled at a maximum), the user is given tips, and the user’s health bar decreases. They have the option to reattempt and click submit after modifying their answer in the code editor.
+
+     - The "continue" button to go to the next question will only appear for valid solutions (answer must be at least rated as 5 / 10).
+
+     - If the rating is greater than or equal to 5 / 10, the answer's rating is correctly shown (at least 60% stars filled), The user's answer is recognized as a valid solution. The user receives tips on improving their solution, and the user can continue to the next question as it will become available. The user successfully damages the enemy, and the enemy’s health bar decreases.
+
+9. The user continues to engage with the quest until all questions are answered, the enemy is defeated (enemy's health bar reaching 0), the user quits, or the user’s health bar reaches zero.
 
 ## Use Case 6 - Creating a Party to Start a Quest
-A user wants to form a party to undertake a quest together.
-1. From the homepage, the user selects the "Quests" tab.
-2. The user selects the dropdown menu option "My Quests."
-3. The quests the user has created are displayed; the user selects the quest they are interested in starting.
-4. The user selects the “Start Quest” button.
-5. The user is prompted to play the quest 'solo' for singleplayer, or 'form party' for multiplayer.
-6. The user selects the "Form Party" button.
-7. The user creates a party code and shares it with their peers.
-8. The user waits for the party size to reach two to four members, then clicks the “Start Quest” button.
+Intention: A user wants to form a party to undertake a quest together.
+
+1. From the homepage, the user selects the "Create Quests" button.
+
+2. A “Create Quests” section is present. The user selects "Two Player".
+
+3. Selecting "Two Player", expands the the "Create Quests" section to now ask the user if they want to join an existing party/room or create a new party/room. The user selects "Start Room" which automatically prompts a new quest form on screen.
+
+4. The generated room code is now available for the user to share with others and have them join the user's party. The user fills out the form for the following:
+   - Quest Title
+   - Coding Topic
+   - Amount of problems
+   - Difficulty Level
+   - Enemy
+   - Background
+   - Programming Language
+   - Quest Description
+4. The user reviews their input and selects the “Create Quest” button.
+5. There is a confirmation dialog of a quest created.
+6. The user selects the "Start Quest" button.
 
 ## Use Case 7 - Join a Party
 A user wants to join another user’s party.
