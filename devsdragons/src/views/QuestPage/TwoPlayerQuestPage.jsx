@@ -108,7 +108,7 @@ function TwoPlayerQuestPage() {
                 case "Desert":
                     return 50;
                 case "Castle Ruins":
-                    return 50;
+                    return 100;
                 case "Forest":
                     return 50;
                 case "River Crossing":
