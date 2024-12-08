@@ -18,9 +18,9 @@ sidebar_position: 4
 
 * Users must be able to create and customize an Avatar.
 
-[//]: # (Use case 4 functional requirements)
+[//]: # (Use case 4 functional requirements, Creating a solo quest)
 * Users must be able to create "singleplayer", "one player", or "solo" quests to play them by themselves.
-* Users must be able to create quests through filling out a form that takes in:
+* For solo quests: A user must be able to create quests through filling out a form that takes in:
   * Quest Title
   * Coding Topic
   * Amount of Problems (3 - 8)
