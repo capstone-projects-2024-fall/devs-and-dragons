@@ -47,12 +47,13 @@ Discuss what you need to develop this project. This includes background informat
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/leighflagg">
-            <img src="https://avatars.githubusercontent.com/u/143827597?v=4" width="100;" alt="leighflagg"/>
+        <a href="https://github.com/Prince-Nahar">
+            <img src="https://avatars.githubusercontent.com/u/97692251?v=4" width="100;" alt="Prince"/>
             <br />
-            <sub><b>Null</b></sub>
+            <sub><b>Prince Nahar</b></sub>
         </a>
-    </td></tr>
+    </td>
+</tr>
 </table>
 
 [//]: # ( readme: collaborators -end )
