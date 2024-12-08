@@ -18,7 +18,7 @@ export default function initGameEnemyAnimation(adjust_y) {
             this.x = (canvasWidth - this.width) + 55;
             this.y = (canvasHeight - this.height) + adjust_y;
             this.tickCount = 0;
-            this.ticksPerFrame = 10;
+            this.ticksPerFrame = 13;
             this.maxFrame = max;
             this.currentAnimation = "dragonIdle";
             this.changeAnimation('dragonIdle', 3); // Set default animation to idle
