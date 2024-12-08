@@ -105,7 +105,7 @@ Intention: A user wants to join another user’s party.
 3. The user inputs the room code and selects the "Join Room" button.
 4. The user is automatically navigated to the room.
 
-## Use Case 8 - Playing a Quest with a Party
+## Use Case 8 - Playing a "Two Player" Quest with a Party (of at least two people)
 Intention: Context is Use Case 6 (quest created for at least two players) and 7 (one or more players join the existing quest created by user in use case 6). At least two users want to solve a coding problem together during a quest.
 
 1. The game screen is now displayed to the users where they can see:
