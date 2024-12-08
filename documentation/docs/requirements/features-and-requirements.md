@@ -21,12 +21,17 @@ sidebar_position: 4
 * Users can add other users.
   * User can search for another's username and click "Add Friend".
 * Users can create guilds to host multiple guild parties and assign multiple quests.
+* Users can play and finish a quest (game).
+* Users can take turns answering a question/problem within a quest (game).
 * Game must include a timer for each party member.
 * Game must be able to generate coding problems based on topic and difficulty chosen.
 * Game must be able grade answers based on correct and incorrect user(s) input.
 * Users must be able to create accounts.
 * Users must be able to log into created accounts.
 * Users can opt out or leave a started quest.
+* Users must be able to log out.
+* Users should see a quest results at the end of each quest (either victory or defeat).
+* Users must be able to toggle dark mode or light mode during ongoing quests (depending on their preference).
 * All user data must be stored in MongoDB.
  
 
