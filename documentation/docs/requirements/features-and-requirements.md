@@ -59,7 +59,7 @@ sidebar_position: 4
 
   * Answer quality must be indicated/viewable to the user using 5 stars and the amount they're filled.
 
-* User(s) must only be able to move on to the next question after they submit a "valid" answer.
+  * User(s) must only be able to move on to the next question after they submit a "valid" answer. Invalid answers must not allow user(s) to continue to the next questions of the quest.
 
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time (context: all questions have not been correctly answered yet).
 
