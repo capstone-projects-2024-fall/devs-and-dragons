@@ -19,7 +19,7 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 ### Game Mechanics
 ![Timer](https://github.com/user-attachments/assets/ab9dd4d5-2544-461d-a894-28ed702d74bf)             
 **Figure 1.**
-**Timed Challenge:** The party is given a set amount of time, based on the selected difficulty, to solve each problem. The amount of time is divided equally among the party members.
+**Timed Challenge:** The party is given a set amount of time (based on the selected difficulty) to solve each problem. The amount of time is divided equally among the party members.
 
 ![visualConcept_battle](https://github.com/user-attachments/assets/e323bf35-b6bb-4b4e-91dd-a4346f2886f7)
 **Figure 2.**
