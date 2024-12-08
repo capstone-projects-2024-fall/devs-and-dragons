@@ -97,6 +97,13 @@ https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements
             <sub><b>Preet Bhoiwala</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/Jericho-R-Orienza">
+            <img src="https://avatars.githubusercontent.com/u/93217801?v=4" width="100;" alt="Jericho"/>
+            <br />
+            <sub><b>Jericho Orienza</b></sub>
+        </a>
+    </td>
 </tr>
 </table>
 
