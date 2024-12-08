@@ -266,28 +266,23 @@ function TwoPlayerQuestPage() {
         socket.on('next_question', (data) => {
             console.log('Received next_question event:', data);
             setCurrentQuestionIndex(data.questionIndex);
-            if (data.feedbacks) {
-                setFeedbacks(data.feedbacks);
-            }
-            const nextFeedback = data.feedbacks[data.questionIndex];
-            const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
-            console.log("Feedback for next question (from next_question event):", nextFeedback);
-            console.log("Setting showContinueButton in next_question handler:", shouldShowContinue);
-            setShowContinueButton(shouldShowContinue);
+            setFeedbacks(data.feedbacks || []); 
+            setShowContinueButton(false); 
         });
 
         socket.on('code_submit', (data) => {
-            const { questionIndex, grade, advice } = data;
+            const { questionIndex, grade, advice, showContinueButton } = data; 
             console.log("Code submit event received:", data);
             setFeedbacks((prevFeedbacks) => {
                 const newFeedbacks = [...prevFeedbacks];
                 newFeedbacks[questionIndex] = { grade, advice };
                 return newFeedbacks;
             });
-            const shouldShowContinue = grade >= 6 && questionIndex === currentQuestionIndex;
-            console.log("Setting showContinueButton in code_submit handler:", shouldShowContinue);
-            setShowContinueButton(shouldShowContinue);
+
+            console.log("Setting showContinueButton from code_submit:", showContinueButton); 
+            setShowContinueButton(showContinueButton); 
         });
+        
 
         socket.on('trigger_animation', (data) => {
             const { grade } = data;
@@ -364,7 +359,8 @@ function TwoPlayerQuestPage() {
                     room: roomCode,
                     questionIndex,
                     grade,
-                    advice
+                    advice,
+                    showContinueButton: grade >= 6 
                 });
 
                 // Emit animation event for all users
@@ -381,18 +377,11 @@ function TwoPlayerQuestPage() {
                 });
 
                 // handle helath update
-                if (grade >= 6) {
-                    // Successful attack
-                    // updateHealth(playerHealth - 10); 
+                if (grade >= 6) {                   
                     updateEnemyHealth();
-                    // playerRef.current?.changeAnimation("playerAttack1", 6); // Play attack animation
-                    // enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames); // Enemy hurt animation
                     console.log("PLAYER ATTACKS || ENEMY TAKES DAMAGE");
                 } else if (grade < 6 ) {
-                    // Failed attack
                     updatePlayerHealth(playerHealth - 25);
-                    // playerRef.current?.changeAnimation("playerHurt", 5); // Play hurt animation
-                    // enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames); // Enemy attack animation
                     console.log("PLAYER TAKES DAMGE || ENEMY ATTACKS");``
                 } 
 
@@ -403,29 +392,24 @@ function TwoPlayerQuestPage() {
             .catch(error => console.error('Error submitting code:', error));
     };
 
-    // Handle next question
     const handleNextQuestion = () => {
         const nextIndex = currentQuestionIndex + 1;
-
+    
         console.log("Emitting next_question:", {
             room: roomCode,
             questionIndex: nextIndex,
             feedbacks,
         });
-
+    
         socket.emit('next_question', {
             room: roomCode,
             questionIndex: nextIndex,
             feedbacks,
         });
-
+    
         setCurrentQuestionIndex(nextIndex);
-        const nextFeedback = feedbacks[nextIndex];
-        const shouldShowContinue = nextFeedback && nextFeedback.grade >= 6;
-        console.log("Feedback for next question:", nextFeedback);
-        console.log("Setting showContinueButton in handleNextQuestion:", shouldShowContinue);
-        setShowContinueButton(shouldShowContinue);
-    };
+        setShowContinueButton(false); // Reset here as well for consistency
+    };    
 
     // Handle chat message submission
     const sendMessage = () => {
