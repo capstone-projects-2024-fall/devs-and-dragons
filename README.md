@@ -90,6 +90,13 @@ https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements
             <sub><b>Jake Creasy</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/bhoiwalapreet">
+            <img src="https://avatars.githubusercontent.com/u/123014725?v=4" width="100;" alt="Preet"/>
+            <br />
+            <sub><b>Preet Bhoiwala</b></sub>
+        </a>
+    </td>
 </tr>
 </table>
 
