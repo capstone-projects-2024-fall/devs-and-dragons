@@ -26,4 +26,4 @@ export default defineConfig({
     setupFiles: './vitest.setup.js', // Setup file for testing
     globals: true // Enable Jest-like global methods (e.g., test, expect)
   }
-})
+});
