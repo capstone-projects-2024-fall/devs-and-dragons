@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Features and Requirements
 
-## Functional Requirements (sourced from Use Cases)
+## Functional Requirements (sourced from and grouped by Use Cases)
 
 [//]: # (Use case 1 functional requirements, Create Account)
 
@@ -19,6 +19,7 @@ sidebar_position: 4
 * Users must be able to create and customize an Avatar.
 
 [//]: # (Use case 4 functional requirements)
+* Users must be able to create "singleplayer", "one player", or "solo" quests to play them by themselves.
 * Users must be able to create quests through filling out a form that takes in:
   * Quest Title
   * Coding Topic
