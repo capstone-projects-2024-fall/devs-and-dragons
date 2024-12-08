@@ -296,6 +296,19 @@ def handle_update_enemy_health(data):
     health = data['health']
     emit('update_enemy_health', {'health': health}, room=room)
 
+@socketio.on('trigger_animation')
+def handle_trigger_animation(data):
+    room = data.get('room')
+    grade = data.get('grade')
+    question_index = data.get('questionIndex')
+    
+    # Broadcast the animation event to all users in the room
+    emit('trigger_animation', {
+        'grade': grade,
+        'questionIndex': question_index
+    }, to=room)
+
+
 
 
 @app.route('/create_contact', methods=["POST"])
