@@ -7,12 +7,14 @@ sidebar_position: 4
 ## Functional Requirments
 
 * Users must be able to create quests through filling out a form that takes in
-  * Quest title
-  * Coding topic
-  * Amount of problems
-  * Difficulty level
-  * Enemy
+  * Quest Title
+  * Coding Topic
+  * Amount of Problems (3 - 8)
+  * Difficulty Level
+  * Enemy 
   * Background
+  * Programming Language
+  * Quest Description
 * Users must be able to create and customize an Avatar
 * Users must be able to create parties of two to four to start a quest
 * Users must be able to join parties
