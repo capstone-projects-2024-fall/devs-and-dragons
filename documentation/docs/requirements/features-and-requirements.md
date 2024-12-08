@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## Functional Requirements
 
-* Users must be able to create quests through filling out a form that takes in:
+* Quest Form: Users must be able to create quests through filling out a form that takes in:
   * Quest Title
   * Coding Topic
   * Amount of Problems (3 - 8)
