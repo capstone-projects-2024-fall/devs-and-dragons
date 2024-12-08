@@ -44,6 +44,7 @@ sidebar_position: 4
 * All user data must be stored in MongoDB.
 * Chosen background from the quest form must display during the ongoing quest.
 * User(s) should be able to move on to the next question after they submit a "valid" answer.
+* GPT's grading feedback should viewable by all users during ongoing quest.
  
 
 ## Non-Functional Requirements
