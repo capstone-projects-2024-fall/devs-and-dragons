@@ -41,7 +41,7 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 All users can create a quest by filling out a form that specifies the difficulty, number of problems, topic of problems (Computer Science related), enemy, and background.
 
 ### Starting a Quest
-In multiplayer mode, the user must be in a party of two or more people in order to start a quest made by the user. The user who created the quest can provide a unique code for others to join the quest.
+In multiplayer mode, a party of two or more users are needed in order to start a multiplyer (or "Two Player") quest. The user who created the quest can provide a unique code for others to join the quest.
 
 ## Conceptual Design
 The frontend of Devs and Dragons is developed using React.js to build UI components and manage the application state. The backend is powered by Flask, handling user authentication, API requests, and integrating with the OpenAI GPT model for generating and grading coding challenges. The MongoDB database stores the user data, quest configurations, and coding submissions. WebSockets manage the multiplayer connections to allow players to collaborate in real-time during quests. 
