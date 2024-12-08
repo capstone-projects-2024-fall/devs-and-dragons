@@ -130,7 +130,7 @@ Goal: Verify that attempting to create a user with an invalid email format resul
 
 
 
-### User Authentication
+### Strong Credential Validation
 #### Test Case 1: User Exists and Password is Correct
 Goal: Verify that a user with the correct email and password can authenticate successfully.
 
