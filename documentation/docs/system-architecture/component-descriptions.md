@@ -16,10 +16,6 @@ MongoDB is an open source database management database program designed to handl
 
 React.js is a JavaScript framework for building user interfaces. React.js will handle the visual components of the platform. It will be installed through Node.JS. Components will be created for each part of the game interface like avatar customization, buttons, and score display. These components will be reusable across different sections of the game. Each React component that requires data, such as user progress or avatar details, will send HTTP requests to Flask and get the necessary data, which will be used to update the component's state to reflect real-time changes like a user's score after completing a quest.
 
-**React-Game-Kit**
-
-Component library for making games with React & React Native.The library will be installed using npm which will import the pre-built components. It can handle character movement, battle animations, and environment interactions within the React framework. To handle character movement, React’s input module will listen for keyboard or mouse events, tracking player actions. Animations are handled using the Sprite component, which displays frames from a sequence of images based on game events.  Loop component of the library ensures real-time updates of player actions and environment interactions.
-
 **Restful API with Flask**
 
 Python framework used to build web APIs. The restful api is designed for interacting with React through HTTP requests to handle data exchange between the client and server. It will process user actions by receiving API requests from React. Flask will be used to set up API routes that handle requests from the front end. Each route will handle specific tasks, like saving user progress or retrieving coding challenges. Flask will process the requests, interact with MongoDB to store or retrieve data, and send responses back to React. There are libraries such as pyMongo to connect to MongoDB. It will store or retrieve data as needed, format the response in JSON, and send it back to React via the API route for updating the interface.
