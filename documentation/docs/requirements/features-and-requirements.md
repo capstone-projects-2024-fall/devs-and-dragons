@@ -30,6 +30,7 @@ sidebar_position: 4
   * Programming Language
   * Quest Description
 
+[//]: # (Use case 5 functional requirements, Playing a solo quest)
 * Users must be able to create parties/rooms of two to four to start a quest.
 * Users must be able to join parties/rooms.
 * Users can add other users.
