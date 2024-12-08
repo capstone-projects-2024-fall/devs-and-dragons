@@ -104,6 +104,13 @@ https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements
             <sub><b>Jericho Orienza</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/IshanAgg125">
+            <img src="https://avatars.githubusercontent.com/u/143641776?v=4" width="100;" alt="Ishan"/>
+            <br />
+            <sub><b>Ishan Aggarwal</b></sub>
+        </a>
+    </td>
 </tr>
 </table>
 
