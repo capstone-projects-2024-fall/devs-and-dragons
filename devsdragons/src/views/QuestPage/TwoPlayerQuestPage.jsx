@@ -289,6 +289,20 @@ function TwoPlayerQuestPage() {
             setShowContinueButton(shouldShowContinue);
         });
 
+        socket.on('trigger_animation', (data) => {
+            const { grade } = data;
+            
+            if (grade >= 6) {
+                // Trigger successful attack animations
+                playerRef.current?.changeAnimation("playerAttack1", 6); 
+                enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
+            } else {
+                // Trigger failed attack animations
+                playerRef.current?.changeAnimation("playerHurt", 5); 
+                enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames);
+            }
+        });
+
         socket.emit('join_room', {
             username: localStorage.getItem('user_id'),
             room: roomCode,
@@ -301,8 +315,9 @@ function TwoPlayerQuestPage() {
             socket.off('update_player_health');
             socket.off('next_question');
             socket.off('code_submit');
+            socket.off('trigger_animation');
         };
-    }, [roomCode, currentQuestionIndex]);
+    }, [roomCode, enemyHurtSS, enemyHurtFrames, enemyAttackSS, enemyAttackFrames]);
 
     // Handle player health updates
     const updatePlayerHealth = (newHealth) => {
@@ -343,12 +358,20 @@ function TwoPlayerQuestPage() {
                 const adviceMatch = text.match(/Advice:\s*(.+)/);
                 const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
                 const advice = adviceMatch ? adviceMatch[1] : "";
-
+                
+                // Emit grade and showContinueButton for all
                 socket.emit('code_submit', {
                     room: roomCode,
                     questionIndex,
                     grade,
                     advice
+                });
+
+                // Emit animation event for all users
+                socket.emit('trigger_animation', {
+                    room: roomCode,
+                    grade,
+                    questionIndex,
                 });
 
                 setFeedbacks((prevFeedbacks) => {
@@ -357,24 +380,21 @@ function TwoPlayerQuestPage() {
                     return newFeedbacks;
                 });
 
+                // handle helath update
                 if (grade >= 6) {
                     // Successful attack
                     // updateHealth(playerHealth - 10); 
                     updateEnemyHealth();
-                    playerRef.current?.changeAnimation("playerAttack1", 6); // Play attack animation
-                    enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames); // Enemy hurt animation
+                    // playerRef.current?.changeAnimation("playerAttack1", 6); // Play attack animation
+                    // enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames); // Enemy hurt animation
                     console.log("PLAYER ATTACKS || ENEMY TAKES DAMAGE");
                 } else if (grade < 6 ) {
                     // Failed attack
                     updatePlayerHealth(playerHealth - 25);
-                    playerRef.current?.changeAnimation("playerHurt", 5); // Play hurt animation
-                    enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames); // Enemy attack animation
+                    // playerRef.current?.changeAnimation("playerHurt", 5); // Play hurt animation
+                    // enemyRef.current?.changeAnimation(enemyAttackSS, enemyAttackFrames); // Enemy attack animation
                     console.log("PLAYER TAKES DAMGE || ENEMY ATTACKS");``
-                } else {
-                    // Neutral animations
-                    playerRef.current?.changeAnimation("playerIdle", 7);
-                    enemyRef.current?.changeAnimation(enemyIdleSS, enemyIdleFrames);
-                }
+                } 
 
                 const shouldShowContinue = grade >= 6;
                 console.log("Grade:", grade, "Setting showContinueButton in submitCode:", shouldShowContinue);
