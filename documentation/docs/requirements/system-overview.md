@@ -34,8 +34,8 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
   - **1 star**: Rating of 0% - 30% signfies a solution which is extremely inefficient, irrelevant, or incorrect.
   - **2 stars**: Rating of 40% – 50% signifies a solution which is generally inefficient, partially helpful, but still unclear or incomplete.
   - **3 stars**: Rating of 60% to 70% signifies a solution which is efficient clear, relevant, and generally complete.
-  - **4 stars**: Rating of 80% to 90% signifies a soltuon which is highly efficient and exceeds expectations.
-  - **5 stars**: Grade 10/10 (Exceptional; goes above and beyond)
+  - **4 stars**: Rating of 80% to 90% signifies a solution which is highly efficient and exceeds expectations.
+  - **5 stars**: Rating of 100% signfies an exceptional and perfect solution.
 
 ### Quest Creation
 All users can create a quest by filling out a form that specifies the difficulty, number of problems, computer science related topic(s), enemy, and background.
