@@ -42,6 +42,7 @@ sidebar_position: 4
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 * All user data must be stored in MongoDB.
+* Chosen background from the quest form must display during the ongoing quest.
  
 
 ## Non-Functional Requirements
