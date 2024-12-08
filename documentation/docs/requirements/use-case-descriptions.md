@@ -108,15 +108,16 @@ Intention: A user wants to join another user’s party.
 ## Use Case 8 - Playing a Quest with a Party
 Intention: Context is Use Case 6 (quest created for at least two players) and 7 (one or more players join the existing quest created by user in use case 6). At least two users want to solve a coding problem together during a quest.
 
-1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
-
-2. The game screen is now displayed to the user where they can see:
+1. The game screen is now displayed to the users where they can see:
    - User's avatar
    - User's health bar
    - Enemy
    - Enemy's health bar
    - Timer
-   - Code Editor
+   - Background
+   - Code Editor (Answer Space)
+   - Question
+   - Party/Room code
 
 3. The user is prompted with a question.
 
