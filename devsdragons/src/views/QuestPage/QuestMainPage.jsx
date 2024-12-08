@@ -96,11 +96,11 @@ function QuestMainPage() {
             case "Dragon":
                 switch (quest?.background) {
                     case "Desert":
-                        return 8;
+                        return 200;
                     case "Castle Ruins":
-                        return 9;
+                        return 225;
                     case "Forest":
-                        return 8;
+                        return 190;
                     case "River Crossing":
                         return 0;
                     default:
@@ -351,6 +351,8 @@ function QuestMainPage() {
                 setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
                 playerRef.current?.changeAnimation("playerAttack1", 6);
                 enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
+                // enemyRef.current?.changeAnimation(enemyDeathSS, enemyDeathFrames);
+
             } else if (grade <= 5) {
                 // Enemy attacks successfully
                 setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0
