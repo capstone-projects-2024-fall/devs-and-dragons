@@ -56,6 +56,8 @@ sidebar_position: 4
 
 * GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
 
+* Answer quality must be indicated/viewable to the user using 5 stars and the amount these 5 stars are filled.
+
 * User(s) must only be able to move on to the next question after they submit a "valid" answer.
 
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time (context: all questions have not been correctly answered yet).
