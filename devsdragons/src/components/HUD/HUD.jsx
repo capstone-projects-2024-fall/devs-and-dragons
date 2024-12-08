@@ -24,7 +24,7 @@ const HUD = () => {
       <Toolbar sx={{ justifyContent: 'space-between' }}>  {/* 'justifyContent: space-between' spreads out the icons evenly */}
         
         {/* IconButton is a clickable button with an icon; 'Link' allows navigation without reloading the page */}
-        <IconButton component={Link} to="/" color="inherit">  {/* Links to the Home page */}
+        <IconButton component={Link} to="/home-page" color="inherit">  {/* Links to the Home page */}
           <Home />  {/* MUI icon for Home */}
           <Typography variant="caption">Home</Typography>  {/* 'Typography' adds text next to the icon */}
         </IconButton>

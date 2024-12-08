@@ -1,4 +1,4 @@
-export default function initGameEnemyAnimation() {
+export default function initGameEnemyAnimation(adjust_y) {
     const canvas = document.getElementById("enemyCanvas");
     console.log("Canvas is being drawn to:", canvas);
     const ctx = canvas.getContext("2d");
@@ -6,7 +6,7 @@ export default function initGameEnemyAnimation() {
     canvas.height = 500;
 
     class Dragon {
-        constructor(canvasWidth, canvasHeight, imageID, max){
+        constructor(canvasWidth, canvasHeight, imageID, max, adjust_y){
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
@@ -16,9 +16,10 @@ export default function initGameEnemyAnimation() {
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
             this.x = (canvasWidth - this.width);
-            this.y = (canvasHeight - this.height) / 8;
+            this.y = (canvasHeight - this.height) / adjust_y;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
+            this.maxFrame = max;
             this.currentAnimation = "dragonIdle";
             this.changeAnimation('dragonIdle', 3); // Set default animation to idle
         }
@@ -53,7 +54,7 @@ export default function initGameEnemyAnimation() {
         }
     }
 
-    const dragon = new Dragon(canvas.width, canvas.height, "dragonIdle", 3);
+    const dragon = new Dragon(canvas.width, canvas.height, "dragonIdle", 3, adjust_y);
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

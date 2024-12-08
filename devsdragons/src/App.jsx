@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 
 //UNCOMMENT THESE IMPORTS UNTIL THE LINE BREAK TO VIEW GAME SCREEN
@@ -13,12 +14,14 @@ import theme from './theme/theme.js';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import {QuestProvider} from './views/QuestPage/QuestContext.jsx'
 import QuestMainPage from './views/QuestPage/QuestMainPage.jsx';
+import MultiplayerCodeEditor from './views/Editor/MultiplayerCodeEditor.jsx';
+import TwoPlayerQuestPage from './views/QuestPage/TwoPlayerQuestPage.jsx';
+import PlayerAnimation from '../GAME/Player/player.jsx';
 import Timer from './components/Timer/timer.jsx';
 
 
 //UNCOMMENT TO TEST GAME SCREEN
 // import PlayerAnimation from '../GAME/Player/player.jsx';
-
 
 
 
@@ -34,7 +37,6 @@ function App() {
   };
 
   return (
-    //UNCOMMENT TO VIEW WEB APP
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
@@ -42,21 +44,23 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/code-editor" element={<CodeEditor />} />  
+            <Route path="/multiplayer-code-editor" element={<MultiplayerCodeEditor />} />
             <Route path="/home-page" element={<HomePage />} />
             <Route path="/create-quests" element={<CreateQuestsPage />}/>
             <Route path="/my-quests" element={<MyQuestsPage/>} />
             <Route path="/quest-main" element={<QuestMainPage />} /> 
+            <Route path="/two-player" element={<TwoPlayerQuestPage />} />
             <Route path="/avatar" element={<AvatarPage />} />
           </Routes>
         </QuestProvider>
       </Router>
     </ThemeProvider>
 
+
     // // UNCOMMENT TO VIEW TIMER
     // <Timer />
 
     //UNCOMMENT TO VIEW GAME SCREEN
-
     // <div>
     //   <PlayerAnimation />
     // </div>
