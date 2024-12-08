@@ -45,7 +45,8 @@ sidebar_position: 4
 * Chosen background from the quest form must display during the ongoing quest.
 * User(s) should be able to move on to the next question after they submit a "valid" answer.
 * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
-* GPT should not accept an irrelavant answer (such as blank answer, answer irrelavant to the question, answers that try to cheat)
+* GPT should not accept an irrelavant answer (such as blank answer, answer irrelavant to the question, answers that try to cheat).
+* Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time.
  
 
 ## Non-Functional Requirements
