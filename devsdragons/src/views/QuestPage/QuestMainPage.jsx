@@ -124,6 +124,43 @@ function QuestMainPage() {
         }
     };
 
+        // Set enemy animation parameters
+    useEffect(() => {
+        const setEnemyAnimations = () => {
+            if (!quest || !quest.enemy) return;
+
+            switch (quest.enemy) {
+                case "Dragon":
+                    setEnemyIdleSS("dragonIdle");
+                    setEnemyIdleFrames(3);
+                    setEnemyHurtSS("dragonHurt");
+                    setEnemyHurtFrames(4);
+                    setEnemyAttackSS("dragonAttack");
+                    setEnemyAttackFrames(5);
+                    setEnemyDeathSS("dragonDeath");
+                    setEnemyDeathFrames(6);
+                    break;
+
+                case "Mr. Mushroom":
+                    setEnemyIdleSS("mushroomIdle");
+                    setEnemyIdleFrames(7);
+                    setEnemyHurtSS("mushroomHurt");
+                    setEnemyHurtFrames(5);
+                    setEnemyAttackSS("mushroomAttack");
+                    setEnemyAttackFrames(10);
+                    setEnemyDeathSS("mushroomDeath");
+                    setEnemyDeathFrames(11);
+                    break;
+
+                default:
+                    console.warn("Unknown enemy type");
+                    break;
+            }
+        };
+
+        setEnemyAnimations();
+    }, [quest]);
+
     // Determine what Enemy was selcted for the quest
     const initializeEnemyAnimation = (getEnemyAdjust_Y) => {
         if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
@@ -168,11 +205,11 @@ function QuestMainPage() {
         const getPlayerAdjustY = () => {
             switch (quest?.background) {
                 case "Desert":
-                    return 0; 
+                    return 90; 
                 case "Castle Ruins":
-                    return 50; 
+                    return 100; 
                 case "Forest":
-                    return 50; 
+                    return 90; 
                 case "River Crossing":
                     return -120;
                 default:

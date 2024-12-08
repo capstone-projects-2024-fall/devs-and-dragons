@@ -271,6 +271,31 @@ def handle_next_question(data):
 
     print(f"Broadcasted next_question to room {room}")
 
+@socketio.on('update_player_health')
+def handle_update_health(data):
+    """
+    Handles health updates for players and broadcasts the updated health
+    to all players in the room.
+    """
+    room = data.get('room')
+    health = data.get('health')
+
+    if not room or health is None:
+        print("Invalid data received for health update:", data)
+        return
+
+    # Log the update
+    print(f"Updating health for room {room}: {health}%")
+
+    # Broadcast the updated health to all users in the room
+    emit('update_player_health', {'health': health}, room=room)
+
+@socketio.on('update_enemy_health')
+def handle_update_enemy_health(data):
+    room = data['room']
+    health = data['health']
+    emit('update_enemy_health', {'health': health}, room=room)
+
 
 
 @app.route('/create_contact', methods=["POST"])

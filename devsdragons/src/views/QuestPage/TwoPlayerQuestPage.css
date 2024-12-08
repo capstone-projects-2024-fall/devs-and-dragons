@@ -109,28 +109,59 @@
 }
 
 .player-and-enemy {
-    display: flex; /* Align items in a row */
-    justify-content: space-between; /* Create space between player and enemy sections */
-    align-items: flex-end; /* Align items at the bottom */
-    width: 100%; 
-    height: 100%; /* Allow it to adjust based on the content */
-    position: relative; /* Ensure proper positioning */
-    padding: 0 20px; /* Add some horizontal padding */
-    box-sizing: border-box; /* Include padding in dimensions */
+    display: flex;
+    flex-direction: column; /* Stack health-bars-container on top of canvas-container */
+    justify-content: center;
+    align-items: center; /* Center both containers */
+    width: 100%; /* Occupy full width */
+    height: 100%; /* Occupy full height */
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Health Bars Container */
+.health-bars-container {
+    display: flex; /* Align health bars in a row */
+    justify-content: space-between; /* Space between player and enemy health bars */
+    align-items: center; /* Align health bars vertically */
+    width: 100%; /* Occupy full width */
+    padding: 10px 20px; /* Optional padding */
+    box-sizing: border-box;
+}
+
+.player-health-bar-container, .enemy-health-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45%; /* Each health bar occupies 45% of the width */
+    height: 20px; /* Set height for health bars */
+    background-color: #ccc;
+    border: 1px solid #999;
+    position: relative;
+}
+
+.health-bar-inner {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease;
+}
+
+/* Canvas Container */
+.canvas-container {
+    display: flex; /* Align canvases in a row */
+    justify-content: space-between; /* Space between player and enemy canvases */
+    align-items: flex-start; /* Align canvases vertically */
+    width: 100%; /* Occupy full width */
+    height: 100%; /* Adjust height if needed */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .player-section, .enemy-section {
     display: flex;
-    flex-direction: column; /* Stack health bar and canvas vertically */
-    align-items: center; /* Center align the content horizontally */
-    width: 45%; /* Each section occupies 45% of the width */
-    position: relative; 
-}
-
-.player-health-bar-container, .enemy-health-bar-container {
-    position: relative;
-    width: 80%; 
-    height: 20px; 
+    justify-content: center;
+    align-items: center;
+    width: 45%; /* Each canvas occupies 45% of the width */
 }
 
 #playerCanvas{

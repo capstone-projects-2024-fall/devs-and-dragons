@@ -2,21 +2,21 @@ export default function initGameEnemyAnimation(adjust_y) {
     const canvas = document.getElementById("enemyCanvas");
     console.log("Canvas is being drawn to:", canvas);
     const ctx = canvas.getContext("2d");
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = 725;
+    canvas.height = 725;
 
     class Dragon {
         constructor(canvasWidth, canvasHeight, imageID, max, adjust_y){
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 5;
+            this.scale = 6;
             this.spriteWidth = 140;
             this.spriteHeight = 140;
             this.width = this.spriteWidth * this.scale;
             this.height = this.spriteHeight * this.scale;
-            this.x = (canvasWidth - this.width);
-            this.y = (canvasHeight - this.height) / adjust_y;
+            this.x = (canvasWidth - this.width) + 55;
+            this.y = (canvasHeight - this.height) + adjust_y;
             this.tickCount = 0;
             this.ticksPerFrame = 10;
             this.maxFrame = max;
