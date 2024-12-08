@@ -33,7 +33,7 @@ sidebar_position: 4
 * Game must include a timer for each party member.
 * Game must be able to generate coding problems based on topic and difficulty chosen.
 * Chosen background from the quest form must display during the ongoing quest.
-* Game must be able grade answers based on correct and incorrect user(s) input.
+
 * Users can opt out or leave a started quest.
 
 
@@ -49,14 +49,15 @@ sidebar_position: 4
 
 
 
+* Game must be able grade answers based on correct and incorrect user(s) input:
+  
+  * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
 
-* Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
+  * GPT must not mark an irrelevant answer (such as blank answer, answer irrelavant to the question, or answers that try to cheat) as a valid solution (which would let user(s) move on to the next question).
 
-* GPT must not mark an irrelevant answer (such as blank answer, answer irrelavant to the question, or answers that try to cheat) as a valid solution (which would let user(s) move on to the next question).
+  * GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
 
-* GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
-
-* Answer quality must be indicated/viewable to the user using 5 stars and the amount these 5 stars are filled.
+  * Answer quality must be indicated/viewable to the user using 5 stars and the amount they're filled.
 
 * User(s) must only be able to move on to the next question after they submit a "valid" answer.
 
