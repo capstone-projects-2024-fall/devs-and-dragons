@@ -37,16 +37,19 @@ sidebar_position: 4
 * Users can opt out or leave a started quest.
 
 
-* Users must be able to toggle dark mode or light mode during ongoing quests (depending on their preference).
 * Users must able to view, access, and modifiy a code editor component to submit their answers.
+
+* Users must be able to toggle dark mode or light mode on the code editor during ongoing quests (depending on their preference).
+
 * Dragon sprite should be able to:
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
+
 * User(s) sprite should be able to:
+
   * Take damage (its health bar decreasing).
+
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
-
-
 
 
 * Game must be able grade answers based on correct and incorrect user(s) input:
@@ -60,6 +63,10 @@ sidebar_position: 4
   * Answer quality must be indicated/viewable to the user using 5 stars and the amount they're filled.
 
   * User(s) must only be able to move on to the next question after they submit a "valid" answer. Invalid answers must not allow user(s) to continue to the next questions of the quest.
+
+  * Answers which are not at least 50% correct are marked invalid by GPT.
+
+  * Answers which are at least 50% correct are marked valid by GPT.
 
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time (context: all questions have not been correctly answered yet).
 
