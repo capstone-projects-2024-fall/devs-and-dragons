@@ -64,6 +64,7 @@ function TwoPlayerQuestPage() {
     const [gameBackground, setGameBackground] = useState(ForestBackground); // Default background
     const playerRef = useRef(null); // Reference to player animation
     const [playerHealth, setPlayerHealth] = useState(100); // Player health
+    const [enemyHealth, setEnemyHealth] = useState(100); // Enemy Health
 
     // Fetch quest data
     useEffect(() => {
@@ -110,7 +111,7 @@ function TwoPlayerQuestPage() {
                 case "Castle Ruins":
                     return 100;
                 case "Forest":
-                    return 50;
+                    return 70;
                 case "River Crossing":
                     return -120;
                 default:
@@ -340,16 +341,29 @@ function TwoPlayerQuestPage() {
                             <img src={mushroomAttack} alt="Mushroom Attack SS" id="mushroomAttack" style={{display: "none"}} />
                             <img src={mushroomHurt} alt="Mushroom Hurt SS" id="mushroomHurt" style={{display: "none"}} />
                             <img src={mushroomDeath} alt="Mushroom Death SS" id="mushroomDeath" style={{display: "none"}} />
-                            <div className="player-section">
-                                <div className="health-bar-container">
-                                    <div className="health-bar">
-                                        <div
-                                            className="health-bar-inner"
-                                            style={{ width: `${playerHealth}%` }}
-                                        ></div>
+                            <div className="player-and-enemy">
+                                <div className="player-section">
+                                    <div className="player-health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${playerHealth}%` }}
+                                            ></div>
+                                        </div>
                                     </div>
+                                    <canvas id="playerCanvas" width="500" height="500"></canvas>
                                 </div>
-                                <canvas id="playerCanvas" width="500" height="500"></canvas>
+                                <div className="enemy-section">
+                                    <div className="enemy-health-bar-container">
+                                        <div className="health-bar">
+                                            <div
+                                                className="health-bar-inner"
+                                                style={{ width: `${enemyHealth}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="enemyCanvas" width="500" height="500"></canvas>
+                                </div>
                             </div>
                         </div>
                         {feedbacks[currentQuestionIndex] && (
