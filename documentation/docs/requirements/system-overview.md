@@ -27,7 +27,8 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 **Turn-based coding:** Each party member takes turns writing code by picking up where their party members left off. If the answer is incorrect after cycling through all of the party, then the party loses health. The timer restarts and the member who went first will start again. This repeats until the party fixes their solution to solve the problem, or the party's health reaches zero (which means the party lost).
 
 ### Grading User Input
-- Grading does not start until all members have taken a turn
+- GPT grades user(s) input.
+- Grading does not start until all members have taken a turn.
 - Ensures that proper logic is being used to solve
   - A problem expecting an output of "10" will not accept "return 10" as a correct input
 - GPT rates answers from 1 to 5 stars, based on a 10-point grading scale
