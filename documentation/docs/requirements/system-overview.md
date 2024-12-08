@@ -24,7 +24,7 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 ![visualConcept_battle](https://github.com/user-attachments/assets/e323bf35-b6bb-4b4e-91dd-a4346f2886f7)
 **Figure 2.**
 
-**Turn-based coding:** Each party member takes turns coding, picking up where their team members left off. If the final code is still incorrect after the last member's turn, the party loses health. The timer restarts and the member who went first will start. This repeats until the party fixes their code to solve the problem, or the party's health reaches zero.
+**Turn-based coding:** Each party member takes turns writing code by picking up where their party members left off. If the final code is still incorrect after the last member's turn, the party loses health. The timer restarts and the member who went first will start. This repeats until the party fixes their code to solve the problem, or the party's health reaches zero.
 
 ### Grading User Input
 - Grading does not start until all members have taken a turn
