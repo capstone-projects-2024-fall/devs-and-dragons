@@ -148,11 +148,11 @@ function TwoPlayerQuestPage() {
             case "Dragon":
                 switch (quest?.background) {
                     case "Desert":
-                        return 200;
+                        return 120;
                     case "Castle Ruins":
-                        return 140;
+                        return 130;
                     case "Forest":
-                        return 200;
+                        return 120;
                     default:
                         return 0;
                 }
