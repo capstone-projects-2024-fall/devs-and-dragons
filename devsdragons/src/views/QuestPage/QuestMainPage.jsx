@@ -73,6 +73,10 @@ function QuestMainPage() {
     const questId = new URLSearchParams(location.search).get("quest_id");
     const navigate = useNavigate();
 
+    const handleLeaveQuest = () => {
+        navigate('/my-quests');
+    };
+
     // Function to get the background style URL
     const getBackgroundStyle = () => {
         if (!quest || !quest.background) return forestImage; // Use imported image as default
@@ -125,7 +129,7 @@ function QuestMainPage() {
         }
     };
 
-    // Determine what Enemy was selcted for the quest
+    // Determine what Enemy was selected for the quest
     const initializeEnemyAnimation = (getEnemyAdjust_Y) => {
         if (!quest || !quest.enemy) return null; // Ensure quest and enemy exist
 
@@ -397,6 +401,7 @@ function QuestMainPage() {
                                 <img src={mushroomHurt} alt="Mushroom Hurt SS" id="mushroomHurt" style={{display: "none"}} />
                                 <img src={mushroomDeath} alt="Mushroom Death SS" id="mushroomDeath" style={{display: "none"}} />
 
+                                <button onClick={handleLeaveQuest}>Leave</button>
 
                                 <div className="player-section">
                                     <div className="health-bar-container">
