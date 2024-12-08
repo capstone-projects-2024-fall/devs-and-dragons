@@ -46,7 +46,7 @@ sidebar_position: 4
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 
-* Users should see a quest results at the end of each quest (either victory or defeat).
+
 
 
 
@@ -58,6 +58,10 @@ sidebar_position: 4
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time.
 
 * Health bar of dragon reaching 0 must trigger a victory result.
+
+* Health bar of user(s) reaching 0 must trigger a defeat result.
+
+* Users should see a quest results at the end of each quest (either victory or defeat).
 
 * Users must be able to log out.
 
