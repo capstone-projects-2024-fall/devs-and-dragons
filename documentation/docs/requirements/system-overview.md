@@ -28,9 +28,8 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 
 ### Grading User Input
 - GPT grades user(s) input.
-- Grading does not start until all members have taken a turn.
-- Ensures that proper logic is being used to solve
-  - A problem expecting an output of "10" will not accept "return 10" as a correct input
+- GPT grading does not start until all members have taken a turn.
+- GPT ensures and verifies correct logic is used to solve problems. E.g., for a problem which the solution is 10, GPT will not accept a function with a one liner being "return 10" (for the answer).
 - GPT rates answers from 1 to 5 stars, based on a 10-point grading scale
   - **1 star**: Grade 0–3/10 (Extremely inefficient; irrelevant or incorrect)
   - **2 stars**: Grade 4–5/10 (Inefficient; partially helpful but unclear or incomplete)
