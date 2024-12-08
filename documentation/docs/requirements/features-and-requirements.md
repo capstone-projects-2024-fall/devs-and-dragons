@@ -26,14 +26,9 @@ sidebar_position: 4
   * Programming Language
   * Quest Description
 * If a multiplayer quest is made, then a room/party code must be generated so others can join party with the user who created the quest.
-
-[//]: # (Use case 5 functional requirements, Playing a solo quest)
-* Users must be able to create parties/rooms of two to four to start a quest.
-* Users must be able to join parties/rooms.
-* Users can add other users.
-  * User can search for another's username and click "Add Friend".
+* Users must be able to join existing parties/rooms with the correct code.
 * Users can create guilds to host multiple guild parties and assign multiple quests.
-* Users can play and finish a quest (game).
+* Users can start, play, and finish a quest solo or with a party.
 * Users can take turns answering a question/problem within a quest (game).
 * Game must include a timer for each party member.
 * Game must be able to generate coding problems based on topic and difficulty chosen.
