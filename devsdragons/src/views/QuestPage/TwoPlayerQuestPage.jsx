@@ -159,7 +159,7 @@ function TwoPlayerQuestPage() {
             case "Mr. Mushroom":
                 switch (quest?.background) {
                     case "Desert":
-                        return 0;
+                        return 70;
                     case "Castle Ruins":
                         return 70;
                     case "Forest":
