@@ -6,10 +6,20 @@ sidebar_position: 4
 
 ## Functional Requirements (sourced from Use Cases)
 
+[//]: # (Use case 1 functional requirements, Create Account)
+
 * Users must be able to create accounts.
+
+[//]: # (Use case 2 functional requirements, Log In)
+
 * Users must be able to log into created accounts.
 
-* Quest Form: Users must be able to create quests through filling out a form that takes in:
+[//]: # (Use case 3 functional requirements, Avatar)
+
+* Users must be able to create and customize an Avatar.
+
+[//]: # (Use case 4 functional requirements)
+* Users must be able to create quests through filling out a form that takes in:
   * Quest Title
   * Coding Topic
   * Amount of Problems (3 - 8)
@@ -18,7 +28,7 @@ sidebar_position: 4
   * Background
   * Programming Language
   * Quest Description
-* Users must be able to create and customize an Avatar.
+
 * Users must be able to create parties/rooms of two to four to start a quest.
 * Users must be able to join parties/rooms.
 * Users can add other users.
