@@ -119,7 +119,7 @@ Intention: Context is Use Case 6 (quest created for at least two players) and 7 
    - Question
    - Party/Room code
 
-3. The user is prompted with a question.
+3. The users are prompted with a question.
 
 4. The timer begins to tick down.
 
