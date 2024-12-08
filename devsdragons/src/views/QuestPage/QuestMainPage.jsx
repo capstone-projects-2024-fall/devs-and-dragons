@@ -97,11 +97,11 @@ function QuestMainPage() {
             case "Dragon":
                 switch (quest?.background) {
                     case "Desert":
-                        return 8;
+                        return 200;
                     case "Castle Ruins":
-                        return 9;
+                        return 225;
                     case "Forest":
-                        return 8;
+                        return 190;
                     case "River Crossing":
                         return 0;
                     default:
@@ -124,6 +124,43 @@ function QuestMainPage() {
                 return 0; // Default offset if no specific adjustments needed
         }
     };
+
+        // Set enemy animation parameters
+    useEffect(() => {
+        const setEnemyAnimations = () => {
+            if (!quest || !quest.enemy) return;
+
+            switch (quest.enemy) {
+                case "Dragon":
+                    setEnemyIdleSS("dragonIdle");
+                    setEnemyIdleFrames(3);
+                    setEnemyHurtSS("dragonHurt");
+                    setEnemyHurtFrames(4);
+                    setEnemyAttackSS("dragonAttack");
+                    setEnemyAttackFrames(5);
+                    setEnemyDeathSS("dragonDeath");
+                    setEnemyDeathFrames(6);
+                    break;
+
+                case "Mr. Mushroom":
+                    setEnemyIdleSS("mushroomIdle");
+                    setEnemyIdleFrames(7);
+                    setEnemyHurtSS("mushroomHurt");
+                    setEnemyHurtFrames(5);
+                    setEnemyAttackSS("mushroomAttack");
+                    setEnemyAttackFrames(10);
+                    setEnemyDeathSS("mushroomDeath");
+                    setEnemyDeathFrames(11);
+                    break;
+
+                default:
+                    console.warn("Unknown enemy type");
+                    break;
+            }
+        };
+
+        setEnemyAnimations();
+    }, [quest]);
 
     // Determine what Enemy was selcted for the quest
     const initializeEnemyAnimation = (getEnemyAdjust_Y) => {
@@ -169,11 +206,11 @@ function QuestMainPage() {
         const getPlayerAdjustY = () => {
             switch (quest?.background) {
                 case "Desert":
-                    return 0; 
+                    return 90; 
                 case "Castle Ruins":
-                    return 50; 
+                    return 100; 
                 case "Forest":
-                    return 50; 
+                    return 90; 
                 case "River Crossing":
                     return -120;
                 default:
@@ -315,6 +352,8 @@ function QuestMainPage() {
                 setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
                 playerRef.current?.changeAnimation("playerAttack1", 6);
                 enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
+                // enemyRef.current?.changeAnimation(enemyDeathSS, enemyDeathFrames);
+
             } else if (grade <= 5) {
                 // Enemy attacks successfully
                 setPlayerHealth((prev) => Math.max(prev - 25, 0)); // Ensure health does not go below 0

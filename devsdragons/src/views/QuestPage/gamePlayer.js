@@ -10,7 +10,7 @@ export default function initGamePlayerAnimation(adjust_y) {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.image = document.getElementById(imageID);
-            this.scale = 6;
+            this.scale = 5;
             this.spriteWidth = 64;
             this.spriteHeight = 64;
             this.width = this.spriteWidth * this.scale;
