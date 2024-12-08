@@ -107,7 +107,9 @@ Intention: A user wants to join another user’s party.
 
 ## Use Case 8 - Playing a Quest with a Party
 Intention: Context is Use Case 6 (quest created for at least two players) and 7 (one or more players join the existing quest created by user in use case 6). At least two users want to solve a coding problem together during a quest.
+
 1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
+
 2. The game screen is now displayed to the user where they can see:
    - User's avatar
    - User's health bar
@@ -115,17 +117,31 @@ Intention: Context is Use Case 6 (quest created for at least two players) and 7 
    - Enemy's health bar
    - Timer
    - Code Editor
+
 3. The user is prompted with a question.
+
 4. The timer begins to tick down.
+
    - If the user does not submit an answer before the timer reaches 0, then the user's health bar decreases.
+
 5. The user writes code in the provided code editor.
+
 6. The user clicks the "Submit" button.
+
 7. The second user in the party adds onto the code editor to solve the problem if needed.
+
 8. The second user clicks the "Submit" button.
+
 9. The GPT-bot analyzes the user's submission and provides feedback with a rating from 1 to 3.
+
 10. Based on the GPT-bot’s rating:
+
    - **Feedback is provided to the user**:
+     
      - If the rating is 1, the user’s health bar decreases, and the quest continues with the timer reset for a new attempt.
+
      - If the rating is 2, the user receives tips on improving their solution and chooses to try again or continue.
+     
      - If the rating is 3, the user successfully damages the enemy, the enemy’s health bar decreases, and the user proceeds to the next question if available.
+
 11. The two users continue to engage with the quest until all questions are answered, the user quits, or the user’s health bar reaches zero.
