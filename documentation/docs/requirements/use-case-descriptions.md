@@ -101,12 +101,12 @@ Intention: A user wants to form a party to undertake a quest together.
 ## Use Case 7 - Join an Existing Party for a "Two Player Quest"
 Intention: A user wants to join another user’s party.
 1. From the home page, the user clicks on the “Create Quests” button.
-2. The user selects "Two Player" option in the Create Quest Section.
+2. The user selects the "Two Player" option in the Create Quest Section.
 3. The user inputs the room code and selects the "Join Room" button.
 4. The user is automatically navigated to the room.
 
 ## Use Case 8 - Playing a Quest with a Party
-Two users want to solve a coding problem together during a quest. Context is use case 7.
+Intention: Two users want to solve a coding problem together during a quest. Context is use case 7.
 1. The quest begins by displaying the quest briefing to the user, providing a story for the user.
 2. The game screen is now displayed to the user where they can see:
    - User's avatar
