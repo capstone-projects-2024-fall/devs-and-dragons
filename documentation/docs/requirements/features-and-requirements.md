@@ -4,7 +4,10 @@ sidebar_position: 4
 
 # Features and Requirements
 
-## Functional Requirements
+## Functional Requirements (sourced from Use Cases)
+
+* Users must be able to create accounts.
+* Users must be able to log into created accounts.
 
 * Quest Form: Users must be able to create quests through filling out a form that takes in:
   * Quest Title
@@ -26,8 +29,6 @@ sidebar_position: 4
 * Game must include a timer for each party member.
 * Game must be able to generate coding problems based on topic and difficulty chosen.
 * Game must be able grade answers based on correct and incorrect user(s) input.
-* Users must be able to create accounts.
-* Users must be able to log into created accounts.
 * Users can opt out or leave a started quest.
 * Users must be able to log out.
 * A user must be able to play a quest in single player (by themself).
