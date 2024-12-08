@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Features and Requirements
 
-## Functional Requirments
+## Functional Requirements
 
 * Users must be able to create quests through filling out a form that takes in
   * Quest Title
