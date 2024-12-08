@@ -32,6 +32,12 @@ sidebar_position: 4
 * Users must be able to log out.
 * Users should see a quest results at the end of each quest (either victory or defeat).
 * Users must be able to toggle dark mode or light mode during ongoing quests (depending on their preference).
+* Dragon sprite should be able to:
+  * Take damage (its health bar decreasing).
+  * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
+* User(s) sprite should be able to:
+  * Take damage (its health bar decreasing).
+  * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 * All user data must be stored in MongoDB.
  
 
