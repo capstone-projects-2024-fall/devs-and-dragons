@@ -29,15 +29,14 @@ sidebar_position: 4
 * Users must be able to join existing parties/rooms with the correct code.
 * Users can create guilds to host multiple guild parties and assign multiple quests.
 * Users can start, play, and finish a quest solo or with a party.
-* Users can take turns answering a question/problem within a quest (game).
+* For multiplayer quests, users must take turns answering a question/problem within a quest.
 * Game must include a timer for each party member.
 * Game must be able to generate coding problems based on topic and difficulty chosen.
+* Chosen background from the quest form must display during the ongoing quest.
 * Game must be able grade answers based on correct and incorrect user(s) input.
 * Users can opt out or leave a started quest.
-* Users must be able to log out.
-* A user must be able to play a quest in single player (by themself).
-* Users must able to play a quest together (multiplayer; two player).
-* Users should see a quest results at the end of each quest (either victory or defeat).
+
+
 * Users must be able to toggle dark mode or light mode during ongoing quests (depending on their preference).
 * Users must able to view, access, and modifiy a code editor component to submit their answers.
 * Dragon sprite should be able to:
@@ -46,12 +45,23 @@ sidebar_position: 4
 * User(s) sprite should be able to:
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
-* All user data must be stored in MongoDB.
-* Chosen background from the quest form must display during the ongoing quest.
-* User(s) should be able to move on to the next question after they submit a "valid" answer.
+
+* Users should see a quest results at the end of each quest (either victory or defeat).
+
+
+
 * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
 * GPT should not accept an irrelevant answer (such as blank answer, answer irrelavant to the question, answers that try to cheat).
+
+* User(s) should be able to move on to the next question after they submit a "valid" answer.
+
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time.
+
+* Health bar of dragon reaching 0 must trigger a victory result.
+
+* Users must be able to log out.
+
+* All user data must be stored in and retreived from the MongoDB database using the Flask backend.
  
 
 ## Non-Functional Requirements
