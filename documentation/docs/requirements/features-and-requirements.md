@@ -30,6 +30,8 @@ sidebar_position: 4
 * Users must be able to log into created accounts.
 * Users can opt out or leave a started quest.
 * Users must be able to log out.
+* A user must be able to play a quest in single player (by themself).
+* Users must able to play a quest together (multiplayer; two player).
 * Users should see a quest results at the end of each quest (either victory or defeat).
 * Users must be able to toggle dark mode or light mode during ongoing quests (depending on their preference).
 * Users must able to view, access, and modifiy a code editor component to submit their answers.
