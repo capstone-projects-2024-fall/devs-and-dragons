@@ -12,9 +12,9 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
 ## High Level Requirements
 
 ### Group Dynamics
-- **Party:** Small group of 2 to 4 members
-- **Create Room:**  User can create a quest and invite others to join by sharing a unique room code
-- **Join Room:**  User can join an existing quest by entering the shared room code
+- **Party:** Small group of 2 to 4 members.
+- **Create Room:**  User can create a quest and invite others to join by sharing a unique room code.
+- **Join Room:**  User can join an existing quest by entering the shared room code.
 
 ### Game Mechanics
 ![Timer](https://github.com/user-attachments/assets/ab9dd4d5-2544-461d-a894-28ed702d74bf)             
