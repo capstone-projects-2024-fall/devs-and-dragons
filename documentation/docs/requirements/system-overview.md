@@ -38,7 +38,7 @@ Devs and Dragons is a multiplayer web-based application that's designed as a gam
   - **5 stars**: Rating of 100% signfies an exceptional and perfect solution.
 
 ### Quest Creation
-All users can create a quest by filling out a form that specifies the difficulty, number of problems, computer science related topic(s), enemy, and background.
+All users can create a quest by filling out a form that specifies the difficulty, number of problems, topic of problems (Computer Science related), enemy, and background.
 
 ### Starting a Quest
 In multiplayer mode, the user must be in a party of two or more people in order to start a quest made by the user. The user who created the quest can provide a unique code for others to join the quest.
