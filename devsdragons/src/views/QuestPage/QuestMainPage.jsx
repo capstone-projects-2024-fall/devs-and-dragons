@@ -297,7 +297,7 @@ function QuestMainPage() {
         .then(response => response.text())
         .then(text => {
             const gradeMatch = text.match(/Grade:\s*(\d+)/);
-            const adviceMatch = text.match(/Advice:\s*(.+)/);
+            const adviceMatch = text.match(/Feedback:\s*([^\n}]+)/);
             const grade = gradeMatch ? parseInt(gradeMatch[1], 10) : null;
             const advice = adviceMatch ? adviceMatch[1] : "";
 

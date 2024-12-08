@@ -416,20 +416,24 @@ def getResponse():
         
         
         
-        user_input = (f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
-              f"I need {problemCount} computer science coding challenges on the topic '{topics}', each in the language {programmingLanguage}. "
-              f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
-              f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
-              f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question**.\n"
-              f"Format the output as:\n"
-              f"Background: (Description of the scene)\n"
-              f"Question 1: (Describe a scenario where I encounter '{enemy}' or an obstacle, followed by a coding question related to '{codingTopic}' "
-              f"that must be solved in {programmingLanguage} to progress)\n"
-              f"Question 2: (Next coding question in {programmingLanguage}, with another part of the story building on my progress or another encounter with '{enemy}')\n"
-              f"… and so on up to Question {problemCount}.\n"
-              f"Example question format:\n"
-              f"'The enemy blocks your path with a wall of encrypted data. To proceed, write a function in {programmingLanguage} that can decrypt the data. If possible provide input and expected output as an example'\n"
-              f"Use this storyline description for context: {description}")
+        user_input = (
+            f"[A quest is a gamified series of coding challenges tied to a storyline. Each challenge is a part of the story, progressively advancing the user’s knowledge in a chosen topic. "
+            f"The output should maintain a continuous narrative while keeping each question engaging and relevant. Each level must include a concrete task description that provides the user with clear instructions, example inputs, and expected outputs. Tasks should be simple and focus on fundamental coding concepts such as loops, conditionals, and basic data manipulations.]\n\n"
+            f"You're a quest master guiding me on a coding adventure titled '{questTitle}' with the difficulty level '{difficultyLevel}'. "
+            f"I need {problemCount} computer science coding challenges on the topic '{codingTopic}', each in the language {programmingLanguage}. "
+            f"Please provide a quest story in the '{background}' setting, where I am battling the enemy '{enemy}'. "
+            f"Each question should progress the story, incorporating a short description of how each coding challenge helps me defeat '{enemy}' "
+            f"or overcome a specific obstacle in the journey. **Do not provide solutions or hints for any question.**\n\n"
+            f"### Format the output as:\n"
+            f"- **Background:** (Description of the scene)\n"
+            f"- **Question 1:**\n"
+            f"    - Storyline: (Describe a simple scenario where I encounter '{enemy}' or an obstacle tied to the '{background}' setting.)\n"
+            f"    - Task: (Provide a basic coding challenge, focusing on fundamental concepts with clear instructions, inputs, and outputs.)\n\n"
+            f"- **Question 2:**\n"
+            f"    - Storyline: (Describe how the story progresses and the next challenge I encounter with '{enemy}' or the '{background}' setting.)\n"
+            f"    - Task: (Another simple coding challenge tied to the storyline with straightforward instructions.)\n\n"
+            f"- … and so on up to **Question {problemCount}.**\n\n"
+        )
         
         print(user_input)
         
@@ -547,8 +551,25 @@ def checkAnswer():
     answer = data.get('answer')
     print(answer)
     language = data.get('language')
-    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be a tough grader, if the person has provided nothing give him a 0, if he is not meeting requirements give him a bad grade. But if the expectations are met provie good grade. Focus more on the logic than the syntax of the code. The return output should be: Grade, Advice"
     
+    if not answer.strip():
+        # Return a clean response for empty code
+        return jsonify({
+            "message": "Grade: 1/10\n\nFeedback: No solution was submitted. Please try writing and submitting code next time. Practice makes perfect!"
+        })
+    
+    # Proceed with OpenAI API call if code is provided
+    sendToOpenAI = (
+        f"This is the question: {question}, and this is the user's solution: {answer}. "
+        f"Grade their solution on a scale of 1 to 10, where 1 is the worst code and 10 is the best code, in this programming language: {language}. "
+        f"Provide feedback that is thorough yet concise, prioritizing the most critical aspects of their solution. "
+        f"Format the response as:\n"
+        f"Grade: [1–10]\n\n"
+        f"Feedback:\n"
+        f"[A short summary of the solution's strengths and weaknesses.]\n"
+        f"[List 1-3 leading questions to help the user think about their solution.]\n"
+        f"Do not provide the exact solution or give away the answer. End with a note of encouragement."
+    )    
     response = openai.ChatCompletion.create(
         model = "gpt-3.5-turbo",
         messages = [
