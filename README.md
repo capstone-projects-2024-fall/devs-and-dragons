@@ -62,7 +62,7 @@ Educators often face the challenge of addressing differences in students’ prep
 
 ## Required Resources
 
-Discuss what you need to develop this project. This includes background information you will need to acquire, hardware resources, and software resources. If these are not part of the standard Computer Science Department lab resources, these must be identified early and discussed with the instructor.
+https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/general-requirements
 
 ## Collaborators
 
