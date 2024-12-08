@@ -58,7 +58,7 @@ The frontend of Devs and Dragons is developed using React JS to build UI compone
 
 ## Background
 
-The background will contain a more detailed description of the product and a comparison to existing similar projects/products. A literature search should be conducted and the results listed. Proper citation of sources is required. If there are similar open-source products, you should state whether existing source will be used and to what extent. If there are similar closed-source/proprietary products, you should state how the proposed product will be similar and different.
+Educators often face the challenge of addressing differences in students’ preparedness as coding experience can vary widely among Computer Science freshmen. This range of difference in initial knowledge makes it difficult to teach in a way that is engaging and effective for everyone. Additionally, the importance of soft skills, particularly teamwork and collaboration, can be hard to implement when some students may feel discouraged due to many students choosing to work alone or within their circle. Devs and Dragons addresses these challenges by combining the multiplayer dynamic of video games with the rigor of programming challenges. By fostering a collaborative environment, the platform not only aims to aid individual learning but also to enhance group problem-solving skills.
 
 ## Required Resources
 
