@@ -51,9 +51,12 @@ sidebar_position: 4
 
 
 * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
-* GPT should not accept an irrelevant answer (such as blank answer, answer irrelavant to the question, answers that try to cheat).
 
-* User(s) should only be able to move on to the next question after they submit a "valid" answer.
+* GPT must not accept an irrelevant answer (such as blank answer, answer irrelavant to the question, answers that try to cheat).
+
+* GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
+
+* User(s) must only be able to move on to the next question after they submit a "valid" answer.
 
 * Game timer reaching 0 must produce a defeat result unless the dragon's/enemy's health bar reaches 0 by that time (context: all questions have not been correctly answered yet).
 
