@@ -12,7 +12,7 @@ sidebar_position: 4
 
 * Users must be able to log into created accounts.
 
-* Users must be able to create and customize an Avatar.
+* Users must be able to create and customize an Avatar for themselves.
 
 * Users must be able to create "singleplayer", "one player", or "solo" quests to play them by themselves.
 * Users must be able to create "multiplayer", "two player", or "co-player" quests to play them with others.
@@ -25,13 +25,15 @@ sidebar_position: 4
   * Background
   * Programming Language
   * Quest Description
-* If a multiplayer quest is made, then a room/party code must be generated so others can join party with the user who created the quest.
+* If a multiplayer quest is made, then a room/party code must be generated so others can use this code to form/join a party with the user who created the quest.
 * Users must be able to join existing parties/rooms with the correct code.
 * Users can create guilds to host multiple guild parties and assign multiple quests.
 * Users can start, play, and finish a quest solo or with a party.
 * For multiplayer quests, users must take turns answering a question/problem within a quest.
-* Game must include a timer for each party member.
-* Game must be able to generate coding problems based on topic and difficulty chosen.
+
+* The quest/game component must be loaded and presented on a 2D plane filling the entire screen.
+* The quest/game component must include a timer for each party member.
+* The quest/game component must be able to generate coding problems based on topic and difficulty chosen.
 * Chosen background from the quest form must display during the ongoing quest.
 
 * Users can opt out or leave a started quest.
@@ -41,7 +43,7 @@ sidebar_position: 4
 
 * Users must be able to toggle dark mode or light mode on the code editor during ongoing quests (depending on their preference).
 
-* Dragon sprite should be able to:
+* The dragon sprite, representing the enemy, should be able to:
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 
