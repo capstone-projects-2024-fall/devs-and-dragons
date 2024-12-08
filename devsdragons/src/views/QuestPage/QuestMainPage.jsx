@@ -71,6 +71,7 @@ function QuestMainPage() {
 
     const location = useLocation();
     const questId = new URLSearchParams(location.search).get("quest_id");
+    const navigate = useNavigate();
 
     // Function to get the background style URL
     const getBackgroundStyle = () => {
@@ -344,6 +345,10 @@ function QuestMainPage() {
         }
     };
 
+    const redirectToMyQuests = () => {
+        navigate('/my-quests');
+    };
+
     if (!quest) {
         return <div>Loading quest...</div>;
     }
@@ -352,6 +357,7 @@ function QuestMainPage() {
         return (
             <div className="win-screen">
                 <h1>You Win!</h1>
+                <button onClick={redirectToMyQuests}>Back to My Quests</button>
             </div>
         );
     }
@@ -360,6 +366,7 @@ function QuestMainPage() {
         return (
             <div className="lose-screen">
                 <h1>You Lose!</h1>
+                <button onClick={redirectToMyQuests}>Back to My Quests</button>
             </div>
         );
     }
