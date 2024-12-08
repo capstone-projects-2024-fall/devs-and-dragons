@@ -12,7 +12,7 @@
 
 ## Keywords
 
-Section 001, React, Flask, MongoDB, GPT Grading, Sockets, Server Hosting Multiplayer, Full Stack Game (from scratch)
+Section 001, React, Flask, MongoDB, GPT Grading, Sockets, Server Hosting Multiplayer, Full Stack Game
 
 ## Project Abstract
 
@@ -54,7 +54,7 @@ In multiplayer mode, a party of two or more users are needed in order to start a
 
 ## Conceptual Design
 
-Describe the initial design concept: Hardware/software architecture, programming language, operating system, etc.
+The frontend of Devs and Dragons is developed using React JS to build UI components and manage the application state. The backend is powered by Flask, API requests, and an integration with OpenAI's GPT (Model 4) for generating and grading users' answers to coding challenges (quests). The MongoDB database stores the user data, quest configurations, and coding submissions. WebSockets manage the multiplayer connections to allow players to collaborate in real-time during ongoing quests.
 
 ## Background
 
