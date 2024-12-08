@@ -64,7 +64,7 @@ sidebar_position: 4
 
 * Health bar of user(s) reaching 0 must trigger a defeat result.
 
-* Users should see a quest result at the end of each quest (either victory or defeat).
+* Users must see a quest result at the end of each quest (either victory or defeat).
 
 * Users must be able to log out.
 
