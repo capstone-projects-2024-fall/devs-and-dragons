@@ -17,7 +17,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 # change the HOST according to your wifi
 socketio = SocketIO(app, cors_allowed_origins="http://10.0.0.93:30000")
 password = "testKey125"
-# For better readability
+# For better readabilityy
 openai.api_key = ""
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
