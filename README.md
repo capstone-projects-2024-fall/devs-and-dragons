@@ -83,6 +83,13 @@ https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements
             <sub><b>Prince Nahar</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/JCreasy00">
+            <img src="https://avatars.githubusercontent.com/u/93548948?v=4" width="100;" alt="Jake"/>
+            <br />
+            <sub><b>Jake Creasy</b></sub>
+        </a>
+    </td>
 </tr>
 </table>
 
