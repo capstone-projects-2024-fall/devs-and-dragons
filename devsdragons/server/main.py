@@ -246,11 +246,13 @@ def handle_code_submit(data):
     questionIndex = data.get('questionIndex')
     grade = data.get('grade')
     advice = data.get('advice')
+    showContinueButton = data.get('showContinueButton')
 
     emit('code_submit', {
         'questionIndex': questionIndex,
         'grade': grade,
-        'advice': advice
+        'advice': advice,
+        'showContinueButton': showContinueButton
     }, room=room)
 
 # MULTIPLAYER GAME SOCKETS
