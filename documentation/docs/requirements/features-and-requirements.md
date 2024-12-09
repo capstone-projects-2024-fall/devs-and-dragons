@@ -62,7 +62,7 @@ sidebar_position: 4
   
   * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue to the next question.
 
-  * GPT must not mark an incorrect answer (such as a blank answer, an answer with content irrelavant to the question, or an answer without an actual algorithm) as a valid solution. 
+  * GPT must not mark an incorrect answer (such as a blank answer, an answer with content irrelevant to the question, or an answer without an actual algorithm) as a valid solution. 
     * Inaccurately marking answers as valid would let users wrongly move onto the next question.
 
   * GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
