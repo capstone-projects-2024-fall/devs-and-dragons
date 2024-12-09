@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
 ---
-# Acceptance test
+# Acceptance Tests
 
-Demonstration of all of the functional and non-functional requirements. This can be a combination of automated tests derived from the use-cases (user stories) and manual tests with recorded observation of the results.
+You can find the acceptance test report [here](https://docs.google.com/document/d/1BqJuHvXan7W0Tp8wXqw7djBdliMmIsoK_ce-NQKf5nI/edit?usp=sharing). It starts on Page 9
