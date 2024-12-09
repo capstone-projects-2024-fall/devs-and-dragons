@@ -35,7 +35,7 @@ import mushroomHurt from "./GameAssets/Mushroom/mushroomHurt.png";
 import mushroomDeath from "./GameAssets/Mushroom/mushroomDeath.png";
 
 // Connect to the backend server socket
-const socket = io('http://192.168.1.208:30000');
+const socket = io('http://10.0.0.93:30000');
 
 // StarRating component to display stars based on the grade
 function StarRating({ grade }) {
@@ -644,41 +644,48 @@ function TwoPlayerQuestPage() {
                             <p key={index}>{msg}</p>
                         ))}
                     </div>
-                    <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Talk to your peer"
-                    />
-                    <button onClick={sendMessage}>Send</button>
-                </div>
-
-                {isRoomCreator && !gameStarted && (
-                    <div className="start-button-container">
-                        <button className="start-button" onClick={handleStartQuest}>
-                            Start Quest
-                        </button>
+                    <div className="chat-buttons">
+                        <input
+                            className = "chat-input"
+                            type="text"
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            placeholder="Talk to your peer"
+                        />
+                        <button className="chat-send-button" onClick={sendMessage}>Send</button>
                     </div>
-                )}
-                <div className="turn-info">
-                    <h3>Current Turn:</h3>
-                    {currentPlayer ? (
-                        <p>
-                            <strong>{currentPlayer}</strong> - Time Remaining:{" "}
-                            {Math.floor(playerTime / 60)}:{playerTime % 60 < 10 ? `0${playerTime % 60}` : playerTime % 60}
-                        </p>
-                    ) : (
-                        <p>Waiting for turn to be assigned...</p>
-                    )}
                 </div>
 
-                <div className="quest-timer">
-                    <h3>Total Quest Time Remaining:</h3>
-                    <p>
-                        {Math.floor(timeRemaining / 60)}:{timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}
-                    </p>
+                <div className="game-update-container">
+                    <div className="update-header">
+                        {isRoomCreator && !gameStarted && (
+                            <div className="start-button-container">
+                                <button className="start-button" onClick={handleStartQuest}>
+                                    Start Quest
+                                </button>
+                            </div>
+                        )}
+                        <div className="turn-info">
+                            <h3>Current Turn:</h3>
+                            {currentPlayer ? (
+                                <p>
+                                    <strong>{currentPlayer}</strong> - Time Remaining:{" "}
+                                    {Math.floor(playerTime / 60)}:{playerTime % 60 < 10 ? `0${playerTime % 60}` : playerTime % 60}
+                                </p>
+                            ) : (
+                                <p>Waiting for turn to be assigned...</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="quest-timer">
+                        <h3>Total Quest Time Remaining:</h3>
+                        <p>
+                            {Math.floor(timeRemaining / 60)}:{timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}
+                        </p>
+                    </div>
                 </div>
-                
+
 
                 <div className="code-editor-container">
                     <MultiplayerCodeEditor

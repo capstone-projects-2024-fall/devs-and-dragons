@@ -17,7 +17,7 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit, disable
   const containerStyle = {
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    height: '600px',
+    height: '400px',
     display: 'flex',
     flexDirection: 'column',
     padding: '10px',
@@ -56,7 +56,7 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit, disable
     <div style={containerStyle}>
       <div style={editorContainerStyle}>
         <Editor
-          height="30vh"
+          height="50vh"
           language={language}
           theme="vs-light"
           value={code} // Controlled by the parent

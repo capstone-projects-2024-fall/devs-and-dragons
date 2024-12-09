@@ -54,7 +54,7 @@ const Timer = ({ TIME = "00:01:00", onTimeout }) => {
 
     return (
         <div style={{ textAlign: "center", margin: "auto" }}>
-            <h1 style={{ color: "green" }}>TIMER</h1>
+            <h1 style={{ color: "#ddcf8a" }}>TIMER</h1>
             <h2>{timer}</h2>
             {/* <button onClick={onClickReset}>Reset</button> */}
         </div>
