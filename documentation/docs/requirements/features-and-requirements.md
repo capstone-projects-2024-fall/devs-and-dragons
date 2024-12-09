@@ -31,9 +31,13 @@ sidebar_position: 4
 * Users can start, play, and finish a quest solo or with a party.
 * For multiplayer quests, users must take turns answering a question/problem within a quest.
 
+
 * The quest/game component must be loaded and presented on a 2D plane filling the entire screen.
+
 * The quest/game component must include a timer for each party member.
-* The quest/game component must be able to generate coding problems based on topic and difficulty chosen.
+
+* The quest/game component must be able to generate coding problems based on the topic and the difficulty selected in the quest form.
+
 * Chosen background from the quest form must display during the ongoing quest.
 
 * Users can opt out or leave a started quest.
