@@ -4,28 +4,47 @@ sidebar_position: 5
 
 # Development Environment
 
-### IDE
-- VS Code
-- You can use other IDEs or Terminal configurations
+## Tools
 
-### Documentation
-- Docasaurus
+- **IDE**: any text editor + terminal combination
+  - Preferred: Visual Studio Code
 
-### Frontend
-- JavaScript
-- React JS
+- **Package Managers**
+  - For Docusaurus: yarn
+  - For Web App: npm
+  - For Python: pip
 
-### Backend
-- Python
-- Flask
+## Languages, Frameworks, and Packages
 
-### Database
-- MongoDB
+- **HTML/CSS/JavaScript**
+  - **React** 
+    - Frontend.
+- **Python** 
+  - **Flask**
+    - Backend with MongoDB database.
+    - To host web server.
+    - To host API endpoints to communicate user data.
+  - **Packages**:
+    - pymongo
+    - openai
+    - flask
+    - flask_socketio
+    - flask_cors
+    - contact
+    - bcrypt
+    - re
+    - certifi
+    - uuid
 
-### Testing
-- Python Unit Testing: PyTest
-- React Component Testing: Jest, Vite
+## Testing
 
-### API
-- OpenAI (GPT-4), API Key
-- RESTful APIs
+- **PyTest**
+  - For Python-related testing
+- **Jest**
+  - For JavaScript-related testing
+
+
+
+## Hardware
+
+- **General Requirements** - [link](https://capstone-projects-2024-fall.github.io/project-techtrek/docs/requirements/general-requirements)
