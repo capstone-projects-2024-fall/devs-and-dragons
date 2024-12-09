@@ -4,26 +4,29 @@ sidebar_position: 3
 
 # General Requirements
 
-Desktop, laptop or a mobile device with internet access
+## Hardware Requirements
 
-**Development environment:**  
-VS Studio code
+- Multiple devices with internet connection.
 
-**Hardware:**  
-Dual-core processor, 8GB RAM, 128 GB SSD, Linux/windows/Macos OS, and GPU
+## Software Requirements
 
-**Project management system:**  
-Github, Jira, Discord, and Zoom
+- Backend: Flask  
+    - Unit Test Framework: Pytest
 
-**Testing Requirements:**  
-Test Driven Development and unit testing  
-Python library unittest
+[//]: # (Comment)
+- Frontend: React JS
+    - Vite for testing
+    - Jest for testing
 
-**Technical requirements:**  
-Backend: Python  
-Frontend: Javascript, React.js  
-APIs: OpenAI, TTS, Google Analytics, and Restful  
-Database: SQLite, MongoDB  
-Server: AWS or Azure
+[//]: # (Comment)
+- APIs: 
+    - OpenAI (GPT-4)
+    - RESTful APIs  
+
+[//]: # (Comment)
+- Remote Database/Server: 
+    - MongoDB  
+
+
 
 
