@@ -15,9 +15,10 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 # change the HOST according to your wifi
-socketio = SocketIO(app, cors_allowed_origins="http://192.168.1.208:30000")
+socketio = SocketIO(app, cors_allowed_origins="http://10.0.0.93:30000")
 password = "testKey125"
 # For better readability
+openai.api_key = ""
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
 db = cluster_connection["techQuest"]
@@ -633,6 +634,11 @@ def checkAnswer():
     language = data.get('language')
     sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be a tough grader, if the person has provided nothing give him a 0, if he is not meeting requirements give him a bad grade. But if the expectations are met provie good grade. Focus more on the logic than the syntax of the code. The return output should be: Grade, Advice"
     
+    # Check if the submitted answer is empty
+    if not answer.strip():  # Handles empty strings or strings with only spaces
+        messageFromChatGpt = "Grade: 0, Advice: no code submitted"
+        return jsonify(messageFromChatGpt)
+
     response = openai.ChatCompletion.create(
         model = "gpt-3.5-turbo",
         messages = [
@@ -667,7 +673,7 @@ for result in results:
 """
 
 if __name__ == '__main__':
-    HOST, PORT = '192.168.1.208', 29000
+    HOST, PORT = '10.0.0.93', 29000
     socketio.run(app, host=HOST, port=PORT, debug=True)
     app.run(debug=True)
 
