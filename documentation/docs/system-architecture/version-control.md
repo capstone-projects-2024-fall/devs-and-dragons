@@ -3,12 +3,26 @@ sidebar_position: 6
 ---
 
 # Version Control
-- Version control will be handled using Git and Github.
-- Branches:
-  - The Main Branch is protected.
-  - Branches require a pull request to be accepted by one other team member before being merged into the main branch.
-  - All features get their own individual branch during development.
-    - Branches are named after the corresponding ticket number assigned to the issue in Jira.
-- Deployment:
-  - Before each 'milestone demo' a GitHub release will be made.
-  - The Github release will always be created from the Main Branch of the repository. 
+
+## Overview
+
+We're managing Devs and Dragons using **Git** and **GitHub**. 
+
+Our git repository combines three distinct parts of our project:
+- Docusaurus Documentation.
+- Flask Web Server (MongoDB).
+- Core user interface using React.
+
+## Branching 
+
+- Branches are created based on the latest **main** branch commit.
+
+## Branch Protection
+
+- We require a pull request before merging into main.
+
+
+
+## Docusaurus Build
+
+We use **GitHub Actions** on our **main** branch to build our Docusaurus project documentation dynamically. Docusaurus uses the text and configuration details from Markdown and JSON files to build an HTML-based documentation website.
