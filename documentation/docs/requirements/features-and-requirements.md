@@ -65,7 +65,7 @@ sidebar_position: 4
   * GPT must not mark an incorrect answer (such as a blank answer, an answer with content irrelevant to the question, or an answer without an actual algorithm) as a valid solution. 
     * Inaccurately marking answers as valid would let users wrongly move onto the next question.
 
-  * GPT must rate the answers as either valid or invalid, determing the course of the quest/game.
+  * GPT must rate the answers as either valid or invalid, determining the course of the quest/game.
 
   * Answer quality must be indicated/viewable to the user using 5 stars and the amount they're filled.
 
