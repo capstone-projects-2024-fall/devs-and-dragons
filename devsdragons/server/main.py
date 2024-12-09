@@ -15,10 +15,9 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "12345"
 CORS(app, resources={r"/*": {"origins": "*"}}) 
 # change the HOST according to your wifi
-socketio = SocketIO(app, cors_allowed_origins="http://10.0.0.93:30000")
+socketio = SocketIO(app, cors_allowed_origins="http://192.168.1.208:30000")
 password = "testKey125"
 # For better readability
-openai.api_key = ""
 connection = "mongodb+srv://User1:" + password + "@cluster0.1edn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 cluster_connection = MongoClient(connection, tlsCAFile=certifi.where())
 db = cluster_connection["techQuest"]
@@ -272,6 +271,15 @@ def handle_next_question(data):
     }, room=room)
 
     print(f"Broadcasted next_question to room {room}")
+    
+@app.route('/get_player_count', methods=['GET'])
+def get_player_count():
+    room = request.args.get('room')
+    print(room, "get player count")
+    room_details = db["rooms"].find_one({f"{room}.roomCreator": {"$exists": True}})
+    players = room_details.get(room, {}).get("players", [])
+    print("players: ", players)
+    return jsonify({"player": players})
 
 @socketio.on('update_player_health')
 def handle_update_health(data):
@@ -291,6 +299,42 @@ def handle_update_health(data):
 
     # Broadcast the updated health to all users in the room
     emit('update_player_health', {'health': health}, room=room)
+
+@socketio.on('start_timer')
+def handle_start_timer(data):
+    room = data.get('room')
+    room_details = db["rooms"].find_one({f"{room}.roomCreator": {"$exists": True}})
+    players = room_details.get(room, {}).get("players", [])
+    timer_length = 5 * 60  # Total quest time in seconds (10 minutes)
+
+    if not players:
+        emit("error", {"message": "No players in the room!"}, room=room)
+        return
+
+    time_per_player = timer_length // len(players)
+    current_turn_index = 0
+    total_time_elapsed = 0
+
+    def broadcast_turn():
+        nonlocal current_turn_index, total_time_elapsed
+
+        if total_time_elapsed >= timer_length:
+            emit('quest_ended', {'message': 'Quest time has expired.'}, room=room)
+            return
+
+        current_player = players[current_turn_index % len(players)]
+        emit('turn_update', {
+            'currentPlayer': current_player,
+            'timePerPlayer': time_per_player,
+            'totalTimeRemaining': timer_length - total_time_elapsed,
+        }, room=room)
+
+        current_turn_index += 1
+        total_time_elapsed += time_per_player
+        socketio.sleep(time_per_player)
+
+    while total_time_elapsed < timer_length:
+        broadcast_turn()
 
 @socketio.on('update_enemy_health')
 def handle_update_enemy_health(data):
@@ -623,7 +667,7 @@ for result in results:
 """
 
 if __name__ == '__main__':
-    HOST, PORT = '10.0.0.93', 29000
+    HOST, PORT = '192.168.1.208', 29000
     socketio.run(app, host=HOST, port=PORT, debug=True)
     app.run(debug=True)
 

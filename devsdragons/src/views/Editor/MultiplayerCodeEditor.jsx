@@ -1,21 +1,23 @@
 import React from 'react';
 import Editor from '@monaco-editor/react';
 
-const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
+const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit, disabled }) => {
   const handleEditorChange = (value) => {
-    if (onChange) {
+    if (!disabled && onChange) {
       onChange(value, "code"); // Notify the parent about code changes
     }
   };
 
   const runCode = () => {
-    onCodeSubmit(code, language); // Submit the code and language to the parent
+    if (!disabled) {
+      onCodeSubmit(code, language); // Submit the code and language to the parent
+    }
   };
 
   const containerStyle = {
     backgroundColor: '#f0f0f0',
     border: '2px solid #ccc',
-    height: '600px', // Reduced height for the editor
+    height: '600px',
     display: 'flex',
     flexDirection: 'column',
     padding: '10px',
@@ -28,16 +30,7 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
     margin: '10px 0',
   };
 
-  const selectStyle = {
-    margin: '10px 0',
-    padding: '8px',
-    borderRadius: '5px',
-    border: '1px solid #333',
-    fontSize: '1rem',
-  };
-
   const editorContainerStyle = {
-   
     border: '1px solid #ddd',
     borderRadius: '5px',
     overflow: 'hidden',
@@ -50,7 +43,8 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
     color: 'white',
     border: 'none',
     borderRadius: '5px',
-    cursor: 'pointer',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    opacity: disabled ? 0.6 : 1,
     transition: 'background-color 0.3s ease',
   };
 
@@ -60,30 +54,28 @@ const MultiplayerCodeEditor = ({ code, language, onChange, onCodeSubmit }) => {
 
   return (
     <div style={containerStyle}>
-      {/* <h3 style={headerStyle}>Try your best to focus more on the code structure than the solution itself.</h3> */}
-      {/* <select
-        style={selectStyle}
-        value={language}
-        onChange={(e) => onChange(e.target.value, "language")} // Notify parent about language changes
-      >
-        <option value="javascript">JavaScript</option>
-        <option value="python">Python</option>
-        <option value="java">Java</option>
-      </select> */}
       <div style={editorContainerStyle}>
         <Editor
           height="30vh"
           language={language}
           theme="vs-light"
           value={code} // Controlled by the parent
+          options={{
+            readOnly: disabled, // Disable editor interaction if locked
+          }}
           onChange={handleEditorChange} // Notify parent when the editor content changes
         />
       </div>
       <button
         style={buttonStyle}
-        onMouseEnter={(e) => (e.target.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-        onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')}
+        onMouseEnter={(e) => {
+          if (!disabled) e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+        }}
+        onMouseLeave={(e) => {
+          if (!disabled) e.target.style.backgroundColor = '#007bff';
+        }}
         onClick={runCode}
+        disabled={disabled} // Disable the submit button if editor is locked
       >
         Submit
       </button>

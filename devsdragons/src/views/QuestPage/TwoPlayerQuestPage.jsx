@@ -35,7 +35,7 @@ import mushroomHurt from "./GameAssets/Mushroom/mushroomHurt.png";
 import mushroomDeath from "./GameAssets/Mushroom/mushroomDeath.png";
 
 // Connect to the backend server socket
-const socket = io('http://10.0.0.93:30000');
+const socket = io('http://192.168.1.208:30000');
 
 // StarRating component to display stars based on the grade
 function StarRating({ grade }) {
@@ -60,7 +60,7 @@ function TwoPlayerQuestPage() {
     const [feedbacks, setFeedbacks] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [sharedCode, setSharedCode] = useState("");
-    const [language, setLanguage] = useState("javascript");
+    const [language, setLanguage] = useState("python");
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [showContinueButton, setShowContinueButton] = useState(false);
@@ -79,8 +79,16 @@ function TwoPlayerQuestPage() {
     const [enemyAttackFrames, setEnemyAttackFrames] = useState(0);
     const [enemyDeathSS, setEnemyDeathSS] = useState("");
     const [enemyDeathFrames, setEnemyDeathFrames] = useState(0);
-
+    const [gameStarted, setGameStarted] = useState(false);
+    const [timerLength, setTimerLength] = useState(null); // Default to 3 minutes
+    const [players, setPlayers] = useState([]);
+    const [currentPlayer, setCurrentPlayer] = useState(null);
+    const [playerTime, setPlayerTime] = useState(0);
+    const [timeRemaining, setTimeRemaining] = useState(0);
     // Fetch quest data
+    const playersRef = useRef([]);
+
+    
     useEffect(() => {
         if (!roomCode || !questData) return;
 
@@ -105,8 +113,6 @@ function TwoPlayerQuestPage() {
                     return DesertBackground;
                 case 'Castle Ruins':
                     return CastleBackground;
-                case 'River Crossing':
-                    return RiverBackground;
                 case 'Forest':
                 default:
                     return ForestBackground;
@@ -115,6 +121,43 @@ function TwoPlayerQuestPage() {
 
         setGameBackground(getBackgroundStyle());
     }, [quest]);
+
+    useEffect(() => {
+        socket.on('turn_update', (data) => {
+            setCurrentPlayer(data.currentPlayer);
+            setPlayerTime(data.timePerPlayer);
+            setTimeRemaining(data.totalTimeRemaining);
+        });
+    
+        return () => {
+            socket.off('turn_update');
+        };
+    }, []);
+
+    useEffect(() => {
+        if (playerTime > 0) {
+            const playerTimer = setInterval(() => {
+                setPlayerTime((prev) => prev - 1);
+            }, 1000);
+    
+            return () => clearInterval(playerTimer); // Cleanup individual player's timer
+        }
+    }, [playerTime]);
+    
+    useEffect(() => {
+        if (timeRemaining > 0) {
+            const totalTimer = setInterval(() => {
+                setTimeRemaining((prev) => prev - 1);
+            }, 1000);
+    
+            return () => clearInterval(totalTimer); // Cleanup total quest timer
+        } else if (timeRemaining === 0 && gameStarted) {
+            console.log("Total quest time expired, auto-submitting...");
+            // handleAutoSubmit();
+            setGameStarted(false); // End the game
+        }
+    }, [timeRemaining, gameStarted]);
+
 
     // Initialize Player Animation
     useEffect(() => {
@@ -421,12 +464,14 @@ function TwoPlayerQuestPage() {
 
     // Handle code editor changes
     const handleEditorChange = (value, type) => {
-        if (type === 'code') {
-            setSharedCode(value);
-            socket.emit('code_update', { room: roomCode, code: value });
-        } else if (type === 'language') {
-            setLanguage(value);
-            socket.emit('language_update', { room: roomCode, language: value });
+        if (currentPlayer === localStorage.getItem('user_id')) {
+            if (type === 'code') {
+                setSharedCode(value);
+                socket.emit('code_update', { room: roomCode, code: value });
+            } else if (type === 'language') {
+                setLanguage(value);
+                socket.emit('language_update', { room: roomCode, language: value });
+            }
         }
     };
 
@@ -435,6 +480,62 @@ function TwoPlayerQuestPage() {
         const username = localStorage.getItem('user_id');
         socket.emit('leave_room', { username, room: roomCode });
         navigate("/my-quests");
+    };
+
+    const handleStartQuest = async () => {
+        if (isRoomCreator) {
+            const totalSeconds = 10 * 60; // Total quest time (10 minutes)
+            
+            try {
+                const response = await fetch(`/api/get_player_count?room=${roomCode}`);
+                const data = await response.json();
+                const playersList = data.player;
+    
+                if (!playersList || playersList.length === 0) {
+                    alert("No players in the room!");
+                    return;
+                }
+    
+                setPlayers(playersList);
+                playersRef.current = playersList;
+    
+                const timePerPlayer = Math.floor(totalSeconds / playersList.length);
+                let currentPlayerIndex = 0;
+                let totalTimeElapsed = 0;
+    
+                setGameStarted(true);
+                socket.emit("start_timer", { room: roomCode });
+    
+                const turnInterval = setInterval(() => {
+                console.log("totalTimeElapse, totalSeconds", totalTimeElapsed, totalSeconds)
+                    if (totalTimeElapsed >= totalSeconds) {
+                        clearInterval(turnInterval);
+                        console.log("Quest time expired, auto-submitting...");
+                        //handleAutoSubmit();
+                        setGameStarted(false);
+                        return;
+                    }
+    
+                    const nextPlayer = playersRef.current[currentPlayerIndex % playersList.length];
+                    console.log(nextPlayer)
+                    setCurrentPlayer(nextPlayer);
+                    setPlayerTime(timePerPlayer);
+                    setTimeRemaining(totalSeconds - totalTimeElapsed);
+    
+                    socket.emit("turn_update", {
+                        currentPlayer: nextPlayer,
+                        timePerPlayer,
+                        totalTimeRemaining: totalSeconds - totalTimeElapsed,
+                    });
+    
+                    totalTimeElapsed += timePerPlayer;
+                    currentPlayerIndex++;
+                }, timePerPlayer * 1000);
+            } catch (error) {
+                console.error("Error fetching players:", error);
+                alert("Failed to start the quest. Please try again.");
+            }
+        }
     };
 
     return (
@@ -538,12 +639,40 @@ function TwoPlayerQuestPage() {
                     <button onClick={sendMessage}>Send</button>
                 </div>
 
+                {isRoomCreator && !gameStarted && (
+                    <div className="start-button-container">
+                        <button className="start-button" onClick={handleStartQuest}>
+                            Start Quest
+                        </button>
+                    </div>
+                )}
+                <div className="turn-info">
+                    <h3>Current Turn:</h3>
+                    {currentPlayer ? (
+                        <p>
+                            <strong>{currentPlayer}</strong> - Time Remaining:{" "}
+                            {Math.floor(playerTime / 60)}:{playerTime % 60 < 10 ? `0${playerTime % 60}` : playerTime % 60}
+                        </p>
+                    ) : (
+                        <p>Waiting for turn to be assigned...</p>
+                    )}
+                </div>
+
+                <div className="quest-timer">
+                    <h3>Total Quest Time Remaining:</h3>
+                    <p>
+                        {Math.floor(timeRemaining / 60)}:{timeRemaining % 60 < 10 ? `0${timeRemaining % 60}` : timeRemaining % 60}
+                    </p>
+                </div>
+                
+
                 <div className="code-editor-container">
                     <MultiplayerCodeEditor
                         code={sharedCode}
                         language={language}
                         onChange={handleEditorChange}
-                        onCodeSubmit={(code) => submitCode(code, language, currentQuestionIndex)}
+                        onCodeSubmit={(code, lang) => submitCode(code, lang, currentQuestionIndex)}
+                        disabled = {currentPlayer != localStorage.getItem('user_id')}
                     />
                 </div>
             </div>
