@@ -30,10 +30,7 @@ const HUD = () => {
         </IconButton>
 
         {/* Icon for navigating to the avatar page */}
-        <IconButton component={Link} to="/avatar" color="inherit">  {/* Links to the Quests page */}
-          <Face />  
-          <Typography variant="caption">Avatar</Typography>  
-        </IconButton>
+        
 
         {/* Icon for navigating to the guilds page */}
        
