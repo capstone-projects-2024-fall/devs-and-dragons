@@ -58,7 +58,7 @@ sidebar_position: 4
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.).
 
 
-* The GPT component of the game must be able grade answers based on correct and incorrect user(s) input:
+* The GPT component of the game must be able to grade answers based on correct and incorrect user(s) input:
   
   * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
 
