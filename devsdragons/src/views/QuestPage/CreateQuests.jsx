@@ -25,7 +25,7 @@ const CreateQuestsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Placeholder values for coding topics, enemies, and backgrounds
-  const codingTopics = ['Algorithms', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
+  const codingTopics = ['Algorithms', 'Arrays', 'Data Structures', 'Recursion', 'Sorting', 'Dynamic Programming'];
   const enemies = ['Dragon', 'Mr. Mushroom'];
   const backgrounds = ['Forest', 'Desert', 'Castle Ruins'];
   const programmingLanguageOptions = ['Python', 'Java', 'JavaScript', 'C', "C++"];
@@ -333,9 +333,22 @@ const CreateQuestsPage = () => {
             </>
           )}
   
-          <button type="submit" className="submit-button" disabled={isLoading}>
-            {isLoading ? 'Creating Quest...' : 'Create Quest'}
+            <button
+            type="submit"
+            className="submit-button"
+            disabled={isLoading}
+            aria-busy={isLoading}
+            aria-label={isLoading ? 'Creating quest, please wait...' : 'Create Quest'}
+          >
+            {isLoading ? (
+              <>
+                <span className="spinner" /> Creating Quest...
+              </>
+            ) : (
+              'Create Quest'
+            )}
           </button>
+
         </form>
       ) : (
         <div className="quest-preview">
