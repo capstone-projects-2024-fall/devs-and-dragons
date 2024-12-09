@@ -51,7 +51,7 @@ sidebar_position: 4
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 
-* The user(s) sprite, representing the user(s), should be able to:
+* The user sprite, representing the user, should be able to:
 
   * Take damage (its health bar decreasing).
 
