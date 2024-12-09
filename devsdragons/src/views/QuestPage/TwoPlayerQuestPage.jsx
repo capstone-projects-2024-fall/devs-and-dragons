@@ -306,6 +306,11 @@ function TwoPlayerQuestPage() {
             setEnemyHealth(data.health);
         });
 
+        socket.on("enemy_defeated", () => {
+            console.log("Enemy defeated! Triggering death animation.");
+            enemyRef.current?.changeAnimation(enemyDeathSS, enemyDeathFrames);
+        });
+
         socket.on('next_question', (data) => {
             console.log('Received next_question event:', data);
             setCurrentQuestionIndex(data.questionIndex);
@@ -351,11 +356,13 @@ function TwoPlayerQuestPage() {
             socket.off('code_update');
             socket.off('language_update');
             socket.off('update_player_health');
+            socket.off('update_enemy_health');
+            socket.off('enemy_defeated');
             socket.off('next_question');
             socket.off('code_submit');
             socket.off('trigger_animation');
         };
-    }, [roomCode, enemyHurtSS, enemyHurtFrames, enemyAttackSS, enemyAttackFrames]);
+    }, [roomCode, enemyHurtSS, enemyHurtFrames, enemyAttackSS, enemyAttackFrames, enemyDeathSS, enemyDeathFrames]);
 
     // Handle player health updates
     const updatePlayerHealth = (newHealth) => {
@@ -379,6 +386,14 @@ function TwoPlayerQuestPage() {
             room: roomCode,
             health: newHealth,
         });
+
+        // Emit enemy_defeated event if health is <= 0
+        if (newHealth <= 0) {
+            console.log("Enemy defeated! Emitting enemy_defeated event.");
+            socket.emit("enemy_defeated", {
+                room: roomCode,
+            });
+        }
     };
 
 

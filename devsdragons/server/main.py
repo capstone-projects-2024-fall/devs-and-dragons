@@ -343,6 +343,14 @@ def handle_update_enemy_health(data):
     health = data['health']
     emit('update_enemy_health', {'health': health}, room=room)
 
+@socketio.on('enemy_defeated')
+def handle_enemy_defeated(data):
+    room = data.get('room')
+    
+    # Broadcast the enemy_defeated event to all users in the room
+    emit('enemy_defeated', {}, to=room)
+
+
 @socketio.on('trigger_animation')
 def handle_trigger_animation(data):
     room = data.get('room')
@@ -632,7 +640,7 @@ def checkAnswer():
     answer = data.get('answer')
     print(answer)
     language = data.get('language')
-    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. Be a tough grader, if the person has provided nothing give him a 0, if he is not meeting requirements give him a bad grade. But if the expectations are met provie good grade. Focus more on the logic than the syntax of the code. The return output should be: Grade, Advice"
+    sendToOpenAI = f"This is the question: {question}, and based on that grade my solution: {answer}, on a scale 1-10, 1 being the worst code and 10 being the best code, in this programming language: {language}. If you expect the code to provide the correct output, give a good grade above a 6. Focus on if the code written will provide a correct output and on than the syntax of the code. Provide Advice on how you would make the code better, but do not provide advice that gives code. Your output should never include '/n' The return output should be: Grade, Advice"
     
     # Check if the submitted answer is empty
     if not answer.strip():  # Handles empty strings or strings with only spaces
