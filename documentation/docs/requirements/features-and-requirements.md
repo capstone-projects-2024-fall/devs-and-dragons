@@ -60,7 +60,7 @@ sidebar_position: 4
 
 * The GPT component of the game must be able to grade answers based on correct and incorrect user(s) input:
   
-  * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue onto the rest of the quest.
+  * Users must be able to see GPT's grading feedback during an ongoing quest, so they may know if they can continue to the next question.
 
   * GPT must not mark an irrelevant answer (such as blank answer, answer irrelavant to the question, or answers that try to cheat) as a valid solution (which would let user(s) move on to the next question).
 
