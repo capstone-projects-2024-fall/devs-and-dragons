@@ -351,10 +351,11 @@ function QuestMainPage() {
             
               // Health Logic
               const totalQuestions = quest.questions.length;
+              console.log("total questions:", totalQuestions);
 
             if (grade >= 7) {
                 // Player attacks successfully
-                setDragonHealth((prev) => Math.max(prev - 100 / totalQuestions, 0)); // Ensure health does not go below 0
+                setDragonHealth(dragonHealth - (100/totalQuestions)); // Ensure health does not go below 0
                 playerRef.current?.changeAnimation("playerAttack1", 6);
                 enemyRef.current?.changeAnimation(enemyHurtSS, enemyHurtFrames);
                 // enemyRef.current?.changeAnimation(enemyDeathSS, enemyDeathFrames);
