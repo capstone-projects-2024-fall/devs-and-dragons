@@ -619,13 +619,27 @@ function TwoPlayerQuestPage() {
                         )}
                     </div>
                 )}
-                {currentQuestionIndex >= questions.length && <h2>All questions completed!</h2>}
+                {/* Reference to dealing with win/lost
+                {currentQuestionIndex >= questions.length && <h2>
+                    You win! All questions completed!</h2>} 
+                {playerHealth <= 0 && <h2>You Lose!</h2>} */}
+                {playerHealth <= 0 ? (
+                <h2 style={{ backgroundColor: 'red', padding: '10px', borderRadius: '5px', color: 'white' }}>
+                    You lose! Better luck next time!
+                </h2>
+                ) : currentQuestionIndex >= questions.length ? (
+                <h2 style={{ backgroundColor: 'white', padding: '10px', borderRadius: '5px' }}>
+                    You win! All questions completed!
+                </h2>
+                ) : null}
+
+
             </div>
 
             <div className="right-container">
                 <div className="chat-container">
                     <h2>Collaborate with Your Teammate</h2>
-                    <div style={{ border: '1px solid black', padding: '10px', height: '200px', overflowY: 'scroll' }}>
+                    <div style={{ border: '1px solid black', padding: '10px', height: '200px', overflowY: 'scroll', width: '1000px' }}>
                         {messages.map((msg, index) => (
                             <p key={index}>{msg}</p>
                         ))}
