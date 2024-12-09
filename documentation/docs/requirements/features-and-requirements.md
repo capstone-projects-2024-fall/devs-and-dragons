@@ -25,7 +25,7 @@ sidebar_position: 4
   * Background
   * Programming Language
   * Quest Description
-* If a multiplayer quest is made, then a room/party code must be generated so others can use this code to form/join a party with the user who created the quest.
+* If a multiplayer quest is made, then a room/party code must be generated. The code is needed sp others can form/join a party with the original user (who created the quest).
 * Users must be able to join existing parties/rooms with the correct code.
 * Users can create guilds to host multiple guild parties and assign multiple quests.
 * Users can start, play, and finish a quest solo or with a party.
