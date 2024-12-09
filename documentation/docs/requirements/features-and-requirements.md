@@ -47,11 +47,11 @@ sidebar_position: 4
   * Take damage (its health bar decreasing).
   * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
 
-* User(s) sprite should be able to:
+* The user(s) sprite, representing the user(s), should be able to:
 
   * Take damage (its health bar decreasing).
 
-  * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.)
+  * Animate whenever an action is being performed (taking or inflicting damage, idle, etc.).
 
 
 * Game must be able grade answers based on correct and incorrect user(s) input:
