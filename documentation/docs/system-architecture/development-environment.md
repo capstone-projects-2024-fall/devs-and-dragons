@@ -6,24 +6,26 @@ sidebar_position: 5
 
 ### IDE
 - VS Code
+- You can use other IDEs or Terminal configurations
 
 ### Documentation
 - Docasaurus
 
 ### Frontend
-- React Game Kit
 - JavaScript
-- React.js
+- React JS
 
 ### Backend
 - Python
+- Flask
 
 ### Database
 - MongoDB
 
 ### Testing
-- Python Unit Testing
-- React Component Testing: Jest
+- Python Unit Testing: PyTest
+- React Component Testing: Jest, Vite
 
-### Deplyoment/Hosting
-- AWS
+### API
+- OpenAI (GPT-4), API Key
+- RESTful APIs
