@@ -38,7 +38,7 @@ sidebar_position: 4
 
 * The quest/game component must be able to generate coding problems based on the topic and the difficulty selected in the quest form.
 
-* Chosen background from the quest form must display during the ongoing quest.
+* The quest/game component must be display the selected background in the quest form.
 
 * Users can opt out or leave a started quest.
 
