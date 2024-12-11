@@ -8,7 +8,7 @@
  * The URL or reference to your projects logo!
  * @type {string}
  */
-const logo = 'https://cdn.discordapp.com/attachments/1303099585173917737/1315176252164018198/water-dragon-svg-20.png?ex=675674d5&is=67552355&hm=d8f32cbcbabc7ebf505ef764438881ee17e1310989eea2df4b89f31b5d16f76c&';
+const logo = 'http://cliparts.co/cliparts/gTe/5xp/gTe5xpjRc.png';
 
 const main_template_jira_scripts = () => {
   if (process.env.ORG_NAME === 'ApplebaumIan'){
