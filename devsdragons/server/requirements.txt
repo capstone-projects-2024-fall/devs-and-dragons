@@ -1,0 +1,10 @@
+pymongo
+random
+openai
+flask
+flask-socketio
+flask-cors
+bcrypt
+re
+certifi
+uuid
