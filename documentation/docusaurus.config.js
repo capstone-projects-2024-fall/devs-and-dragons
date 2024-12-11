@@ -33,7 +33,7 @@ const config = {
   trailingSlash: false,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'https://cdn.discordapp.com/attachments/1303099585173917737/1315176252164018198/water-dragon-svg-20.png?ex=675674d5&is=67552355&hm=d8f32cbcbabc7ebf505ef764438881ee17e1310989eea2df4b89f31b5d16f76c&',
+  favicon: 'http://cliparts.co/cliparts/gTe/5xp/gTe5xpjRc.png',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
