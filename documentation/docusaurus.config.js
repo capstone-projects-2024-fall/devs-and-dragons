@@ -60,13 +60,7 @@ const config = {
           showLastUpdateAuthor: true,
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: 'docs',
-          path: 'docs',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME+'/edit/main/documentation/',
-          // remarkPlugins: [require('mdx-mermaid')],
-
+          path: 'docs'
         },
         // tutorials: {
         //   sidebarPath: require.resolve('./tutorialSidebars.js'),
@@ -118,7 +112,7 @@ const config = {
             label: 'Documentation',
           },
           {
-            href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
+            href: "https://github.com/capstone-projects-2024-fall/project-techtrek",
             label: 'GitHub',
             position: 'right',
           },
