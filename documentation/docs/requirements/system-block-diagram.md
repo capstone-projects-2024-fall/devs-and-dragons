@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # System Block Diagram
 
-<iframe width="1260" height="446" src="https://media.discordapp.net/attachments/1303099585173917737/1315507795898142783/System_Block_Diag.png?ex=6757a99b&is=6756581b&hm=4ae346db56b40483e1e0c1bbf0291ddf4103ef5d70059bc6f873b123644e42c3&=&format=webp&quality=lossless&width=1440&height=510" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+![](SystemBlockDiag.png)
 **Figure 1.** High level design of Devs and Dragons
 
 ## Description
