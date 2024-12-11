@@ -112,7 +112,7 @@ const config = {
             label: 'Documentation',
           },
           {
-            href: 'https://github.com/'+process.env.ORG_NAME+'/'+process.env.PROJECT_NAME,
+            href: "https://github.com/capstone-projects-2024-fall/project-techtrek",
             label: 'GitHub',
             position: 'right',
           },
