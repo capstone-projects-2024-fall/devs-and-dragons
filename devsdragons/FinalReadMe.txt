@@ -7,6 +7,7 @@ Backend
 1. Cd into "devsdragons".
 2. Cd into "server".
 3. In main.py, "pip install -r requirements.txt", "pip3" may work as well. This will install all the needed libraries.
+4. On line 21, you must input your OpenAI API Key. You can accquire this on OpenAI.com!
 
 
 Frontend
